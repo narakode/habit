@@ -4,7 +4,7 @@ import { Icon } from '@iconify/vue';
 
 <template>
   <nav
-    class="bg-white border-b border-gray-200 h-14 flex items-center dark:border-gray-800"
+    class="bg-white border-b border-gray-200 h-14 flex items-center dark:bg-gray-800 dark:border-gray-700"
   >
     <div class="container px-4 mx-auto flex items-center justify-between">
       <a href="" class="flex items-center gap-2 font-bold">
