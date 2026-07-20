@@ -1,5 +1,17 @@
 <script setup>
 import { Icon } from '@iconify/vue';
+import { ref } from 'vue';
+
+const theme = ref(
+  document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+);
+
+function onToggleTheme() {
+  theme.value = theme.value === 'dark' ? 'light' : 'dark';
+
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('theme', theme.value);
+}
 </script>
 
 <template>
@@ -11,11 +23,20 @@ import { Icon } from '@iconify/vue';
         <Icon icon="twemoji:clipboard" />
         Habbit Tracker
       </a>
-      <a href="">
-        <Icon icon="tabler:user" />
-        <span class="hidden">Profile</span>
-      </a>
-      <a href="" class="hidden">Logout</a>
+      <div class="flex items-center gap-2">
+        <button @click="onToggleTheme">
+          <Icon
+            :icon="
+              theme === 'dark' ? 'tabler:moon-filled' : 'tabler:sun-filled'
+            "
+          />
+          <span class="hidden">Profile</span>
+        </button>
+        <a href="">
+          <Icon icon="tabler:user" />
+          <span class="hidden">Profile</span>
+        </a>
+      </div>
     </div>
   </nav>
 </template>
