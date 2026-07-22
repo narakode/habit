@@ -1,6 +1,8 @@
 <script setup>
 import { Icon } from '@iconify/vue';
 import AppNavbar from './components/partials/AppNavbar.vue';
+import BaseCard from './components/base/BaseCard.vue';
+import BaseButton from './components/base/BaseButton.vue';
 
 const activities = [
   {
@@ -55,10 +57,10 @@ const activities = [
     <AppNavbar />
     <div class="container px-4 mx-auto py-6 xl:py-8 space-y-4">
       <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        <div
+        <BaseCard
           v-for="activity in activities"
           :key="activity.name"
-          class="bg-white border border-gray-200 rounded-lg p-4 flex flex-col justify-between gap-4 dark:bg-gray-800 dark:border-gray-700"
+          class="border border-gray-200 p-4 flex flex-col justify-between gap-4"
         >
           <div class="flex items-center justify-between">
             <p class="font-bold flex items-center gap-2 text-lg">
@@ -101,14 +103,12 @@ const activities = [
               </button>
             </div>
           </div>
-        </div>
+        </BaseCard>
       </div>
-      <button
-        class="hidden md:flex bg-sky-600 text-white h-10 rounded-lg px-4 items-center gap-2 font-bold"
-      >
+      <BaseButton class="hidden md:flex items-center gap-2" color="primary">
         <Icon icon="tabler:plus" class="size-5" />
         Tambah Habbit
-      </button>
+      </BaseButton>
       <button
         class="size-10 bg-sky-600 text-white rounded-full flex items-center justify-center fixed bottom-4 right-4 md:hidden"
       >

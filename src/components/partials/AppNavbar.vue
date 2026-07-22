@@ -1,10 +1,12 @@
 <script setup>
+import AuthLogoutConfirm from '../../core/auth/components/AuthLogoutConfirm.vue';
 import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
 
 const theme = ref(
   document.documentElement.classList.contains('dark') ? 'dark' : 'light',
 );
+const logoutVisible = ref(false);
 
 function onToggleTheme() {
   theme.value = theme.value === 'dark' ? 'light' : 'dark';
@@ -77,6 +79,7 @@ function onToggleTheme() {
               </a>
               <button
                 class="w-full flex items-center px-3 py-2 gap-2 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                @click="logoutVisible = true"
               >
                 <Icon
                   icon="tabler:logout"
@@ -90,4 +93,5 @@ function onToggleTheme() {
       </div>
     </div>
   </nav>
+  <AuthLogoutConfirm v-model:visible="logoutVisible" />
 </template>
