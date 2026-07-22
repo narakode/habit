@@ -3,6 +3,10 @@ import BaseButton from '../../../components/base/BaseButton.vue';
 import BaseCard from '../../../components/base/BaseCard.vue';
 
 const visible = defineModel('visible');
+
+function onClose() {
+  visible.value = false;
+}
 </script>
 
 <template>
@@ -18,7 +22,7 @@ const visible = defineModel('visible');
       v-if="visible"
       class="fixed inset-0 bg-black/50 z-9999999 flex items-center justify-center"
     >
-      <BaseCard class="space-y-4">
+      <BaseCard class="space-y-4" v-click-outside="onClose">
         <h2 class="font-bold text-xl">Logout</h2>
         <p class="text-gray-600 dark:text-gray-400">
           Apakah anda yakin ingin keluar dari aplikasi?
