@@ -2,6 +2,8 @@
 import AuthLogoutConfirm from '../../core/auth/components/AuthLogoutConfirm.vue';
 import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
+import AppMobileBottomBar from './AppMobileBottomBar.vue';
+import { navs } from '../../core/nav';
 
 const theme = ref(
   document.documentElement.classList.contains('dark') ? 'dark' : 'light',
@@ -28,18 +30,13 @@ function onToggleTheme() {
         </a>
         <div class="hidden sm:flex sm:items-center sm:gap-4">
           <a
+            v-for="nav in navs"
+            :key="nav.name"
             href=""
             class="flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
           >
-            <Icon icon="tabler:graph" />
-            Stats
-          </a>
-          <a
-            href=""
-            class="flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-          >
-            <Icon icon="tabler:history" />
-            History
+            <Icon :icon="nav.icon" />
+            {{ nav.name }}
           </a>
         </div>
       </div>
@@ -95,5 +92,6 @@ function onToggleTheme() {
       </div>
     </div>
   </nav>
+  <AppMobileBottomBar />
   <AuthLogoutConfirm v-model:visible="logoutVisible" />
 </template>

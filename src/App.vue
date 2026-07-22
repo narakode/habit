@@ -52,7 +52,7 @@ const activities = [
 
 <template>
   <div
-    class="text-gray-900 min-h-screen bg-gray-100 dark:bg-gray-900 dark:text-white"
+    class="text-gray-900 min-h-screen bg-gray-100 pb-8 dark:bg-gray-900 dark:text-white"
   >
     <AppNavbar />
     <div class="container px-4 mx-auto py-6 xl:py-8 space-y-4">
@@ -109,11 +109,6 @@ const activities = [
         <Icon icon="tabler:plus" class="size-5" />
         Tambah Habbit
       </BaseButton>
-      <button
-        class="size-10 bg-sky-600 text-white rounded-full flex items-center justify-center fixed bottom-4 right-4 md:hidden"
-      >
-        <Icon icon="tabler:plus" class="size-5" />
-      </button>
     </div>
   </div>
 </template>
