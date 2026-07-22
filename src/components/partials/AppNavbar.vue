@@ -56,7 +56,9 @@ function onToggleTheme() {
           <Icon icon="tabler:user" />
         </a>
         <VDropdown placement="bottom-end">
-          <button class="hidden sm:flex items-center justify-center">
+          <button
+            class="hidden cursor-pointer sm:flex items-center justify-center"
+          >
             <Icon icon="tabler:user" />
           </button>
 
