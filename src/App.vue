@@ -6,6 +6,7 @@ import BaseButton from './components/base/BaseButton.vue';
 import BaseDropdownItem from './components/base/BaseDropdownItem.vue';
 import HabitDeleteConfirm from './features/habit/HabitDeleteConfirm.vue';
 import { reactive, ref } from 'vue';
+import HabitFormModal from './features/habit/HabitFormModal.vue';
 
 const activities = ref([
   {
@@ -55,6 +56,17 @@ const activities = ref([
 const deleteConfirm = reactive({
   visible: false,
 });
+const formModal = reactive({
+  visible: false,
+});
+
+function getPercent(done, target) {
+  if (done >= target) {
+    return 100;
+  }
+
+  return (done / target) * 100;
+}
 </script>
 
 <template>
@@ -96,7 +108,7 @@ const deleteConfirm = reactive({
               <div
                 class="bg-sky-600 h-full rounded dark:bg-sky-400"
                 :style="{
-                  width: `${(activity.done / activity.target) * 100}%`,
+                  width: `${getPercent(activity.done, activity.target)}%`,
                 }"
               ></div>
             </div>
@@ -104,7 +116,7 @@ const deleteConfirm = reactive({
               class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400"
             >
               <span>{{ activity.done }}/{{ activity.target }}</span>
-              <span>{{ (activity.done / activity.target) * 100 }} %</span>
+              <span>{{ getPercent(activity.done, activity.target) }} %</span>
             </div>
           </div>
           <div class="flex items-center justify-between">
@@ -119,7 +131,6 @@ const deleteConfirm = reactive({
               </button>
               <p class="font-bold text-xl">{{ activity.done }}x</p>
               <button
-                :disabled="activity.target && activity.done === activity.target"
                 class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700"
                 @click="activities[index].done++"
               >
@@ -129,7 +140,11 @@ const deleteConfirm = reactive({
           </div>
         </BaseCard>
       </div>
-      <BaseButton class="hidden md:flex items-center gap-2" color="primary">
+      <BaseButton
+        class="hidden md:flex items-center gap-2"
+        color="primary"
+        @click="formModal.visible = true"
+      >
         <Icon icon="tabler:plus" class="size-5" />
         Tambah Habbit
       </BaseButton>
@@ -137,4 +152,5 @@ const deleteConfirm = reactive({
   </div>
 
   <HabitDeleteConfirm v-model:visible="deleteConfirm.visible" />
+  <HabitFormModal v-model:visible="formModal.visible" />
 </template>
