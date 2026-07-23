@@ -10,6 +10,8 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@iconify-json/tabler": "^1.2.37",
+    "@iconify-json/twemoji": "^1.2.5",
     "@tailwindcss/vite": "^4.3.3",
     "click-outside-vue3": "^4.0.1",
     "floating-vue": "^5.2.2",
@@ -18,6 +20,7 @@
   },
   "devDependencies": {
     "@iconify/vue": "^5.0.1",
+    "@tailwindcss/forms": "^0.5.11",
     "@vitejs/plugin-vue": "^6.0.7",
     "eslint": "^10.7.0",
     "eslint-plugin-vue": "^10.9.2",
