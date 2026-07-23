@@ -3,6 +3,9 @@ import { Icon } from '@iconify/vue';
 import AppNavbar from './components/partials/AppNavbar.vue';
 import BaseCard from './components/base/BaseCard.vue';
 import BaseButton from './components/base/BaseButton.vue';
+import BaseDropdownItem from './components/base/BaseDropdownItem.vue';
+import HabitDeleteConfirm from './features/habit/HabitDeleteConfirm.vue';
+import { reactive } from 'vue';
 
 const activities = [
   {
@@ -48,6 +51,10 @@ const activities = [
     icon: 'twemoji:bookmark-tabs',
   },
 ];
+
+const deleteConfirm = reactive({
+  visible: false,
+});
 </script>
 
 <template>
@@ -67,9 +74,22 @@ const activities = [
               <Icon :icon="activity.icon" />
               {{ activity.name }}
             </p>
-            <button class="text-gray-500 dark:text-gray-400">
-              <Icon icon="tabler:dots" />
-            </button>
+            <VDropdown placement="bottom-end">
+              <button class="text-gray-500 dark:text-gray-400 cursor-pointer">
+                <Icon icon="tabler:dots" />
+              </button>
+
+              <template #popper>
+                <div class="py-1 min-w-30">
+                  <BaseDropdownItem icon="tabler:edit">Edit</BaseDropdownItem>
+                  <BaseDropdownItem
+                    icon="tabler:trash"
+                    @click="deleteConfirm.visible = true"
+                    >Delete</BaseDropdownItem
+                  >
+                </div>
+              </template>
+            </VDropdown>
           </div>
           <div v-if="activity.target" class="space-y-1">
             <div class="w-full h-1.5 bg-gray-100 rounded dark:bg-gray-700">
@@ -111,4 +131,6 @@ const activities = [
       </BaseButton>
     </div>
   </div>
+
+  <HabitDeleteConfirm v-model:visible="deleteConfirm.visible" />
 </template>

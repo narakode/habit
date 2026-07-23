@@ -4,6 +4,7 @@ import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
 import AppMobileBottomBar from './AppMobileBottomBar.vue';
 import { navs } from '../../core/nav';
+import BaseDropdownItem from '../base/BaseDropdownItem.vue';
 
 const theme = ref(
   document.documentElement.classList.contains('dark') ? 'dark' : 'light',
@@ -66,26 +67,15 @@ function onToggleTheme() {
                 <p class="text-gray-500 text-sm dark:text-gray-400">@ahmad</p>
               </div>
               <hr class="border-gray-200 mb-1 dark:border-gray-700" />
-              <a
-                href=""
-                class="w-full flex items-center px-3 py-2 gap-2 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              >
-                <Icon
-                  icon="tabler:user"
-                  class="text-gray-500 dark:text-gray-400"
-                />
+              <BaseDropdownItem tag="a" icon="tabler:user" href="">
                 Profile
-              </a>
-              <button
-                class="w-full flex items-center px-3 py-2 gap-2 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+              </BaseDropdownItem>
+              <BaseDropdownItem
+                icon="tabler:logout"
                 @click="logoutVisible = true"
               >
-                <Icon
-                  icon="tabler:logout"
-                  class="text-gray-500 dark:text-gray-400"
-                />
                 Logout
-              </button>
+              </BaseDropdownItem>
             </div>
           </template>
         </VDropdown>

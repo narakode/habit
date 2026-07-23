@@ -55,7 +55,7 @@ onUnmounted(() => {
   <button
     :class="[
       'size-12 bg-sky-600 text-white rounded-full flex items-center justify-center fixed right-4 md:hidden',
-      hidden ? 'bottom-4' : 'bottom-20',
+      hidden ? 'bottom-4' : 'bottom-20 sm:bottom-4',
     ]"
   >
     <Icon icon="tabler:plus" class="size-5" />
