@@ -5,9 +5,9 @@ import BaseCard from './components/base/BaseCard.vue';
 import BaseButton from './components/base/BaseButton.vue';
 import BaseDropdownItem from './components/base/BaseDropdownItem.vue';
 import HabitDeleteConfirm from './features/habit/HabitDeleteConfirm.vue';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 
-const activities = [
+const activities = ref([
   {
     name: 'Ngoding Project',
     done: 3,
@@ -50,7 +50,7 @@ const activities = [
     reset: 'daily',
     icon: 'twemoji:bookmark-tabs',
   },
-];
+]);
 
 const deleteConfirm = reactive({
   visible: false,
@@ -65,7 +65,7 @@ const deleteConfirm = reactive({
     <div class="container px-4 mx-auto py-6 xl:py-8 space-y-4">
       <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <BaseCard
-          v-for="activity in activities"
+          v-for="(activity, index) in activities"
           :key="activity.name"
           class="border border-gray-200 p-4 flex flex-col justify-between gap-4"
         >
@@ -111,13 +111,17 @@ const deleteConfirm = reactive({
             <p class="text-sm text-gray-500 dark:text-gray-400">Hari ini</p>
             <div class="flex items-center justify-end gap-2">
               <button
-                class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 dark:border-gray-700"
+                :disabled="activity.done === 0"
+                class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700"
+                @click="activities[index].done--"
               >
                 <Icon icon="tabler:minus" />
               </button>
               <p class="font-bold text-xl">{{ activity.done }}x</p>
               <button
-                class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 dark:border-gray-700"
+                :disabled="activity.target && activity.done === activity.target"
+                class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700"
+                @click="activities[index].done++"
               >
                 <Icon icon="tabler:plus" />
               </button>
