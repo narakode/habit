@@ -58,6 +58,7 @@ const deleteConfirm = reactive({
 });
 const formModal = reactive({
   visible: false,
+  habbit: null,
 });
 
 function getPercent(done, target) {
@@ -66,6 +67,15 @@ function getPercent(done, target) {
   }
 
   return (done / target) * 100;
+}
+
+function onOpenCreate() {
+  formModal.habbit = null;
+  formModal.visible = true;
+}
+function onOpenEdit(habit) {
+  formModal.habbit = habit;
+  formModal.visible = true;
 }
 </script>
 
@@ -93,7 +103,11 @@ function getPercent(done, target) {
 
               <template #popper>
                 <div class="py-1 min-w-30">
-                  <BaseDropdownItem icon="tabler:edit">Edit</BaseDropdownItem>
+                  <BaseDropdownItem
+                    icon="tabler:edit"
+                    @click="onOpenEdit(activity)"
+                    >Edit</BaseDropdownItem
+                  >
                   <BaseDropdownItem
                     icon="tabler:trash"
                     @click="deleteConfirm.visible = true"
@@ -143,7 +157,7 @@ function getPercent(done, target) {
       <BaseButton
         class="hidden md:flex items-center gap-2"
         color="primary"
-        @click="formModal.visible = true"
+        @click="onOpenCreate"
       >
         <Icon icon="tabler:plus" class="size-5" />
         Tambah Habbit
@@ -152,5 +166,8 @@ function getPercent(done, target) {
   </div>
 
   <HabitDeleteConfirm v-model:visible="deleteConfirm.visible" />
-  <HabitFormModal v-model:visible="formModal.visible" />
+  <HabitFormModal
+    :habit="formModal.habbit"
+    v-model:visible="formModal.visible"
+  />
 </template>

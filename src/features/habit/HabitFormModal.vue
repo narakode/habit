@@ -7,6 +7,10 @@ import BaseModal from '../../components/base/BaseModal.vue';
 import BaseRadio from '../../components/base/BaseRadio.vue';
 import HabitIconDropdown from './HabitIconDropdown.vue';
 
+const props = defineProps({
+  habit: Object,
+});
+
 const form = reactive({
   name: null,
   icon: 'twemoji:star',
@@ -20,10 +24,28 @@ function resetForm() {
   form.reset = 'daily';
   form.target = null;
 }
+function setEditForm() {
+  form.name = props.habit.name;
+  form.icon = props.habit.icon;
+  form.reset = props.habit.reset;
+  form.target = props.habit.target;
+}
+
+function onOpen() {
+  if (props.habit) {
+    setEditForm();
+  } else {
+    resetForm();
+  }
+}
 </script>
 
 <template>
-  <BaseModal title="Tambah Habit Baru" width="md" @open="resetForm">
+  <BaseModal
+    :title="`${props.habit ? 'Edit' : 'Tambah'} Habit Baru`"
+    width="md"
+    @open="onOpen"
+  >
     <form action="" class="space-y-4" id="habbit_form">
       <BaseFormItem label="Name" v-slot="{ id }">
         <div class="flex items-stretch">
