@@ -1,6 +1,7 @@
 <script setup>
 import { Icon } from '@iconify/vue';
 import BaseCard from './BaseCard.vue';
+import { watch } from 'vue';
 
 defineProps({
   title: String,
@@ -9,12 +10,15 @@ defineProps({
     default: 'fit',
   },
 });
+const emit = defineEmits(['open', 'close']);
 
 const visible = defineModel('visible');
 
 function onClose() {
   visible.value = false;
 }
+
+watch(visible, (newValue) => emit(newValue ? 'open' : 'close'));
 </script>
 
 <template>

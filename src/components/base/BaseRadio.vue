@@ -2,7 +2,10 @@
 defineProps({
   name: String,
   label: String,
+  inputValue: null,
 });
+
+const checked = defineModel();
 </script>
 
 <template>
@@ -10,7 +13,9 @@ defineProps({
     <input
       type="radio"
       :name="name"
+      :value="inputValue"
       class="border-gray-300 checked:border-sky-600 checked:bg-sky-600 focus:ring-sky-600"
+      v-model="checked"
     />
     {{ label }}
   </label>

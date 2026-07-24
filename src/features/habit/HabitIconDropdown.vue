@@ -78,7 +78,12 @@ const icons = [
   'twemoji:trophy',
 ];
 
-const selected = defineModel('twemoji:star');
+const selected = defineModel();
+
+function setIcon(icon, hide) {
+  selected.value = icon;
+  hide();
+}
 </script>
 
 <template>
@@ -89,13 +94,13 @@ const selected = defineModel('twemoji:star');
     >
       <Icon :icon="selected" />
     </button>
-    <template #popper>
+    <template #popper="{ hide }">
       <div class="min-w-40 max-h-40 overflow-y-scroll grid grid-cols-4 p-1">
         <div
           v-for="icon in icons"
           :key="icon"
           class="h-8 flex items-center justify-center rounded-md hover:bg-gray-100"
-          @click="selected = icon"
+          @click="setIcon(icon, hide)"
         >
           <Icon :icon="icon" />
         </div>
