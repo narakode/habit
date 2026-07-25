@@ -90,7 +90,7 @@ function setIcon(icon, hide) {
   <VDropdown class="h-full" placement="bottom-start">
     <button
       type="button"
-      class="size-10 flex items-center justify-center border border-gray-300 rounded-l-lg cursor-pointer hover:bg-gray-100"
+      class="size-10 flex items-center justify-center border border-gray-300 rounded-l-lg cursor-pointer hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700"
     >
       <Icon :icon="selected" />
     </button>
@@ -99,7 +99,7 @@ function setIcon(icon, hide) {
         <div
           v-for="icon in icons"
           :key="icon"
-          class="h-8 flex items-center justify-center rounded-md hover:bg-gray-100"
+          class="h-8 flex items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
           @click="setIcon(icon, hide)"
         >
           <Icon :icon="icon" />

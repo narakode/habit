@@ -20,11 +20,11 @@ const colorClassList = computed(() => {
 <template>
   <button
     :class="[
-      'h-10 rounded-lg px-4 items-center gap-2 font-medium cursor-pointer',
+      'h-10 rounded-lg px-4 inline-flex items-center gap-2 font-medium cursor-pointer',
       colorClassList,
     ]"
   >
-    <Icon v-if="icon" :icon="icon" class="size-5" />
+    <Icon v-if="icon" :icon="icon" class="size-4" />
     <slot />
   </button>
 </template>

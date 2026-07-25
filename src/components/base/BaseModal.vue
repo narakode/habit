@@ -37,7 +37,7 @@ watch(visible, (newValue) => emit(newValue ? 'open' : 'close'));
       <div class="container px-4 mx-auto">
         <BaseCard
           :class="[
-            title ? 'divide-y divide-gray-200' : '',
+            title ? 'divide-y divide-gray-200 dark:divide-gray-700' : '',
             'mx-auto',
             width === 'fit' ? 'w-fit' : 'max-w-xl',
           ]"

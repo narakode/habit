@@ -1,5 +1,5 @@
 <script setup>
-import BaseConfirm from '../../components/base/BaseConfirm.vue';
+import BaseConfirm from '../../../components/base/BaseConfirm.vue';
 </script>
 
 <template>

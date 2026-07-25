@@ -1,10 +1,10 @@
 <script setup>
 import { reactive } from 'vue';
-import BaseButton from '../../components/base/BaseButton.vue';
-import BaseFormItem from '../../components/base/BaseFormItem.vue';
-import BaseInput from '../../components/base/BaseInput.vue';
-import BaseModal from '../../components/base/BaseModal.vue';
-import BaseRadio from '../../components/base/BaseRadio.vue';
+import BaseButton from '../../../components/base/BaseButton.vue';
+import BaseFormItem from '../../../components/base/BaseFormItem.vue';
+import BaseInput from '../../../components/base/BaseInput.vue';
+import BaseModal from '../../../components/base/BaseModal.vue';
+import BaseRadio from '../../../components/base/BaseRadio.vue';
 import HabitIconDropdown from './HabitIconDropdown.vue';
 
 const props = defineProps({

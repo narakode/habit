@@ -7,7 +7,7 @@ defineProps({
 <template>
   <div
     :class="[
-      'bg-white rounded-lg dark:bg-gray-800 dark:border-gray-700',
+      'bg-white rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white',
       padless ? '' : 'p-4',
     ]"
   >
