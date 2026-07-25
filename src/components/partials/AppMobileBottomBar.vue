@@ -32,31 +32,35 @@ onUnmounted(() => {
       hidden ? 'hidden' : '',
     ]"
   >
-    <a
-      v-for="nav in [{ icon: 'tabler:home', name: 'Home' }, ...navs]"
-      :key="nav.name"
-      href=""
+    <router-link
+      v-for="nav in [
+        { id: 'home', icon: 'tabler:home', name: 'Home' },
+        ...navs,
+      ]"
+      :key="nav.id"
+      :to="{ name: nav.id }"
       class="flex flex-col items-center justify-center"
     >
       <Icon
         :icon="nav.icon"
         :class="[
           'size-6',
-          nav.name === navActive ? 'text-sky-600 dark:text-sky-500' : '',
+          nav.id === $route.name ? 'text-sky-600 dark:text-sky-500' : '',
         ]"
       />
       <span
         :class="[
           'text-sm',
-          nav.name === navActive
+          nav.id === $route.name
             ? 'text-sky-600 font-semibold dark:text-sky-500'
             : 'text-gray-500 dark:text-gray-400',
         ]"
         >{{ nav.name }}</span
       >
-    </a>
+    </router-link>
   </nav>
   <button
+    v-if="$route.name === 'home'"
     :class="[
       'size-12 bg-sky-600 text-white rounded-full flex items-center justify-center fixed right-4 md:hidden',
       hidden ? 'bottom-4' : 'bottom-20 sm:bottom-4',

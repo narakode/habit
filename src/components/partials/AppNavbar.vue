@@ -25,20 +25,28 @@ function onToggleTheme() {
   >
     <div class="container px-4 mx-auto flex items-center justify-between">
       <div class="flex items-center gap-8">
-        <a href="" class="flex items-center gap-2 font-bold">
+        <router-link
+          :to="{ name: 'home' }"
+          class="flex items-center gap-2 font-bold"
+        >
           <Icon icon="twemoji:clipboard" />
           Habit Tracker
-        </a>
+        </router-link>
         <div class="hidden sm:flex sm:items-center sm:gap-4">
-          <a
+          <router-link
             v-for="nav in navs"
-            :key="nav.name"
-            href=""
-            class="flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+            :key="nav.id"
+            :to="{ name: nav.id }"
+            :class="[
+              'flex items-center gap-2',
+              $route.name !== nav.id
+                ? 'text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
+                : 'text-sky-600 font-semibold hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-400',
+            ]"
           >
             <Icon :icon="nav.icon" />
             {{ nav.name }}
-          </a>
+          </router-link>
         </div>
       </div>
       <div class="flex items-center gap-2 dark:text-gray-300">

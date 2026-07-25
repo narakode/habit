@@ -8,5 +8,10 @@ export const router = createRouter({
       name: 'home',
       component: () => import('../features/habit/pages/HabitIndexPage.vue'),
     },
+    {
+      path: '/stats',
+      name: 'stats',
+      component: () => import('../features/stats/pages/StatsIndexPage.vue'),
+    },
   ],
 });
