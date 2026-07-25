@@ -106,5 +106,25 @@ const activityTrends = {
         <Line :data="activityTrends" />
       </BaseCard>
     </div>
+
+    <div>
+      <h2 class="font-bold text-2xl mb-4">Heatmap</h2>
+      <BaseCard
+        bordered
+        class="flex flex-col items-center justify-center gap-2"
+      >
+        <p class="font-bold">Juli 2026</p>
+        <div class="grid grid-cols-7 gap-2">
+          <div class="text-xs text-center text-gray-600">Sen</div>
+          <div class="text-xs text-center text-gray-600">Sel</div>
+          <div class="text-xs text-center text-gray-600">Rab</div>
+          <div class="text-xs text-center text-gray-600">Kam</div>
+          <div class="text-xs text-center text-gray-600">Jum</div>
+          <div class="text-xs text-center text-gray-600">Sab</div>
+          <div class="text-xs text-center text-gray-600">Min</div>
+          <div v-for="day in 30" :key="day" class="bg-green-600 size-6"></div>
+        </div>
+      </BaseCard>
+    </div>
   </div>
 </template>
