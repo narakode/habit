@@ -54,7 +54,7 @@ loadHabits();
 </script>
 
 <template>
-  <div>
+  <div class="space-y-4 pb-8">
     <div
       v-if="!habits.length"
       class="flex flex-col items-center text-center gap-4"
@@ -76,7 +76,8 @@ loadHabits();
         <BaseCard
           v-for="(habit, index) in habits"
           :key="habit.id"
-          class="border border-gray-200 p-4 flex flex-col justify-between gap-4"
+          bordered
+          class="flex flex-col justify-between gap-4"
         >
           <div class="flex items-center justify-between">
             <p class="font-bold flex items-center gap-2 text-lg">
@@ -125,14 +126,14 @@ loadHabits();
             <div class="flex items-center justify-end gap-2">
               <button
                 :disabled="habit.done === 0"
-                class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700"
+                class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-700 dark:disabled:bg-gray-700"
                 @click="habits[index].done--"
               >
                 <Icon icon="tabler:minus" />
               </button>
               <p class="font-bold text-xl">{{ habit.done }}x</p>
               <button
-                class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700"
+                class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-700 dark:disabled:bg-gray-700"
                 @click="habits[index].done++"
               >
                 <Icon icon="tabler:plus" />
