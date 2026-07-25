@@ -8,6 +8,7 @@ defineProps({
   confirmText: String,
   cancelText: String,
 });
+defineEmits(['confirm']);
 
 const visible = defineModel('visible');
 
@@ -23,7 +24,9 @@ function onClose() {
       {{ message }}
     </p>
     <div class="flex gap-2 justify-end">
-      <BaseButton color="error">{{ confirmText }}</BaseButton>
+      <BaseButton color="error" @click="$emit('confirm')">{{
+        confirmText
+      }}</BaseButton>
       <BaseButton @click="visible = false">{{ cancelText }}</BaseButton>
     </div>
   </BaseModal>

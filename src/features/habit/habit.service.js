@@ -10,4 +10,7 @@ export const HabitService = {
   update(id, data) {
     return HabitRepository.update(id, data);
   },
+  delete(id, data) {
+    return HabitRepository.delete(id, data);
+  },
 };

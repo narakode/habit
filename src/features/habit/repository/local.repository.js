@@ -20,4 +20,9 @@ export const LocalHabitRepository = {
       ...data,
     };
   },
+  delete(id) {
+    const deleteIndex = habits.findIndex((habit) => habit.id === id);
+
+    habits.splice(deleteIndex, 1);
+  },
 };

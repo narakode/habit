@@ -13,6 +13,7 @@ import { emitter } from './core/emitter';
 const habits = ref([]);
 
 const deleteConfirm = reactive({
+  id: null,
   visible: false,
 });
 const formModal = reactive({
@@ -38,6 +39,10 @@ function onOpenCreate() {
 function onOpenEdit(habit) {
   formModal.habit = habit;
   formModal.visible = true;
+}
+function onOpenDelete(habit) {
+  deleteConfirm.id = habit.id;
+  deleteConfirm.visible = true;
 }
 
 emitter.on('create-habit', onOpenCreate);
@@ -97,7 +102,7 @@ loadHabits();
                     >
                     <BaseDropdownItem
                       icon="tabler:trash"
-                      @click="deleteConfirm.visible = true"
+                      @click="onOpenDelete(habit)"
                       >Delete</BaseDropdownItem
                     >
                   </div>
@@ -153,7 +158,11 @@ loadHabits();
     </div>
   </div>
 
-  <HabitDeleteConfirm v-model:visible="deleteConfirm.visible" />
+  <HabitDeleteConfirm
+    :id="deleteConfirm.id"
+    v-model:visible="deleteConfirm.visible"
+    @deleted="loadHabits"
+  />
   <HabitFormModal
     :habit="formModal.habit"
     v-model:visible="formModal.visible"
