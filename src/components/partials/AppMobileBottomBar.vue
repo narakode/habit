@@ -2,6 +2,7 @@
 import { Icon } from '@iconify/vue';
 import { navs } from '../../core/nav';
 import { onMounted, onUnmounted, ref } from 'vue';
+import { emitter } from '../../core/emitter';
 
 const navActive = 'Home';
 const hidden = ref(false);
@@ -10,6 +11,9 @@ const lastScrollY = ref(null);
 function onScroll() {
   hidden.value = lastScrollY.value < window.scrollY;
   lastScrollY.value = window.scrollY;
+}
+function onOpenCreate() {
+  emitter.emit('create-habit');
 }
 
 onMounted(() => {
@@ -57,6 +61,7 @@ onUnmounted(() => {
       'size-12 bg-sky-600 text-white rounded-full flex items-center justify-center fixed right-4 md:hidden',
       hidden ? 'bottom-4' : 'bottom-20 sm:bottom-4',
     ]"
+    @click="onOpenCreate"
   >
     <Icon icon="tabler:plus" class="size-5" />
   </button>

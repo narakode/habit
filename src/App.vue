@@ -5,18 +5,19 @@ import BaseCard from './components/base/BaseCard.vue';
 import BaseButton from './components/base/BaseButton.vue';
 import BaseDropdownItem from './components/base/BaseDropdownItem.vue';
 import HabitDeleteConfirm from './features/habit/components/HabitDeleteConfirm.vue';
-import { reactive, ref } from 'vue';
+import { onUnmounted, reactive, ref } from 'vue';
 import HabitFormModal from './features/habit/components/HabitFormModal.vue';
-import { HabbitService } from './features/habit/components/habbit.service';
+import { HabitService } from './features/habit/components/habit.service';
+import { emitter } from './core/emitter';
 
-const habbits = ref([]);
+const habits = ref([]);
 
 const deleteConfirm = reactive({
   visible: false,
 });
 const formModal = reactive({
   visible: false,
-  habbit: null,
+  habit: null,
 });
 
 function getPercent(done, target) {
@@ -27,17 +28,23 @@ function getPercent(done, target) {
   return (done / target) * 100;
 }
 function loadActivities() {
-  habbits.value = HabbitService.getAll();
+  habits.value = HabitService.getAll();
 }
 
 function onOpenCreate() {
-  formModal.habbit = null;
+  formModal.habit = null;
   formModal.visible = true;
 }
 function onOpenEdit(habit) {
-  formModal.habbit = habit;
+  formModal.habit = habit;
   formModal.visible = true;
 }
+
+emitter.on('create-habit', onOpenCreate);
+
+onUnmounted(() => {
+  emitter.off('create-habit', onOpenCreate);
+});
 
 loadActivities();
 </script>
@@ -48,7 +55,10 @@ loadActivities();
   >
     <AppNavbar />
     <div class="container px-4 mx-auto py-6 xl:py-8 space-y-4">
-      <div v-if="!habbits.length" class="flex flex-col items-center gap-4">
+      <div
+        v-if="!habits.length"
+        class="flex flex-col items-center text-center gap-4"
+      >
         <Icon
           icon="tabler:clipboard-plus"
           class="size-14 text-gray-300 dark:text-gray-700"
@@ -58,13 +68,13 @@ loadActivities();
           Anda belum memiliki habit untuk dilakukan, tambahkan satu habit.
         </p>
         <BaseButton color="primary" icon="tabler:plus" @click="onOpenCreate">
-          Tambah Habbit
+          Tambah Habit
         </BaseButton>
       </div>
       <template v-else>
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           <BaseCard
-            v-for="(activity, index) in habbits"
+            v-for="(activity, index) in habits"
             :key="activity.name"
             class="border border-gray-200 p-4 flex flex-col justify-between gap-4"
           >
@@ -116,14 +126,14 @@ loadActivities();
                 <button
                   :disabled="activity.done === 0"
                   class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700"
-                  @click="habbits[index].done--"
+                  @click="habits[index].done--"
                 >
                   <Icon icon="tabler:minus" />
                 </button>
                 <p class="font-bold text-xl">{{ activity.done }}x</p>
                 <button
                   class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700"
-                  @click="habbits[index].done++"
+                  @click="habits[index].done++"
                 >
                   <Icon icon="tabler:plus" />
                 </button>
@@ -137,7 +147,7 @@ loadActivities();
           icon="size-5"
           @click="onOpenCreate"
         >
-          Tambah Habbit
+          Tambah Habit
         </BaseButton>
       </template>
     </div>
@@ -145,7 +155,7 @@ loadActivities();
 
   <HabitDeleteConfirm v-model:visible="deleteConfirm.visible" />
   <HabitFormModal
-    :habit="formModal.habbit"
+    :habit="formModal.habit"
     v-model:visible="formModal.visible"
   />
 </template>

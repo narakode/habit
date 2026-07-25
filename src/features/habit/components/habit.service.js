@@ -1,4 +1,4 @@
-export const HabbitService = {
+export const HabitService = {
   getAll() {
     return [];
   },

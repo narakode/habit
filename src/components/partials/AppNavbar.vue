@@ -27,7 +27,7 @@ function onToggleTheme() {
       <div class="flex items-center gap-8">
         <a href="" class="flex items-center gap-2 font-bold">
           <Icon icon="twemoji:clipboard" />
-          Habbit Tracker
+          Habit Tracker
         </a>
         <div class="hidden sm:flex sm:items-center sm:gap-4">
           <a

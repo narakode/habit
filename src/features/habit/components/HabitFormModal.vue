@@ -46,10 +46,10 @@ function onOpen() {
     width="md"
     @open="onOpen"
   >
-    <form action="" class="space-y-4" id="habbit_form">
+    <form action="" class="space-y-4" id="habit_form">
       <BaseFormItem label="Name" v-slot="{ id }">
         <div class="flex items-stretch">
-          <HabitIconDropdown container="#habbit_form" v-model="form.icon" />
+          <HabitIconDropdown container="#habit_form" v-model="form.icon" />
           <BaseInput
             type="text"
             :id="id"
@@ -62,19 +62,19 @@ function onOpen() {
       <BaseFormItem label="Reset">
         <div class="flex gap-4">
           <BaseRadio
-            name="habbit_form_reset"
+            name="habit_form_reset"
             input-value="daily"
             label="Harian"
             v-model="form.reset"
           />
           <BaseRadio
-            name="habbit_form_reset"
+            name="habit_form_reset"
             input-value="weekly"
             label="Mingguan"
             v-model="form.reset"
           />
           <BaseRadio
-            name="habbit_form_reset"
+            name="habit_form_reset"
             input-value="monthly"
             label="Bulanan"
             v-model="form.reset"
