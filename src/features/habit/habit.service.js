@@ -7,4 +7,7 @@ export const HabitService = {
   create(data) {
     return HabitRepository.create();
   },
+  update(id, data) {
+    return HabitRepository.update(id, data);
+  },
 };

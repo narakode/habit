@@ -74,14 +74,14 @@ loadHabits();
       <template v-else>
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           <BaseCard
-            v-for="(activity, index) in habits"
-            :key="activity.name"
+            v-for="(habit, index) in habits"
+            :key="habit.id"
             class="border border-gray-200 p-4 flex flex-col justify-between gap-4"
           >
             <div class="flex items-center justify-between">
               <p class="font-bold flex items-center gap-2 text-lg">
-                <Icon :icon="activity.icon" />
-                {{ activity.name }}
+                <Icon :icon="habit.icon" />
+                {{ habit.name }}
               </p>
               <VDropdown placement="bottom-end">
                 <button class="text-gray-500 dark:text-gray-400 cursor-pointer">
@@ -92,7 +92,7 @@ loadHabits();
                   <div class="py-1 min-w-30">
                     <BaseDropdownItem
                       icon="tabler:edit"
-                      @click="onOpenEdit(activity)"
+                      @click="onOpenEdit(habit)"
                       >Edit</BaseDropdownItem
                     >
                     <BaseDropdownItem
@@ -104,33 +104,33 @@ loadHabits();
                 </template>
               </VDropdown>
             </div>
-            <div v-if="activity.target" class="space-y-1">
+            <div v-if="habit.target" class="space-y-1">
               <div class="w-full h-1.5 bg-gray-100 rounded dark:bg-gray-700">
                 <div
                   class="bg-sky-600 h-full rounded dark:bg-sky-400"
                   :style="{
-                    width: `${getPercent(activity.done, activity.target)}%`,
+                    width: `${getPercent(habit.done, habit.target)}%`,
                   }"
                 ></div>
               </div>
               <div
                 class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400"
               >
-                <span>{{ activity.done }}/{{ activity.target }}</span>
-                <span>{{ getPercent(activity.done, activity.target) }} %</span>
+                <span>{{ habit.done }}/{{ habit.target }}</span>
+                <span>{{ getPercent(habit.done, habit.target) }} %</span>
               </div>
             </div>
             <div class="flex items-center justify-between">
               <p class="text-sm text-gray-500 dark:text-gray-400">Hari ini</p>
               <div class="flex items-center justify-end gap-2">
                 <button
-                  :disabled="activity.done === 0"
+                  :disabled="habit.done === 0"
                   class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700"
                   @click="habits[index].done--"
                 >
                   <Icon icon="tabler:minus" />
                 </button>
-                <p class="font-bold text-xl">{{ activity.done }}x</p>
+                <p class="font-bold text-xl">{{ habit.done }}x</p>
                 <button
                   class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700"
                   @click="habits[index].done++"
@@ -144,7 +144,7 @@ loadHabits();
         <BaseButton
           class="hidden md:flex items-center gap-2"
           color="primary"
-          icon="size-5"
+          icon="tabler:plus"
           @click="onOpenCreate"
         >
           Tambah Habit
@@ -157,6 +157,6 @@ loadHabits();
   <HabitFormModal
     :habit="formModal.habit"
     v-model:visible="formModal.visible"
-    @created="loadHabits"
+    @saved="loadHabits"
   />
 </template>

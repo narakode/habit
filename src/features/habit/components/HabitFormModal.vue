@@ -11,7 +11,7 @@ import { HabitRepository } from '../../../repository';
 const props = defineProps({
   habit: Object,
 });
-const emit = defineEmits(['created']);
+const emit = defineEmits(['saved']);
 const visible = defineModel('visible');
 
 const form = reactive({
@@ -42,9 +42,13 @@ function onOpen() {
   }
 }
 function onSubmit() {
-  HabitRepository.create(form);
+  if (props.habit) {
+    HabitRepository.update(props.habit.id, form);
+  } else {
+    HabitRepository.create(form);
+  }
 
-  emit('created');
+  emit('saved');
 
   visible.value = false;
 }
