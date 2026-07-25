@@ -13,11 +13,13 @@
     "@iconify-json/tabler": "^1.2.37",
     "@iconify-json/twemoji": "^1.2.5",
     "@tailwindcss/vite": "^4.3.3",
+    "chart.js": "^4.5.1",
     "click-outside-vue3": "^4.0.1",
     "floating-vue": "^5.2.2",
     "mitt": "^3.0.1",
     "tailwindcss": "^4.3.3",
     "vue": "^3.5.39",
+    "vue-chartjs": "^5.3.4",
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
