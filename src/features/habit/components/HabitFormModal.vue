@@ -6,10 +6,13 @@ import BaseInput from '../../../components/base/BaseInput.vue';
 import BaseModal from '../../../components/base/BaseModal.vue';
 import BaseRadio from '../../../components/base/BaseRadio.vue';
 import HabitIconDropdown from './HabitIconDropdown.vue';
+import { HabitRepository } from '../../../repository';
 
 const props = defineProps({
   habit: Object,
 });
+const emit = defineEmits(['created']);
+const visible = defineModel('visible');
 
 const form = reactive({
   name: null,
@@ -38,15 +41,23 @@ function onOpen() {
     resetForm();
   }
 }
+function onSubmit() {
+  HabitRepository.create(form);
+
+  emit('created');
+
+  visible.value = false;
+}
 </script>
 
 <template>
   <BaseModal
     :title="`${props.habit ? 'Edit' : 'Tambah'} Habit Baru`"
     width="md"
+    v-model:visible="visible"
     @open="onOpen"
   >
-    <form action="" class="space-y-4" id="habit_form">
+    <form class="space-y-4" id="habit_form" @submit.prevent="onSubmit">
       <BaseFormItem label="Name" v-slot="{ id }">
         <div class="flex items-stretch">
           <HabitIconDropdown container="#habit_form" v-model="form.icon" />
@@ -55,6 +66,7 @@ function onOpen() {
             :id="id"
             placeholder="Ngoding"
             class="rounded-l-none border-l-0"
+            required
             v-model="form.name"
           />
         </div>
@@ -65,18 +77,21 @@ function onOpen() {
             name="habit_form_reset"
             input-value="daily"
             label="Harian"
+            required
             v-model="form.reset"
           />
           <BaseRadio
             name="habit_form_reset"
             input-value="weekly"
             label="Mingguan"
+            required
             v-model="form.reset"
           />
           <BaseRadio
             name="habit_form_reset"
             input-value="monthly"
             label="Bulanan"
+            required
             v-model="form.reset"
           />
         </div>
@@ -86,6 +101,7 @@ function onOpen() {
           type="number"
           :id="id"
           placeholder="10"
+          required
           v-model="form.target"
         />
       </BaseFormItem>
@@ -93,7 +109,9 @@ function onOpen() {
 
     <template #footer="{ close }">
       <div class="flex justify-end gap-2">
-        <BaseButton color="primary">Simpan</BaseButton>
+        <BaseButton type="submit" form="habit_form" color="primary"
+          >Simpan</BaseButton
+        >
         <BaseButton @click="close">Tutup</BaseButton>
       </div>
     </template>

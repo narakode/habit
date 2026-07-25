@@ -7,7 +7,7 @@ import BaseDropdownItem from './components/base/BaseDropdownItem.vue';
 import HabitDeleteConfirm from './features/habit/components/HabitDeleteConfirm.vue';
 import { onUnmounted, reactive, ref } from 'vue';
 import HabitFormModal from './features/habit/components/HabitFormModal.vue';
-import { HabitService } from './features/habit/components/habit.service';
+import { HabitService } from './features/habit/habit.service';
 import { emitter } from './core/emitter';
 
 const habits = ref([]);
@@ -27,7 +27,7 @@ function getPercent(done, target) {
 
   return (done / target) * 100;
 }
-function loadActivities() {
+function loadHabits() {
   habits.value = HabitService.getAll();
 }
 
@@ -46,7 +46,7 @@ onUnmounted(() => {
   emitter.off('create-habit', onOpenCreate);
 });
 
-loadActivities();
+loadHabits();
 </script>
 
 <template>
@@ -157,5 +157,6 @@ loadActivities();
   <HabitFormModal
     :habit="formModal.habit"
     v-model:visible="formModal.visible"
+    @created="loadHabits"
   />
 </template>
