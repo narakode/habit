@@ -24,10 +24,10 @@ watch(visible, (newValue) => emit(newValue ? 'open' : 'close'));
 <template>
   <Transition
     enter-from-class="opacity-0"
-    enter-active-class="transition transition-duration-150"
+    enter-active-class="transition duration-150"
     enter-to-class="opacity-100"
     leave-from-class="opacity-100"
-    leave-active-class="transition transition-duration-150"
+    leave-active-class="transition duration-150"
     leave-to-class="opacity-0"
   >
     <div

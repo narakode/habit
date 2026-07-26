@@ -3,6 +3,36 @@ import { Icon } from '@iconify/vue';
 import BaseButton from '../../../components/base/BaseButton.vue';
 import BaseCard from '../../../components/base/BaseCard.vue';
 import { theme, toggle } from '../../../core/theme';
+import { login } from 'vue-auth-helper';
+import HabitIndexScreenshot from '../../../assets/login/habit-index.png';
+import HabitStatsScreenshot from '../../../assets/login/habit-stats.png';
+import HabitHistoryScreenshot from '../../../assets/login/habit-history.png';
+import { onMounted, onUnmounted, ref, useTemplateRef } from 'vue';
+
+const screenshotList = [
+  HabitIndexScreenshot,
+  HabitStatsScreenshot,
+  HabitHistoryScreenshot,
+];
+const screenshots = useTemplateRef('screenshots');
+const currentScreenshotCarousel = ref(0);
+const screenshotCarousel = ref(null);
+
+function startScreenshotCareousel() {
+  screenshotCarousel.value = setInterval(() => {
+    if (currentScreenshotCarousel.value === screenshotList.length - 1) {
+      currentScreenshotCarousel.value = 0;
+    } else {
+      currentScreenshotCarousel.value++;
+    }
+  }, 5000);
+}
+function stopScreenshotCareousel() {
+  clearInterval(screenshotCarousel.value);
+}
+
+onMounted(() => startScreenshotCareousel());
+onUnmounted(() => stopScreenshotCareousel());
 </script>
 
 <template>
@@ -30,14 +60,22 @@ import { theme, toggle } from '../../../core/theme';
           :surface="theme"
           icon="tabler:brand-google-filled"
           color="white"
+          @click="login('test', {}, new Date())"
         >
           Login with Google
         </BaseButton>
       </form>
-      <div>
-        <div
-          class="bg-gray-200 aspect-[16/9] w-full rounded-t-lg md:aspect-[4/3] md:rounded-tl-none md:rounded-r-lg dark:bg-gray-700"
-        ></div>
+      <div class="relative aspect-[16/9] md:aspect-[4/3]">
+        <img
+          v-for="(screenshot, index) in screenshotList"
+          :key="index"
+          :class="[
+            'w-full h-full rounded-t-lg object-cover object-top-left absolute inset-0 transition-all duration-500 md:rounded-tl-none md:rounded-r-lg',
+            index === currentScreenshotCarousel ? 'z-10' : 'opacity-0',
+          ]"
+          ref="screenshots"
+          :src="screenshot"
+        />
       </div>
     </BaseCard>
   </div>
