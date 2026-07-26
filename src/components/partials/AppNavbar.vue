@@ -5,18 +5,9 @@ import { ref } from 'vue';
 import AppMobileBottomBar from './AppMobileBottomBar.vue';
 import { navs } from '../../core/nav';
 import BaseDropdownItem from '../base/BaseDropdownItem.vue';
+import { theme, toggle } from '../../core/theme';
 
-const theme = ref(
-  document.documentElement.classList.contains('dark') ? 'dark' : 'light',
-);
 const logoutVisible = ref(false);
-
-function onToggleTheme() {
-  theme.value = theme.value === 'dark' ? 'light' : 'dark';
-
-  document.documentElement.classList.toggle('dark');
-  localStorage.setItem('theme', theme.value);
-}
 </script>
 
 <template>
@@ -50,11 +41,9 @@ function onToggleTheme() {
         </div>
       </div>
       <div class="flex items-center gap-2 dark:text-gray-300">
-        <button class="cursor-pointer" @click="onToggleTheme">
+        <button class="cursor-pointer" @click="toggle">
           <Icon
-            :icon="
-              theme === 'dark' ? 'tabler:moon-filled' : 'tabler:sun-filled'
-            "
+            :icon="theme === 'light' ? 'tabler:moon' : 'tabler:sun-filled'"
           />
           <span class="hidden">Profile</span>
         </button>

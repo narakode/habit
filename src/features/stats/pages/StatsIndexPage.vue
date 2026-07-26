@@ -14,6 +14,8 @@ import {
   Tooltip,
 } from 'chart.js';
 import { getChartColor } from '../../../core/chart/chart.util';
+import { computed } from 'vue';
+import { theme } from '../../../core/theme';
 
 Chart.register(
   CategoryScale,
@@ -79,6 +81,36 @@ const activityTrends = {
   ],
 };
 
+const activityChartOptions = computed(() => {
+  return {
+    scales: {
+      x: {
+        grid: {
+          color: theme.value === 'light' ? '#d1d5db' : '#4b5563',
+        },
+        ticks: {
+          color: theme.value === 'light' ? '#d1d5db' : '#4b5563',
+        },
+      },
+      y: {
+        grid: {
+          color: theme.value === 'light' ? '#d1d5db' : '#4b5563',
+        },
+        ticks: {
+          color: theme.value === 'light' ? '#d1d5db' : '#4b5563',
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: theme.value === 'light' ? '#4b5563' : '#d1d5db',
+        },
+      },
+    },
+  };
+});
+
 const heatmaps = [
   3, 0, 1, 5, 2, 4, 6, 0, 3, 2, 1, 7, 4, 5, 0, 2, 3, 1, 6, 4, 2, 0, 5, 3, 7, 2,
   1, 4, 3, 5, 2,
@@ -128,7 +160,7 @@ function getHeatMapColor(count) {
     <div>
       <h2 class="font-bold text-2xl mb-4">Tren</h2>
       <BaseCard bordered>
-        <Line :data="activityTrends" />
+        <Line :data="activityTrends" :options="activityChartOptions" />
       </BaseCard>
     </div>
 
