@@ -3,6 +3,7 @@ import { VueDatePicker } from '@vuepic/vue-datepicker';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 import { getPercent } from '../../../utils/math';
+import { theme } from '../../../core/theme';
 
 const yesterday = new Date().setDate(new Date().getDate() - 1);
 
@@ -66,6 +67,7 @@ const activities = [
         :time-config="{ enableTimePicker: false }"
         :input-attrs="{ clearable: false }"
         :max-date="yesterday"
+        :dark="theme === 'dark'"
         v-model="date"
       />
     </div>

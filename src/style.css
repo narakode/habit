@@ -14,3 +14,63 @@
 .dark .v-popper--theme-dropdown .v-popper__arrow-outer {
   @apply border-gray-700;
 }
+
+.dp--theme-light {
+  --dp-background-color: var(--color-white);
+  --dp-text-color: var(--color-gray-900);
+  --dp-hover-color: var(--color-gray-100);
+  --dp-hover-text-color: var(--color-gray-900);
+  --dp-hover-icon-color: var(--color-gray-900);
+  --dp-primary-color: var(--color-sky-600);
+  --dp-primary-disabled-color: red;
+  --dp-primary-text-color: white;
+  --dp-secondary-color: var(--color-gray-400);
+  --dp-border-color: var(--color-gray-300);
+  --dp-menu-border-color: var(--color-gray-200);
+  --dp-border-color-hover: var(--color-gray-300);
+  --dp-border-color-focus: var(--color-sky-600);
+  --dp-disabled-color: var(--color-gray-100);
+  --dp-scroll-bar-background: var(--color-gray-100);
+  --dp-scroll-bar-color: var(--color-gray-300);
+  --dp-success-color: red;
+  --dp-success-color-disabled: red;
+  --dp-icon-color: var(--color-gray-500);
+  --dp-danger-color: red;
+  --dp-marker-color: red;
+  --dp-tooltip-color: red;
+  --dp-disabled-color-text: red;
+  --dp-highlight-color: red;
+  --dp-range-between-dates-background-color: red;
+  --dp-range-between-dates-text-color: red;
+  --dp-range-between-border-color: red;
+}
+
+.dp--theme-dark {
+  --dp-background-color: var(--color-gray-800);
+  --dp-text-color: var(--color-white);
+  --dp-hover-color: var(--color-gray-700);
+  --dp-hover-text-color: var(--color-white);
+  --dp-hover-icon-color: var(--color-white);
+  --dp-primary-color: var(--color-sky-600);
+  --dp-primary-disabled-color: red;
+  --dp-primary-text-color: white;
+  --dp-secondary-color: var(--color-gray-500);
+  --dp-border-color: var(--color-gray-700);
+  --dp-menu-border-color: var(--color-gray-700);
+  --dp-border-color-hover: var(--color-gray-700);
+  --dp-border-color-focus: var(--color-sky-500);
+  --dp-disabled-color: var(--color-gray-700);
+  --dp-scroll-bar-background: var(--color-gray-700);
+  --dp-scroll-bar-color: var(--color-white);
+  --dp-success-color: red;
+  --dp-success-color-disabled: red;
+  --dp-icon-color: white;
+  --dp-danger-color: red;
+  --dp-marker-color: red;
+  --dp-tooltip-color: red;
+  --dp-disabled-color-text: red;
+  --dp-highlight-color: red;
+  --dp-range-between-dates-background-color: red;
+  --dp-range-between-dates-text-color: red;
+  --dp-range-between-border-color: red;
+}
