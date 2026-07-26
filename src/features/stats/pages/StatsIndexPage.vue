@@ -78,6 +78,31 @@ const activityTrends = {
     },
   ],
 };
+
+const heatmaps = [
+  3, 0, 1, 5, 2, 4, 6, 0, 3, 2, 1, 7, 4, 5, 0, 2, 3, 1, 6, 4, 2, 0, 5, 3, 7, 2,
+  1, 4, 3, 5, 2,
+];
+
+function getHeatMapColor(count) {
+  if (count === 0) {
+    return 'bg-gray-200 dark:bg-gray-700';
+  }
+
+  if (count <= 2) {
+    return 'bg-sky-200 dark:bg-sky-900';
+  }
+
+  if (count <= 5) {
+    return 'bg-sky-400 dark:bg-sky-700';
+  }
+
+  if (count <= 8) {
+    return 'bg-sky-600 dark:bg-sky-500';
+  }
+
+  return 'bg-sky-800 dark:bg-sky-300';
+}
 </script>
 
 <template>
@@ -115,14 +140,33 @@ const activityTrends = {
       >
         <p class="font-bold">Juli 2026</p>
         <div class="grid grid-cols-7 gap-2">
-          <div class="text-xs text-center text-gray-600">Sen</div>
-          <div class="text-xs text-center text-gray-600">Sel</div>
-          <div class="text-xs text-center text-gray-600">Rab</div>
-          <div class="text-xs text-center text-gray-600">Kam</div>
-          <div class="text-xs text-center text-gray-600">Jum</div>
-          <div class="text-xs text-center text-gray-600">Sab</div>
-          <div class="text-xs text-center text-gray-600">Min</div>
-          <div v-for="day in 30" :key="day" class="bg-green-600 size-6"></div>
+          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
+            Sen
+          </div>
+          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
+            Sel
+          </div>
+          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
+            Rab
+          </div>
+          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
+            Kam
+          </div>
+          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
+            Jum
+          </div>
+          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
+            Sab
+          </div>
+          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
+            Min
+          </div>
+          <div
+            v-for="day in heatmaps"
+            :key="day"
+            :class="['size-6', getHeatMapColor(day)]"
+            v-tooltip="`${day} aktifitas`"
+          ></div>
         </div>
       </BaseCard>
     </div>
