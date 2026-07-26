@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --font-sans: 'IBM Plex Sans', sans-serif;
+}
+
 .dark .v-popper--theme-dropdown .v-popper__inner {
   @apply border-gray-700 shadow-white bg-gray-800;
 }

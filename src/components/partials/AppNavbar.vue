@@ -32,7 +32,7 @@ const logoutVisible = ref(false);
               'flex items-center gap-2',
               $route.name !== nav.id
                 ? 'text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
-                : 'text-sky-600 font-semibold hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-400',
+                : 'text-sky-600 font-medium hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-400',
             ]"
           >
             <Icon :icon="nav.icon" />

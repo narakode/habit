@@ -52,7 +52,7 @@ onUnmounted(() => {
         :class="[
           'text-sm',
           nav.id === $route.name
-            ? 'text-sky-600 font-semibold dark:text-sky-500'
+            ? 'text-sky-600 font-medium dark:text-sky-500'
             : 'text-gray-500 dark:text-gray-400',
         ]"
         >{{ nav.name }}</span

@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import '@fontsource/ibm-plex-sans';
 import 'floating-vue/dist/style.css';
 import '@vuepic/vue-datepicker/dist/main.css';
 import './style.css';
