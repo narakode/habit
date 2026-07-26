@@ -7,5 +7,11 @@ import App from './App.vue';
 import FloatingVue from 'floating-vue';
 import vClickOutside from 'click-outside-vue3';
 import { router } from './core/router';
+import vueAuthHelper from 'vue-auth-helper';
 
-createApp(App).use(FloatingVue).use(vClickOutside).use(router).mount('#app');
+createApp(App)
+  .use(FloatingVue)
+  .use(vClickOutside)
+  .use(router)
+  .use(vueAuthHelper)
+  .mount('#app');

@@ -1,3 +1,4 @@
+import { registerGuards } from 'vue-auth-helper';
 import { createRouter, createWebHistory } from 'vue-router';
 
 export const router = createRouter({
@@ -8,14 +9,25 @@ export const router = createRouter({
       name: 'home',
       meta: {
         title: 'Home',
+        auth: true,
       },
       component: () => import('../features/habit/pages/HabitIndexPage.vue'),
+    },
+    {
+      path: '/login',
+      name: 'login',
+      meta: {
+        title: 'Login',
+        guest: true,
+      },
+      component: () => import('../features/auth/pages/AuthLoginPage.vue'),
     },
     {
       path: '/stats',
       name: 'stats',
       meta: {
         title: 'Stats',
+        auth: true,
       },
       component: () => import('../features/stats/pages/StatsIndexPage.vue'),
     },
@@ -24,10 +36,16 @@ export const router = createRouter({
       name: 'history',
       meta: {
         title: 'History',
+        auth: true,
       },
       component: () => import('../features/history/pages/HistoryIndexPage.vue'),
     },
   ],
+});
+
+registerGuards(router, {
+  redirectOnAuthenticated: '/',
+  redirectOnUnauthenticated: '/login',
 });
 
 router.beforeEach((to) => {

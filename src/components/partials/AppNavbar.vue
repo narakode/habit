@@ -45,7 +45,6 @@ const logoutVisible = ref(false);
           <Icon
             :icon="theme === 'light' ? 'tabler:moon' : 'tabler:sun-filled'"
           />
-          <span class="hidden">Profile</span>
         </button>
         <a href="" class="sm:hidden">
           <Icon icon="tabler:user" />
