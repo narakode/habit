@@ -13,5 +13,10 @@ export const router = createRouter({
       name: 'stats',
       component: () => import('../features/stats/pages/StatsIndexPage.vue'),
     },
+    {
+      path: '/history',
+      name: 'history',
+      component: () => import('../features/history/pages/HistoryIndexPage.vue'),
+    },
   ],
 });

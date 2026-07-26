@@ -8,6 +8,7 @@ import { onUnmounted, reactive, ref } from 'vue';
 import HabitFormModal from '../components/HabitFormModal.vue';
 import { HabitService } from '../habit.service';
 import { emitter } from '../../../core/emitter';
+import { getPercent } from '../../../utils/math';
 
 const habits = ref([]);
 
@@ -20,13 +21,6 @@ const formModal = reactive({
   habit: null,
 });
 
-function getPercent(done, target) {
-  if (done >= target) {
-    return 100;
-  }
-
-  return (done / target) * 100;
-}
 function loadHabits() {
   habits.value = HabitService.getAll();
 }

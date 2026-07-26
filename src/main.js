@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import './style.css';
 import 'floating-vue/dist/style.css';
+import '@vuepic/vue-datepicker/dist/main.css';
 import App from './App.vue';
 import FloatingVue from 'floating-vue';
 import vClickOutside from 'click-outside-vue3';

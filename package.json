@@ -13,6 +13,7 @@
     "@iconify-json/tabler": "^1.2.37",
     "@iconify-json/twemoji": "^1.2.5",
     "@tailwindcss/vite": "^4.3.3",
+    "@vuepic/vue-datepicker": "^14.0.0",
     "chart.js": "^4.5.1",
     "click-outside-vue3": "^4.0.1",
     "floating-vue": "^5.2.2",

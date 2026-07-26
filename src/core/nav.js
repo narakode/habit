@@ -5,7 +5,7 @@ export const navs = [
     name: 'Stats',
   },
   {
-    id: 'home',
+    id: 'history',
     icon: 'tabler:history',
     name: 'History',
   },
