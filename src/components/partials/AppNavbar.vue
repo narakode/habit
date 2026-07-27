@@ -1,11 +1,11 @@
 <script setup>
-import AuthLogoutConfirm from '../../core/auth/components/AuthLogoutConfirm.vue';
 import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
 import AppMobileBottomBar from './AppMobileBottomBar.vue';
 import { navs } from '../../core/nav';
 import BaseDropdownItem from '../base/BaseDropdownItem.vue';
 import { theme, toggle } from '../../core/theme';
+import AuthLogoutConfirm from '../../features/auth/components/AuthLogoutConfirm.vue';
 
 const logoutVisible = ref(false);
 </script>

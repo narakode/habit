@@ -1,5 +1,6 @@
 import { registerGuards } from 'vue-auth-helper';
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuth } from './auth/auth.compose';
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -43,9 +44,18 @@ export const router = createRouter({
   ],
 });
 
-registerGuards(router, {
-  redirectOnAuthenticated: '/',
-  redirectOnUnauthenticated: '/login',
+router.beforeEach(async (to) => {
+  const { checkLoggedIn } = useAuth();
+
+  const loggedIn = await checkLoggedIn();
+
+  if (to.matched.some((route) => route.meta.auth) && !loggedIn) {
+    return { name: 'login' };
+  }
+
+  if (to.matched.some((route) => route.meta.guest) && loggedIn) {
+    return { name: 'home' };
+  }
 });
 
 router.beforeEach((to) => {
