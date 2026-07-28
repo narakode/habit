@@ -3,11 +3,11 @@ import { Icon } from '@iconify/vue';
 import BaseButton from '../../../components/base/BaseButton.vue';
 import BaseCard from '../../../components/base/BaseCard.vue';
 import { theme, toggle } from '../../../core/theme';
-import { login } from 'vue-auth-helper';
 import HabitIndexScreenshot from '../../../assets/login/habit-index.png';
 import HabitStatsScreenshot from '../../../assets/login/habit-stats.png';
 import HabitHistoryScreenshot from '../../../assets/login/habit-history.png';
 import { onMounted, onUnmounted, ref, useTemplateRef } from 'vue';
+import { AuthService } from '../../../core/auth/auth.service';
 
 const screenshotList = [
   HabitIndexScreenshot,
@@ -46,8 +46,7 @@ onUnmounted(() => stopScreenshotCareousel());
       </button>
     </div>
     <BaseCard padless bordered class="grid md:grid-cols-2">
-      <form
-        action=""
+      <div
         class="p-6 min-h-48 flex flex-col justify-between order-last md:order-first"
       >
         <div>
@@ -60,11 +59,11 @@ onUnmounted(() => stopScreenshotCareousel());
           :surface="theme"
           icon="tabler:brand-google-filled"
           color="white"
-          @click="login('test', {}, new Date())"
+          @click="AuthService.loginWithGoogle()"
         >
           Login with Google
         </BaseButton>
-      </form>
+      </div>
       <div class="relative aspect-[16/9] md:aspect-[4/3]">
         <img
           v-for="(screenshot, index) in screenshotList"
