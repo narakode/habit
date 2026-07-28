@@ -1,13 +1,26 @@
 <script setup>
 import { computed } from 'vue';
 import AppNavbar from './components/partials/AppNavbar.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import { setUser, user } from './core/auth/auth';
+import { AuthService } from './core/auth/auth.service';
 
+const router = useRouter();
 const route = useRoute();
 
 const userPage = computed(() => {
   return route.matched.some((route) => route.meta.auth);
 });
+
+async function init() {
+  await setUser();
+
+  if (!user.value) {
+    router.push({ name: 'login' });
+  }
+}
+
+init();
 </script>
 
 <template>

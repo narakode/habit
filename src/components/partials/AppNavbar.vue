@@ -6,6 +6,7 @@ import { navs } from '../../core/nav';
 import BaseDropdownItem from '../base/BaseDropdownItem.vue';
 import { theme, toggle } from '../../core/theme';
 import AuthLogoutConfirm from '../../features/auth/components/AuthLogoutConfirm.vue';
+import { user } from '../../core/auth/auth';
 
 const logoutVisible = ref(false);
 </script>
@@ -58,9 +59,11 @@ const logoutVisible = ref(false);
 
           <template #popper>
             <div class="min-w-48 py-1">
-              <div class="px-3 py-2 gap-2 dark:text-white">
-                <p>Ahmad</p>
-                <p class="text-gray-500 text-sm dark:text-gray-400">@ahmad</p>
+              <div v-if="user" class="px-3 py-2 gap-2 dark:text-white">
+                <p>{{ user.user_metadata.name }}</p>
+                <p class="text-gray-500 text-sm dark:text-gray-400">
+                  @{{ user.email }}
+                </p>
               </div>
               <hr class="border-gray-200 mb-1 dark:border-gray-700" />
               <BaseDropdownItem tag="a" icon="tabler:user" href="">
