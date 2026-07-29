@@ -45,11 +45,26 @@ export function useHabit() {
     return [res, err];
   }
 
+  async function deleteHabit(id, data) {
+    const [res, err] = await HabitService.delete(id, data);
+
+    if (err) {
+      return [null, err];
+    }
+
+    const index = habits.value.data.findIndex((habit) => habit.id === id);
+
+    _habits.value.data.splice(index, 1);
+
+    return [res, err];
+  }
+
   return {
     habits,
     loaded,
     loadHabits,
     createHabit,
     updateHabit,
+    deleteHabit,
   };
 }

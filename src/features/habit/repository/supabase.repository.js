@@ -39,9 +39,13 @@ export const SupabaseHabitRepository = {
 
     return [data, null];
   },
-  delete(id) {
-    const deleteIndex = habits.findIndex((habit) => habit.id === id);
+  async delete(id) {
+    const { error } = await supabase.from('habits').delete().eq('id', id);
 
-    habits.splice(deleteIndex, 1);
+    if (error) {
+      return [null, error];
+    }
+
+    return [true, null];
   },
 };

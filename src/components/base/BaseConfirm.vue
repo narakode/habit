@@ -7,6 +7,7 @@ defineProps({
   message: String,
   confirmText: String,
   cancelText: String,
+  loading: Boolean,
 });
 defineEmits(['confirm']);
 
@@ -24,7 +25,7 @@ function onClose() {
       {{ message }}
     </p>
     <div class="flex gap-2 justify-end">
-      <BaseButton color="error" @click="$emit('confirm')">{{
+      <BaseButton color="error" :loading="loading" @click="$emit('confirm')">{{
         confirmText
       }}</BaseButton>
       <BaseButton @click="visible = false">{{ cancelText }}</BaseButton>

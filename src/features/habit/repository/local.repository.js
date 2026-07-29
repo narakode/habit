@@ -99,5 +99,7 @@ export const LocalHabitRepository = {
     const deleteIndex = habits.findIndex((habit) => habit.id === id);
 
     habits.splice(deleteIndex, 1);
+
+    return [true, null];
   },
 };
