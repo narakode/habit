@@ -3,6 +3,9 @@ import { Icon } from '@iconify/vue';
 import { navs } from '../../core/nav';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { emitter } from '../../core/emitter';
+import { useHabit } from '../../features/habit/habit.compose';
+
+const { loaded } = useHabit();
 
 const navActive = 'Home';
 const hidden = ref(false);
@@ -28,7 +31,7 @@ onUnmounted(() => {
 <template>
   <nav
     :class="[
-      'fixed bottom-0 left-0 bg-white border-t w-full h-16 border-gray-200 grid grid-cols-3 dark:bg-gray-800 dark:border-gray-600 sm:hidden',
+      'fixed bottom-0 left-0 z-10 bg-white border-t w-full h-16 border-gray-200 grid grid-cols-3 dark:bg-gray-800 dark:border-gray-600 sm:hidden',
       hidden ? 'hidden' : '',
     ]"
   >
@@ -60,7 +63,7 @@ onUnmounted(() => {
     </router-link>
   </nav>
   <button
-    v-if="$route.name === 'home'"
+    v-if="$route.name === 'home' && loaded"
     :class="[
       'size-12 bg-sky-600 text-white rounded-full flex items-center justify-center fixed right-4 md:hidden',
       hidden ? 'bottom-4' : 'bottom-20 sm:bottom-4',
