@@ -5,7 +5,7 @@ export const HabitService = {
     return await HabitRepository.getAll();
   },
   create(data) {
-    return HabitRepository.create();
+    return HabitRepository.create(data);
   },
   update(id, data) {
     return HabitRepository.update(id, data);

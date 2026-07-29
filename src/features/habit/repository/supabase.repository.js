@@ -10,12 +10,14 @@ export const SupabaseHabitRepository = {
 
     return [{ data, total: count }, null];
   },
-  create(data) {
-    habits.push({
-      ...data,
-      id: Date.now(),
-      done: 0,
-    });
+  async create(form) {
+    const { data, error } = await supabase.from('habits').insert(form);
+
+    if (error) {
+      return [null, error];
+    }
+
+    return [data, null];
   },
   update(id, data) {
     const updateIndex = habits.findIndex((habit) => habit.id === id);

@@ -24,6 +24,12 @@ const formModal = reactive({
   habit: null,
 });
 
+const targetLabel = {
+  daily: 'Hari ini',
+  weekly: 'Minggu ini',
+  yearly: 'Bulan ini',
+};
+
 function onOpenCreate() {
   formModal.habit = null;
   formModal.visible = true;
@@ -135,7 +141,9 @@ onUnmounted(() => {
               </div>
             </div>
             <div class="flex items-center justify-between">
-              <p class="text-sm text-gray-500 dark:text-gray-400">Hari ini</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">
+                {{ targetLabel[habit.reset] }}
+              </p>
               <div class="flex items-center justify-end gap-2">
                 <button
                   :disabled="habit.done === 0"

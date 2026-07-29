@@ -6,11 +6,12 @@ const props = defineProps({
   icon: String,
   color: String,
   surface: String,
+  loading: Boolean,
 });
 
 const colorClassList = computed(() => {
   return {
-    primary: 'bg-sky-600 text-white hover:bg-sky-700',
+    primary: 'bg-sky-600 text-white hover:bg-sky-700 disabled:hover:bg-sky-600',
     error: 'bg-rose-600 text-white hover:bg-rose-700',
     white: [
       'bg-white text-gray-900',
@@ -26,12 +27,14 @@ const colorClassList = computed(() => {
 
 <template>
   <button
+    :disabled="loading"
     :class="[
-      'h-10 rounded-lg px-4 inline-flex items-center gap-2 font-medium cursor-pointer justify-center text-center',
+      'h-10 rounded-lg px-4 inline-flex items-center gap-2 font-medium cursor-pointer justify-center text-center disabled:cursor-not-allowed disabled:opacity-50',
       colorClassList,
     ]"
   >
-    <Icon v-if="icon" :icon="icon" class="size-4" />
+    <Icon v-if="loading" icon="gg:spinner" class="size-4 animate-spin" />
+    <Icon v-else-if="icon" :icon="icon" class="size-4" />
     <slot />
   </button>
 </template>

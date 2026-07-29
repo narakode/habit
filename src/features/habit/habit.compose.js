@@ -18,9 +18,23 @@ export function useHabit() {
     _loaded.value = true;
   }
 
+  async function createHabit(data) {
+    const [res, err] = await HabitService.create(data);
+
+    if (err) {
+      return [null, err];
+    }
+
+    _habits.value.data.push(res);
+    _habits.value.total++;
+
+    return [res, err];
+  }
+
   return {
     habits,
     loaded,
     loadHabits,
+    createHabit,
   };
 }
