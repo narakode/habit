@@ -1,8 +1,8 @@
-import { HabitRepository } from '../../repository';
+import { HabitRepository } from './habit.repository';
 
 export const HabitService = {
-  getAll() {
-    return HabitRepository.getAll();
+  async getAll() {
+    return await HabitRepository.getAll();
   },
   create(data) {
     return HabitRepository.create();

@@ -10,7 +10,10 @@ import { HabitService } from '../habit.service';
 import { emitter } from '../../../core/emitter';
 import { getPercent } from '../../../utils/math';
 
-const habits = ref([]);
+const habits = ref({
+  data: [],
+  total: 0,
+});
 
 const deleteConfirm = reactive({
   id: null,
@@ -21,8 +24,10 @@ const formModal = reactive({
   habit: null,
 });
 
-function loadHabits() {
-  habits.value = HabitService.getAll();
+async function loadHabits() {
+  const [res, err] = await HabitService.getAll();
+
+  habits.value = res;
 }
 
 function onOpenCreate() {
@@ -50,7 +55,7 @@ loadHabits();
 <template>
   <div class="space-y-4 pb-8">
     <div
-      v-if="!habits.length"
+      v-if="!habits.data.length"
       class="flex flex-col items-center text-center gap-4"
     >
       <Icon
@@ -68,7 +73,7 @@ loadHabits();
     <template v-else>
       <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <BaseCard
-          v-for="(habit, index) in habits"
+          v-for="(habit, index) in habits.data"
           :key="habit.id"
           bordered
           class="flex flex-col justify-between gap-4"
@@ -121,14 +126,14 @@ loadHabits();
               <button
                 :disabled="habit.done === 0"
                 class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-700 dark:disabled:bg-gray-700"
-                @click="habits[index].done--"
+                @click="habits.data[index].done--"
               >
                 <Icon icon="tabler:minus" />
               </button>
               <p class="font-bold text-xl">{{ habit.done }}x</p>
               <button
                 class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-700 dark:disabled:bg-gray-700"
-                @click="habits[index].done++"
+                @click="habits.data[index].done++"
               >
                 <Icon icon="tabler:plus" />
               </button>

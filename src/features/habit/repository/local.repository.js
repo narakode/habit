@@ -49,7 +49,13 @@ const habits = [
 
 export const LocalHabitRepository = {
   getAll() {
-    return habits;
+    return [
+      {
+        total: 0,
+        data: habits,
+      },
+      null,
+    ];
   },
   create(data) {
     habits.push({

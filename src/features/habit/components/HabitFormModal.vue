@@ -6,7 +6,7 @@ import BaseInput from '../../../components/base/BaseInput.vue';
 import BaseModal from '../../../components/base/BaseModal.vue';
 import BaseRadio from '../../../components/base/BaseRadio.vue';
 import HabitIconDropdown from './HabitIconDropdown.vue';
-import { HabitRepository } from '../../../repository';
+import { HabitService } from '../habit.service.js';
 
 const props = defineProps({
   habit: Object,
@@ -43,9 +43,9 @@ function onOpen() {
 }
 function onSubmit() {
   if (props.habit) {
-    HabitRepository.update(props.habit.id, form);
+    HabitService.update(props.habit.id, form);
   } else {
-    HabitRepository.create(form);
+    HabitService.create(form);
   }
 
   emit('saved');
