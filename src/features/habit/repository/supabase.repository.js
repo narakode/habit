@@ -11,7 +11,7 @@ export const SupabaseHabitRepository = {
     return [{ data, total: count }, null];
   },
   async create(form) {
-    const { data, error } = await supabase.from('habits').insert(form);
+    const { data, error } = await supabase.from('habits').insert(form).select();
 
     if (error) {
       return [null, error];
