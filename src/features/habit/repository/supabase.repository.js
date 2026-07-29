@@ -11,7 +11,12 @@ export const SupabaseHabitRepository = {
     return [{ data, total: count }, null];
   },
   async create(form) {
-    const { data, error } = await supabase.from('habits').insert(form).select();
+    const { data, error } = await supabase
+      .from('habits')
+      .insert(form)
+      .select()
+      .limit(1)
+      .single();
 
     if (error) {
       return [null, error];
@@ -19,12 +24,20 @@ export const SupabaseHabitRepository = {
 
     return [data, null];
   },
-  update(id, data) {
-    const updateIndex = habits.findIndex((habit) => habit.id === id);
-    habits[updateIndex] = {
-      ...habits[updateIndex],
-      ...data,
-    };
+  async update(id, form) {
+    const { data, error } = await supabase
+      .from('habits')
+      .update(form)
+      .eq('id', id)
+      .select()
+      .limit(1)
+      .single();
+
+    if (error) {
+      return [null, error];
+    }
+
+    return [data, null];
   },
   delete(id) {
     const deleteIndex = habits.findIndex((habit) => habit.id === id);

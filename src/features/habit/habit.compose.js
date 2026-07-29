@@ -31,10 +31,25 @@ export function useHabit() {
     return [res, err];
   }
 
+  async function updateHabit(id, data) {
+    const [res, err] = await HabitService.update(id, data);
+
+    if (err) {
+      return [null, err];
+    }
+
+    const index = habits.value.data.findIndex((habit) => habit.id === id);
+
+    _habits.value.data[index] = { ...res };
+
+    return [res, err];
+  }
+
   return {
     habits,
     loaded,
     loadHabits,
     createHabit,
+    updateHabit,
   };
 }

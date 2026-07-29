@@ -177,12 +177,10 @@ onUnmounted(() => {
     <HabitDeleteConfirm
       :id="deleteConfirm.id"
       v-model:visible="deleteConfirm.visible"
-      @deleted="loadHabits"
     />
     <HabitFormModal
       :habit="formModal.habit"
       v-model:visible="formModal.visible"
-      @saved="loadHabits"
     />
   </div>
 </template>

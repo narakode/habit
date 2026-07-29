@@ -6,7 +6,6 @@ import BaseInput from '../../../components/base/BaseInput.vue';
 import BaseModal from '../../../components/base/BaseModal.vue';
 import BaseRadio from '../../../components/base/BaseRadio.vue';
 import HabitIconDropdown from './HabitIconDropdown.vue';
-import { HabitService } from '../habit.service.js';
 import { Icon } from '@iconify/vue';
 import { useHabit } from '../habit.compose.js';
 
@@ -16,7 +15,7 @@ const props = defineProps({
 const emit = defineEmits(['saved']);
 const visible = defineModel('visible');
 
-const { createHabit } = useHabit();
+const { createHabit, updateHabit } = useHabit();
 
 const form = reactive({
   name: null,
@@ -54,7 +53,7 @@ async function onSubmit() {
   error.value = null;
 
   const [res, err] = props.habit
-    ? HabitService.update(props.habit.id, form)
+    ? await updateHabit(props.habit.id, form)
     : await createHabit(form);
 
   if (err) {
@@ -71,7 +70,7 @@ async function onSubmit() {
 
 <template>
   <BaseModal
-    :title="`${props.habit ? 'Edit' : 'Tambah'} Habit Baru`"
+    :title="`${props.habit ? 'Edit' : 'Tambah'} Habit`"
     width="md"
     v-model:visible="visible"
     @open="onOpen"

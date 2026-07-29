@@ -86,10 +86,14 @@ export const LocalHabitRepository = {
   },
   update(id, data) {
     const updateIndex = habits.findIndex((habit) => habit.id === id);
-    habits[updateIndex] = {
+    const habit = {
       ...habits[updateIndex],
       ...data,
     };
+
+    habits[updateIndex] = habit;
+
+    return [habit, null];
   },
   delete(id) {
     const deleteIndex = habits.findIndex((habit) => habit.id === id);
