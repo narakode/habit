@@ -13,6 +13,30 @@ export const SupabaseHabitRepository = {
 
     return [{ data, total: count }, null];
   },
+  async getCurrentProgress(id) {
+    const { data, error } = await supabase
+      .from('current_progress_habits')
+      .select()
+      .eq('id', id)
+      .limit(1)
+      .single();
+
+    if (error) {
+      return [null, error];
+    }
+
+    return [
+      {
+        id: data.id,
+        name: data.name,
+        icon: data.icon,
+        reset: data.reset,
+        target: data.target,
+        done: data.done,
+      },
+      null,
+    ];
+  },
   async create(form) {
     const { data, error } = await supabase
       .from('habits')
@@ -41,16 +65,13 @@ export const SupabaseHabitRepository = {
     const { data, error } = await supabase
       .from('habits')
       .update(form)
-      .eq('id', id)
-      .select()
-      .limit(1)
-      .single();
+      .eq('id', id);
 
     if (error) {
       return [null, error];
     }
 
-    return [data, null];
+    return this.getCurrentProgress(id);
   },
   async delete(id) {
     const { error } = await supabase.from('habits').delete().eq('id', id);
