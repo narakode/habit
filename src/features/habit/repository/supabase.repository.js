@@ -1,4 +1,5 @@
 import { supabase } from '../../../core/supabase';
+import { toHabit } from '../habit.dto';
 
 export const SupabaseHabitRepository = {
   async getAll() {
@@ -24,7 +25,17 @@ export const SupabaseHabitRepository = {
       return [null, error];
     }
 
-    return [data, null];
+    return [
+      toHabit({
+        id: data.id,
+        name: data.name,
+        icon: data.icon,
+        reset: data.reset,
+        target: data.target,
+        done: 0,
+      }),
+      null,
+    ];
   },
   async update(id, form) {
     const { data, error } = await supabase
