@@ -2,7 +2,9 @@ import { supabase } from '../../../core/supabase';
 
 export const SupabaseHabitRepository = {
   async getAll() {
-    const { data, error, count } = await supabase.from('habits').select();
+    const { data, error, count } = await supabase
+      .from('current_progress_habits')
+      .select();
 
     if (error) {
       return [null, error];
