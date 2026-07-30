@@ -1,20 +1,19 @@
 import { readonly, ref } from 'vue';
 import { HabitService } from './habit.service';
 
-const _habits = ref({
+const habits = ref({
   data: [],
   total: 0,
 });
 const _loaded = ref(false);
 
 export function useHabit() {
-  const habits = readonly(_habits);
   const loaded = readonly(_loaded);
 
   async function loadHabits() {
     const [res, err] = await HabitService.getAll();
 
-    _habits.value = res;
+    habits.value = res;
     _loaded.value = true;
   }
 
@@ -25,8 +24,8 @@ export function useHabit() {
       return [null, err];
     }
 
-    _habits.value.data.push(res);
-    _habits.value.total++;
+    habits.value.data.push(res);
+    habits.value.total++;
 
     return [res, err];
   }
@@ -40,7 +39,7 @@ export function useHabit() {
 
     const index = habits.value.data.findIndex((habit) => habit.id === id);
 
-    _habits.value.data[index] = { ...res };
+    habits.value.data[index] = { ...res };
 
     return [res, err];
   }
@@ -54,7 +53,7 @@ export function useHabit() {
 
     const index = habits.value.data.findIndex((habit) => habit.id === id);
 
-    _habits.value.data.splice(index, 1);
+    habits.value.data.splice(index, 1);
 
     return [res, err];
   }
