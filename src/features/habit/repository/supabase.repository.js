@@ -1,11 +1,13 @@
 import { supabase } from '../../../core/supabase';
+import { formatDate } from '../../../utils/date';
 import { toHabit } from '../habit.dto';
 
 export const SupabaseHabitRepository = {
   async getAll() {
-    const { data, error, count } = await supabase
-      .from('current_progress_habits')
-      .select();
+    const { data, error, count } = await supabase.rpc(
+      'get_daily_progress_habits',
+      { p_date: formatDate(new Date(), 'YYYY-MM-DD') },
+    );
 
     if (error) {
       return [null, error];
@@ -15,8 +17,9 @@ export const SupabaseHabitRepository = {
   },
   async getCurrentProgress(id) {
     const { data, error } = await supabase
-      .from('current_progress_habits')
-      .select()
+      .rpc('get_daily_progress_habits', {
+        p_date: formatDate(new Date(), 'YYYY-MM-DD'),
+      })
       .eq('id', id)
       .limit(1)
       .single();
