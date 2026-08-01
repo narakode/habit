@@ -5,3 +5,29 @@ export function formatDate(date, format) {
 
   return `${year}-${month}-${day}`;
 }
+
+export function subDate(date, sub) {
+  const res = new Date(date);
+
+  return new Date(res.setDate(res.getDate() - sub));
+}
+
+export function setStartOfDay(date) {
+  const res = new Date(date);
+
+  res.setHours(0, 0, 0, 0);
+
+  return res;
+}
+
+export function isSameDate(dateA, dateB) {
+  return (
+    dateA.getFullYear() === dateB.getFullYear() &&
+    dateA.getMonth() === dateB.getMonth() &&
+    dateA.getDate() === dateB.getDate()
+  );
+}
+
+export function diffDay(dateA, dateB) {
+  return Math.floor(Math.abs(dateA - dateB) / (1000 * 60 * 60 * 24));
+}

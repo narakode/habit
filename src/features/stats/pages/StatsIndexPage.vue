@@ -14,8 +14,9 @@ import {
   Tooltip,
 } from 'chart.js';
 import { getChartColor } from '../../../core/chart/chart.util';
-import { computed } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { theme } from '../../../core/theme';
+import { StatService } from '../stats.service';
 
 Chart.register(
   CategoryScale,
@@ -28,38 +29,38 @@ Chart.register(
   Tooltip,
 );
 
-const stats = [
-  {
+const stats = reactive({
+  currentStreak: {
     name: 'Streak Saat Ini',
-    value: 18,
+    value: 0,
     unit: 'hari',
     icon: 'twemoji:fire',
   },
-  {
+  longestStreak: {
     name: 'Rekor Streak',
-    value: 42,
+    value: 0,
     unit: 'hari',
     icon: 'twemoji:trophy',
   },
-  {
+  targetCompletion: {
     name: 'Rata-Rata Target',
     value: 84,
     unit: '%',
     icon: 'twemoji:bar-chart',
   },
-  {
+  totalActivities: {
     name: 'Habit Dilakukan',
     value: 1248,
     unit: 'kali',
     icon: 'twemoji:white-heavy-check-mark',
   },
-  {
+  daysActive: {
     name: 'Hari Aktif',
     value: 167,
     unit: 'hari',
     icon: 'twemoji:calendar',
   },
-];
+});
 
 const activityTrends = {
   labels: Array.from({ length: 30 }, (_, i) => i++),
@@ -135,6 +136,17 @@ function getHeatMapColor(count) {
 
   return 'bg-sky-800 dark:bg-sky-300';
 }
+
+async function loadStats() {
+  const [res, err] = await StatService.getStreakStats();
+
+  if (!err) {
+    stats.currentStreak.value = res.currentStreakDate;
+    stats.longestStreak.value = res.longestStreak;
+  }
+}
+
+loadStats();
 </script>
 
 <template>
@@ -143,7 +155,7 @@ function getHeatMapColor(count) {
       <h1 class="font-bold text-3xl mb-4">Statistik</h1>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <BaseCard
-          v-for="stat in stats"
+          v-for="stat in Object.values(stats)"
           :key="stat.name"
           bordered
           class="space-y-2"
