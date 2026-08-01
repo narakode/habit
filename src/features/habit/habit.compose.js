@@ -1,5 +1,6 @@
 import { readonly, ref } from 'vue';
 import { HabitService } from './habit.service';
+import { debounce } from '../../utils/debounce';
 
 const habits = ref({
   data: [],
@@ -58,6 +59,25 @@ export function useHabit() {
     return [res, err];
   }
 
+  const updateDoneDebounce = debounce(async (id, done) => {
+    const index = habits.value.data.findIndex((habit) => habit.id === id);
+
+    habits.value.data[index].persistedDone += done;
+
+    await HabitService.updateDone(id, done);
+  }, 500);
+
+  async function updateDone(id, done) {
+    const index = habits.value.data.findIndex((habit) => habit.id === id);
+
+    habits.value.data[index].done += done;
+
+    updateDoneDebounce(
+      id,
+      habits.value.data[index].done - habits.value.data[index].persistedDone,
+    );
+  }
+
   return {
     habits,
     loaded,
@@ -65,5 +85,6 @@ export function useHabit() {
     createHabit,
     updateHabit,
     deleteHabit,
+    updateDone,
   };
 }

@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+import { toHabit, toHabits } from '../habit.dto';
 
 const habits = [
   {
@@ -68,17 +69,17 @@ export const LocalHabitRepository = {
     return [
       {
         total: 0,
-        data: habits.map((habit) => habit),
+        data: toHabits(habits),
       },
       null,
     ];
   },
   create(data) {
-    const habit = {
+    const habit = toHabit({
       ...data,
       id: Date.now(),
       done: 0,
-    };
+    });
 
     habits.push(habit);
 
@@ -86,14 +87,19 @@ export const LocalHabitRepository = {
   },
   update(id, data) {
     const updateIndex = habits.findIndex((habit) => habit.id === id);
-    const habit = {
+    const habit = toHabit({
       ...habits[updateIndex],
       ...data,
-    };
+    });
 
     habits[updateIndex] = habit;
 
     return [habit, null];
+  },
+  updateDone(id, done) {
+    const updateIndex = habits.findIndex((habit) => habit.id === id);
+
+    habits[updateIndex].done = done;
   },
   delete(id) {
     const deleteIndex = habits.findIndex((habit) => habit.id === id);

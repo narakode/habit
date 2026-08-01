@@ -11,7 +11,7 @@ import { emitter } from '../../../core/emitter';
 import { getPercent } from '../../../utils/math';
 import { useHabit } from '../habit.compose.js';
 
-const { habits, loaded, loadHabits } = useHabit();
+const { habits, loaded, loadHabits, updateDone } = useHabit();
 
 const loadingPage = ref(true);
 
@@ -93,7 +93,7 @@ onUnmounted(() => {
       <template v-else>
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           <BaseCard
-            v-for="(habit, index) in habits.data"
+            v-for="habit in habits.data"
             :key="habit.id"
             bordered
             class="flex flex-col justify-between gap-4"
@@ -148,14 +148,14 @@ onUnmounted(() => {
                 <button
                   :disabled="habit.done === 0"
                   class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-700 dark:disabled:bg-gray-700"
-                  @click="habits.data[index].done--"
+                  @click="updateDone(habit.id, -1)"
                 >
                   <Icon icon="tabler:minus" />
                 </button>
                 <p class="font-bold text-xl">{{ habit.done }}x</p>
                 <button
                   class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-700 dark:disabled:bg-gray-700"
-                  @click="habits.data[index].done++"
+                  @click="updateDone(habit.id, 1)"
                 >
                   <Icon icon="tabler:plus" />
                 </button>

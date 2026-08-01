@@ -1,6 +1,6 @@
 import { supabase } from '../../../core/supabase';
 import { formatDate } from '../../../utils/date';
-import { toHabit } from '../habit.dto';
+import { toHabit, toHabits } from '../habit.dto';
 
 export const SupabaseHabitRepository = {
   async getAll() {
@@ -13,7 +13,7 @@ export const SupabaseHabitRepository = {
       return [null, error];
     }
 
-    return [{ data, total: count }, null];
+    return [{ data: toHabits(data), total: count }, null];
   },
   async getCurrentProgress(id) {
     const { data, error } = await supabase
@@ -29,14 +29,14 @@ export const SupabaseHabitRepository = {
     }
 
     return [
-      {
+      toHabit({
         id: data.id,
         name: data.name,
         icon: data.icon,
         reset: data.reset,
         target: data.target,
         done: data.done,
-      },
+      }),
       null,
     ];
   },
@@ -75,6 +75,13 @@ export const SupabaseHabitRepository = {
     }
 
     return this.getCurrentProgress(id);
+  },
+  async updateDone(id, done) {
+    await supabase.rpc('increment_daily_habits_done', {
+      p_date: formatDate(new Date(), 'YYYY-MM-DD'),
+      p_habit_id: id,
+      p_done: done,
+    });
   },
   async delete(id) {
     const { error } = await supabase.from('habits').delete().eq('id', id);
