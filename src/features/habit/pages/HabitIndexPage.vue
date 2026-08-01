@@ -10,6 +10,7 @@ import { HabitService } from '../habit.service';
 import { emitter } from '../../../core/emitter';
 import { getPercent } from '../../../utils/math';
 import { useHabit } from '../habit.compose.js';
+import BaseSkeleton from '../../../components/base/BaseSkeleton.vue';
 
 const { habits, loaded, loadHabits, updateDone } = useHabit();
 
@@ -53,24 +54,7 @@ onUnmounted(() => {
 <template>
   <div class="space-y-4 pb-8">
     <div v-if="!loaded" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-      <div
-        class="bg-gray-200 h-40 rounded-lg animate-pulse dark:bg-gray-800"
-      ></div>
-      <div
-        class="bg-gray-200 h-40 rounded-lg animate-pulse dark:bg-gray-800"
-      ></div>
-      <div
-        class="bg-gray-200 h-40 rounded-lg animate-pulse dark:bg-gray-800"
-      ></div>
-      <div
-        class="bg-gray-200 h-40 rounded-lg animate-pulse dark:bg-gray-800"
-      ></div>
-      <div
-        class="bg-gray-200 h-40 rounded-lg animate-pulse dark:bg-gray-800"
-      ></div>
-      <div
-        class="bg-gray-200 h-40 rounded-lg animate-pulse dark:bg-gray-800"
-      ></div>
+      <BaseSkeleton v-for="i in 6" :key="i" class="h-40" />
     </div>
 
     <template v-else>

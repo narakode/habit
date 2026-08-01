@@ -1,8 +1,11 @@
 import { HabitRepository } from './habit.repository';
 
 export const HabitService = {
-  getAll() {
-    return HabitRepository.getAll();
+  getDailyProgress(date = null) {
+    return HabitRepository.getDailyProgress(date);
+  },
+  getDailyActivities(date = null) {
+    return HabitRepository.getDailyActvities(date);
   },
   create(data) {
     return HabitRepository.create(data);

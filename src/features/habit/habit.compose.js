@@ -12,7 +12,7 @@ export function useHabit() {
   const loaded = readonly(_loaded);
 
   async function loadHabits() {
-    const [res, err] = await HabitService.getAll();
+    const [res, err] = await HabitService.getDailyProgress(new Date());
 
     habits.value = res;
     _loaded.value = true;

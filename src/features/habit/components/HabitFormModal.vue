@@ -6,8 +6,8 @@ import BaseInput from '../../../components/base/BaseInput.vue';
 import BaseModal from '../../../components/base/BaseModal.vue';
 import BaseRadio from '../../../components/base/BaseRadio.vue';
 import HabitIconDropdown from './HabitIconDropdown.vue';
-import { Icon } from '@iconify/vue';
 import { useHabit } from '../habit.compose.js';
+import BaseAlert from '../../../components/base/BaseAlert.vue';
 
 const props = defineProps({
   habit: Object,
@@ -76,18 +76,9 @@ async function onSubmit() {
     @open="onOpen"
   >
     <form class="space-y-4" id="habit_form" @submit.prevent="onSubmit">
-      <div
-        v-if="error"
-        class="bg-red-100 border border-red-200 text-red-800 rounded-lg p-3 flex gap-2 dark:bg-red-500/20 dark:border-red-900 dark:text-red-400"
-      >
-        <Icon icon="tabler:alert-triangle-filled" class="shrink-0 mt-1" />
-        <p class="grow">
-          {{ error }}
-        </p>
-        <button class="cursor-pointer" @click="error = null">
-          <Icon icon="tabler:x" class="shrink-0" />
-        </button>
-      </div>
+      <BaseAlert v-if="error" with-close>
+        {{ error }}
+      </BaseAlert>
       <BaseFormItem label="Name" v-slot="{ id }">
         <div class="flex items-stretch">
           <HabitIconDropdown container="#habit_form" v-model="form.icon" />

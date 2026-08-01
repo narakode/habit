@@ -3,10 +3,22 @@ import { formatDate } from '../../../utils/date';
 import { toHabit, toHabits } from '../habit.dto';
 
 export const SupabaseHabitRepository = {
-  async getAll() {
+  async getDailyProgress(date = new Date()) {
     const { data, error, count } = await supabase.rpc(
       'get_daily_progress_habits',
-      { p_date: formatDate(new Date(), 'YYYY-MM-DD') },
+      { p_date: formatDate(date, 'YYYY-MM-DD') },
+    );
+
+    if (error) {
+      return [null, error];
+    }
+
+    return [{ data: toHabits(data), total: count }, null];
+  },
+  async getDailyActvities(date = new Date()) {
+    const { data, error, count } = await supabase.rpc(
+      'get_daily_activities_habits',
+      { p_date: formatDate(date, 'YYYY-MM-DD') },
     );
 
     if (error) {

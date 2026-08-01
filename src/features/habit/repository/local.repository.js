@@ -65,7 +65,16 @@ const habits = [
 ];
 
 export const LocalHabitRepository = {
-  getAll() {
+  getDailyProgress(date = null) {
+    return [
+      {
+        total: 0,
+        data: toHabits(habits),
+      },
+      null,
+    ];
+  },
+  getDailyActivities(date = null) {
     return [
       {
         total: 0,
