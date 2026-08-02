@@ -13,3 +13,10 @@ export function toHabit({ id, name, icon, reset, done, target }) {
 export function toHabits(data) {
   return data.map((item) => toHabit(item));
 }
+
+export function toActivityStats({ totalActivities, daysActive }) {
+  return {
+    totalActivities,
+    daysActive,
+  };
+}

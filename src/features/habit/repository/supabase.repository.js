@@ -1,6 +1,6 @@
 import { supabase } from '../../../core/supabase';
 import { formatDate } from '../../../utils/date';
-import { toHabit, toHabits } from '../habit.dto';
+import { toActivityStats, toHabit, toHabits } from '../habit.dto';
 
 export const SupabaseHabitRepository = {
   async getDailyProgress(date = new Date()) {
@@ -26,6 +26,21 @@ export const SupabaseHabitRepository = {
     }
 
     return [{ data: toHabits(data), total: count }, null];
+  },
+  async getActivityStats() {
+    const { data, error } = await supabase.rpc('get_user_habit_stats').single();
+
+    if (error) {
+      return [null, error];
+    }
+
+    return [
+      toActivityStats({
+        daysActive: data.active_days,
+        totalActivities: data.total_activities,
+      }),
+      null,
+    ];
   },
   async getCurrentProgress(id) {
     const { data, error } = await supabase

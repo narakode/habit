@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { toHabit, toHabits } from '../habit.dto';
+import { toActivityStats, toHabit, toHabits } from '../habit.dto';
 
 const habits = [
   {
@@ -85,10 +85,10 @@ export const LocalHabitRepository = {
   },
   getActivityStats() {
     return [
-      {
+      toActivityStats({
         totalActivities: 1248,
         daysActive: 167,
-      },
+      }),
       null,
     ];
   },

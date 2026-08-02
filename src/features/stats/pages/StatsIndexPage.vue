@@ -51,13 +51,13 @@ const stats = reactive({
   },
   totalActivities: {
     name: 'Habit Dilakukan',
-    value: 1248,
+    value: 0,
     unit: 'kali',
     icon: 'twemoji:white-heavy-check-mark',
   },
   daysActive: {
     name: 'Hari Aktif',
-    value: 167,
+    value: 0,
     unit: 'hari',
     icon: 'twemoji:calendar',
   },
