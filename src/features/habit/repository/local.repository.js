@@ -83,6 +83,15 @@ export const LocalHabitRepository = {
       null,
     ];
   },
+  getActivityStats() {
+    return [
+      {
+        totalActivities: 1248,
+        daysActive: 167,
+      },
+      null,
+    ];
+  },
   create(data) {
     const habit = toHabit({
       ...data,

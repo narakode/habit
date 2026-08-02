@@ -17,6 +17,7 @@ import { getChartColor } from '../../../core/chart/chart.util';
 import { computed, reactive, ref } from 'vue';
 import { theme } from '../../../core/theme';
 import { StatService } from '../stats.service';
+import { HabitService } from '../../habit/habit.service';
 
 Chart.register(
   CategoryScale,
@@ -137,7 +138,7 @@ function getHeatMapColor(count) {
   return 'bg-sky-800 dark:bg-sky-300';
 }
 
-async function loadStats() {
+async function loadStreakStats() {
   const [res, err] = await StatService.getStreakStats();
 
   if (!err) {
@@ -145,8 +146,17 @@ async function loadStats() {
     stats.longestStreak.value = res.longestStreak;
   }
 }
+async function loadActivityStats() {
+  const [res, err] = await HabitService.getActivityStats();
 
-loadStats();
+  if (!err) {
+    stats.totalActivities.value = res.totalActivities;
+    stats.daysActive.value = res.daysActive;
+  }
+}
+
+loadStreakStats();
+loadActivityStats();
 </script>
 
 <template>
