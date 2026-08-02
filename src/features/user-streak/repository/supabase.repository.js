@@ -13,7 +13,7 @@ export const SupabaseUserStreakRepository = {
     if (data.length === 0) {
       return [
         toUserStreak({
-          currentStreakStartDate: 0,
+          currentStreakStartDate: null,
           lastActivityDate: null,
           longestStreak: 0,
         }),
@@ -25,11 +25,10 @@ export const SupabaseUserStreakRepository = {
 
     return [
       toUserStreak({
-        currentStreakStartDate: subDate(
-          new Date(streak.current_streak_start_date),
-          18,
-        ),
-        lastActivityDate: subDate(streak.last_activity_date, 1),
+        currentStreakStartDate: streak.current_streak_start_date
+          ? subDate(streak.current_streak_start_date, 1)
+          : null,
+        lastActivityDate: streak.last_activity_date,
         longestStreak: streak.longest_streak,
       }),
       null,

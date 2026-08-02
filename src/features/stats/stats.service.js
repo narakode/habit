@@ -9,10 +9,9 @@ export const StatService = {
       return [null, err];
     }
 
-    const isStreak = isSameDate(
-      userStreak.lastActivityDate,
-      subDate(new Date(), 1),
-    );
+    const isStreak =
+      isSameDate(userStreak.lastActivityDate, subDate(new Date(), 1)) ||
+      isSameDate(userStreak.lastActivityDate, new Date());
 
     return [
       {
