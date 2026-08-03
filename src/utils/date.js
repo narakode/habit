@@ -18,10 +18,36 @@ export function addDate(date, add) {
   return new Date(res.setDate(res.getDate() + add));
 }
 
+export function addMonth(date, add) {
+  const res = new Date(date);
+
+  return new Date(res.setMonth(res.getMonth() + add));
+}
+
 export function setStartOfDay(date) {
   const res = new Date(date);
 
   res.setHours(0, 0, 0, 0);
+
+  return res;
+}
+
+export function setStartOfWeek(date) {
+  const res = new Date(date);
+
+  res.setHours(0, 0, 0, 0);
+
+  if (res.getDay() === 1) {
+    return res;
+  }
+
+  if (res.getDay() === 0) {
+    return res.setDate(res.getDate() - 6);
+  }
+
+  const diff = 1 - res.getDay();
+
+  res.setDate(res.getDate() - diff);
 
   return res;
 }
@@ -39,7 +65,10 @@ export function diffDay(dateA, dateB) {
 }
 
 export function diffWeek(dateA, dateB) {
-  return Math.floor(Math.abs(dateA - dateB) / (1000 * 60 * 60 * 24 * 7));
+  return Math.floor(
+    Math.abs(setStartOfWeek(dateA) - setStartOfWeek(dateB)) /
+      (1000 * 60 * 60 * 24 * 7),
+  );
 }
 
 export function diffMonth(dateA, dateB) {

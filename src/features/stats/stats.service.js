@@ -1,5 +1,6 @@
 import {
   addDate,
+  addMonth,
   diffDay,
   diffMonth,
   diffWeek,
@@ -53,19 +54,30 @@ export const StatService = {
 
     const totalPeriods = habits.data.reduce((total, habit) => {
       if (habit.reset === 'daily') {
-        return total + diffDay(habit.createdAt, new Date());
+        return (
+          total + diffDay(addDate(new Date(), 1), new Date(habit.createdAt))
+        );
       }
 
       if (habit.reset === 'weekly') {
-        return total + diffWeek(habit.createdAt, new Date());
+        return (
+          total + diffWeek(addDate(new Date(), 7), new Date(habit.createdAt))
+        );
       }
 
-      return total + diffMonth(habit.createdAt, new Date());
+      return (
+        total + diffMonth(addMonth(new Date(), 1), new Date(habit.createdAt))
+      );
     }, 0);
+
     const completedTarget = habits.data.reduce(
       (total, habit) => total + habit.completedTarget,
       0,
     );
+
+    if (completedTarget < 1) {
+      return [0, null];
+    }
 
     return [Math.floor((completedTarget / totalPeriods) * 100), null];
   },
