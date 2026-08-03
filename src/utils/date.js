@@ -12,6 +12,12 @@ export function subDate(date, sub) {
   return new Date(res.setDate(res.getDate() - sub));
 }
 
+export function addDate(date, add) {
+  const res = new Date(date);
+
+  return new Date(res.setDate(res.getDate() + add));
+}
+
 export function setStartOfDay(date) {
   const res = new Date(date);
 

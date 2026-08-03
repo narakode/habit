@@ -1,4 +1,4 @@
-import { diffDay, isSameDate, subDate } from '../../utils/date';
+import { addDate, diffDay, isSameDate, subDate } from '../../utils/date';
 import { UserStreakRepository } from '../user-streak/user-streak.repository';
 
 export const StatService = {
@@ -9,14 +9,20 @@ export const StatService = {
       return [null, err];
     }
 
+    const today = new Date();
+    const lastStreakIsToday = isSameDate(userStreak.lastActivityDate, today);
+
     const isStreak =
       isSameDate(userStreak.lastActivityDate, subDate(new Date(), 1)) ||
-      isSameDate(userStreak.lastActivityDate, new Date());
+      lastStreakIsToday;
 
     return [
       {
         currentStreakDate: isStreak
-          ? diffDay(new Date(), userStreak.currentStreakStartDate)
+          ? diffDay(
+              lastStreakIsToday ? addDate(today, 1) : today,
+              userStreak.currentStreakStartDate,
+            )
           : 0,
         longestStreak: userStreak.longestStreak,
       },
