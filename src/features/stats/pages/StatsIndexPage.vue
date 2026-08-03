@@ -17,7 +17,6 @@ import { getChartColor } from '../../../core/chart/chart.util';
 import { computed, reactive, ref } from 'vue';
 import { theme } from '../../../core/theme';
 import { StatService } from '../stats.service';
-import { HabitService } from '../../habit/habit.service';
 
 Chart.register(
   CategoryScale,
@@ -44,8 +43,8 @@ const stats = reactive({
     icon: 'twemoji:trophy',
   },
   targetCompletion: {
-    name: 'Rata-Rata Target',
-    value: 84,
+    name: 'Target Tercapai',
+    value: 0,
     unit: '%',
     icon: 'twemoji:bar-chart',
   },
@@ -147,16 +146,24 @@ async function loadStreakStats() {
   }
 }
 async function loadActivityStats() {
-  const [res, err] = await HabitService.getActivityStats();
+  const [res, err] = await StatService.getActivityStats();
 
   if (!err) {
     stats.totalActivities.value = res.totalActivities;
     stats.daysActive.value = res.daysActive;
   }
 }
+async function loadCompletionRate() {
+  const [completionRate, err] = await StatService.getCompletionRate();
+
+  if (!err) {
+    stats.targetCompletion.value = completionRate;
+  }
+}
 
 loadStreakStats();
 loadActivityStats();
+loadCompletionRate();
 </script>
 
 <template>

@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { toActivityStats, toHabit, toHabits } from '../habit.dto';
+import { subDate } from '../../../utils/date';
 
 const habits = [
   {
@@ -8,6 +9,8 @@ const habits = [
     icon: 'twemoji:open-book',
     reset: 'daily',
     done: 1,
+    completedTarget: 3,
+    createdAt: new Date(),
   },
   {
     id: 2,
@@ -15,6 +18,8 @@ const habits = [
     icon: 'twemoji:person-in-lotus-position',
     reset: 'daily',
     done: 2,
+    completedTarget: 8,
+    createdAt: subDate(new Date(), 14),
   },
   {
     id: 3,
@@ -22,6 +27,8 @@ const habits = [
     icon: 'twemoji:memo',
     reset: 'daily',
     done: 1,
+    completedTarget: 15,
+    createdAt: subDate(new Date(), 29),
   },
   {
     id: 4,
@@ -29,6 +36,8 @@ const habits = [
     icon: 'twemoji:potable-water',
     reset: 'daily',
     done: 6,
+    completedTarget: 52,
+    createdAt: subDate(new Date(), 5),
     target: 8,
   },
   {
@@ -37,6 +46,8 @@ const habits = [
     icon: 'twemoji:person-walking',
     reset: 'daily',
     done: 5432,
+    completedTarget: 5,
+    createdAt: subDate(new Date(), 1),
     target: 8000,
   },
   {
@@ -45,6 +56,8 @@ const habits = [
     icon: 'twemoji:flexed-biceps',
     reset: 'daily',
     done: 35,
+    completedTarget: 38,
+    createdAt: subDate(new Date(), 4),
     target: 50,
   },
   {
@@ -53,6 +66,8 @@ const habits = [
     icon: 'twemoji:red-apple',
     reset: 'daily',
     done: 3,
+    completedTarget: 9,
+    createdAt: subDate(new Date(), 288),
     target: 2,
   },
   {
@@ -61,10 +76,21 @@ const habits = [
     icon: 'twemoji:laptop',
     reset: 'daily',
     done: 4,
+    completedTarget: 194,
+    createdAt: subDate(new Date(), 162),
   },
 ];
 
 export const LocalHabitRepository = {
+  getAll(date = null) {
+    return [
+      {
+        total: 0,
+        data: toHabits(habits),
+      },
+      null,
+    ];
+  },
   getDailyProgress(date = null) {
     return [
       {

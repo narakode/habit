@@ -1,4 +1,13 @@
-export function toHabit({ id, name, icon, reset, done, target }) {
+export function toHabit({
+  id,
+  name,
+  icon,
+  reset,
+  done,
+  target,
+  completedTarget,
+  createdAt,
+}) {
   return {
     id,
     name,
@@ -7,6 +16,8 @@ export function toHabit({ id, name, icon, reset, done, target }) {
     reset,
     done,
     persistedDone: done,
+    completedTarget,
+    createdAt,
   };
 }
 

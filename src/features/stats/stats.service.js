@@ -1,4 +1,12 @@
-import { addDate, diffDay, isSameDate, subDate } from '../../utils/date';
+import {
+  addDate,
+  diffDay,
+  diffMonth,
+  diffWeek,
+  isSameDate,
+  subDate,
+} from '../../utils/date';
+import { HabitRepository } from '../habit/habit.repository';
 import { UserStreakRepository } from '../user-streak/user-streak.repository';
 
 export const StatService = {
@@ -28,5 +36,37 @@ export const StatService = {
       },
       null,
     ];
+  },
+  async getActivityStats() {
+    return await HabitRepository.getActivityStats();
+  },
+  async getCompletionRate() {
+    const [habits, err] = await HabitRepository.getAll();
+
+    if (err) {
+      return [null, err];
+    }
+
+    if (!habits.data) {
+      return [0, null];
+    }
+
+    const totalPeriods = habits.data.reduce((total, habit) => {
+      if (habit.reset === 'daily') {
+        return total + diffDay(habit.createdAt, new Date());
+      }
+
+      if (habit.reset === 'weekly') {
+        return total + diffWeek(habit.createdAt, new Date());
+      }
+
+      return total + diffMonth(habit.createdAt, new Date());
+    }, 0);
+    const completedTarget = habits.data.reduce(
+      (total, habit) => total + habit.completedTarget,
+      0,
+    );
+
+    return [Math.floor((completedTarget / totalPeriods) * 100), null];
   },
 };

@@ -37,3 +37,14 @@ export function isSameDate(dateA, dateB) {
 export function diffDay(dateA, dateB) {
   return Math.floor(Math.abs(dateA - dateB) / (1000 * 60 * 60 * 24));
 }
+
+export function diffWeek(dateA, dateB) {
+  return Math.floor(Math.abs(dateA - dateB) / (1000 * 60 * 60 * 24 * 7));
+}
+
+export function diffMonth(dateA, dateB) {
+  const yearDiff = (dateA.getFullYear() - dateB.getFullYear()) * 12;
+  const monthDiff = dateA.getMonth() - dateB.getMonth();
+
+  return yearDiff + monthDiff;
+}
