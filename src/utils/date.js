@@ -61,7 +61,10 @@ export function isSameDate(dateA, dateB) {
 }
 
 export function diffDay(dateA, dateB) {
-  return Math.floor(Math.abs(dateA - dateB) / (1000 * 60 * 60 * 24));
+  return Math.floor(
+    Math.abs(setStartOfDay(dateA) - setStartOfDay(dateB)) /
+      (1000 * 60 * 60 * 24),
+  );
 }
 
 export function diffWeek(dateA, dateB) {
