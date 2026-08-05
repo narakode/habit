@@ -151,7 +151,7 @@ function getHeatMapColor(date) {
     return 'bg-sky-600 text-sky-200 dark:bg-sky-500';
   }
 
-  return 'bg-sky-800 text-sky-300 dark:bg-sky-300';
+  return 'bg-sky-800 text-sky-300 dark:bg-sky-300 dark:text-sky-700';
 }
 
 async function loadStreakStats() {
