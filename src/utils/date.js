@@ -22,23 +22,27 @@ export function formatDate(date, format) {
 
   const year = date.getFullYear();
 
-  if (format === 'MMMM YYYY') {
-    const months = [
-      'Januari',
-      'Febuari',
-      'Maret',
-      'April',
-      'Mei',
-      'Juni',
-      'Juli',
-      'Agustus',
-      'September',
-      'Oktober',
-      'November',
-      'Desember',
-    ];
+  const months = [
+    'Januari',
+    'Febuari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember',
+  ];
 
+  if (format === 'MMMM YYYY') {
     return `${months[date.getMonth()]} ${year}`;
+  }
+
+  if (format === 'DD MMMM YYYY') {
+    return `${day} ${months[date.getMonth()]} ${year}`;
   }
 
   const month = `${date.getMonth() + 1}`.padStart(2, '0');

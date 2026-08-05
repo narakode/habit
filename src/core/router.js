@@ -15,6 +15,15 @@ export const router = createRouter({
       component: () => import('../features/habit/pages/HabitIndexPage.vue'),
     },
     {
+      path: '/profile',
+      name: 'profile',
+      meta: {
+        title: 'Profile',
+        auth: true,
+      },
+      component: () => import('../features/profile/pages/ProfileIndexPage.vue'),
+    },
+    {
       path: '/login',
       name: 'login',
       meta: {

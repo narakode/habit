@@ -47,9 +47,9 @@ const logoutVisible = ref(false);
             :icon="theme === 'light' ? 'tabler:moon' : 'tabler:sun-filled'"
           />
         </button>
-        <a href="" class="sm:hidden">
+        <RouterLink :to="{ name: 'profile' }" class="sm:hidden">
           <Icon icon="tabler:user" />
-        </a>
+        </RouterLink>
         <VDropdown placement="bottom-end">
           <button
             class="hidden cursor-pointer sm:flex items-center justify-center"
@@ -66,7 +66,12 @@ const logoutVisible = ref(false);
                 </p>
               </div>
               <hr class="border-gray-200 mb-1 dark:border-gray-700" />
-              <BaseDropdownItem tag="a" icon="tabler:user" href="">
+              <BaseDropdownItem
+                tag="router-link"
+                :to="{ name: 'profile' }"
+                icon="tabler:user"
+                href=""
+              >
                 Profile
               </BaseDropdownItem>
               <BaseDropdownItem
