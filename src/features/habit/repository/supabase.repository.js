@@ -1,6 +1,11 @@
 import { supabase } from '../../../core/supabase';
 import { formatDate } from '../../../utils/date';
-import { toActivityStats, toHabit, toHabits } from '../habit.dto';
+import {
+  toActivityStats,
+  toDailyDoneStats,
+  toHabit,
+  toHabits,
+} from '../habit.dto';
 
 export const SupabaseHabitRepository = {
   async getAll() {
@@ -91,6 +96,18 @@ export const SupabaseHabitRepository = {
       }),
       null,
     ];
+  },
+  async getDailyDoneStats(range) {
+    const { data, error } = await supabase.rpc('get_daily_done_stats', {
+      p_start_date: formatDate(range.start, 'YYYY-MM-DD'),
+      p_end_date: formatDate(range.end, 'YYYY-MM-DD'),
+    });
+
+    if (error) {
+      return [null, error];
+    }
+
+    return [toDailyDoneStats(data), null];
   },
   async create(form) {
     const { data, error } = await supabase

@@ -4,6 +4,7 @@ import {
   diffDay,
   diffMonth,
   diffWeek,
+  getDaysRange,
   isSameDate,
   subDate,
 } from '../../utils/date';
@@ -82,6 +83,20 @@ export const StatService = {
     return [Math.floor((completedTarget / totalPeriods) * 100), null];
   },
   async getDailyDoneStats(range) {
-    return await HabitRepository.getDailyDoneStats(range);
+    const [data, err] = await HabitRepository.getDailyDoneStats(range);
+
+    if (err) {
+      return [null, err];
+    }
+
+    const stats = getDaysRange(range.start, range.end, 'YYYY-MM-DD').map(
+      (date) => {
+        const item = data.find((item) => item.date === date);
+
+        return item?.done ?? 0;
+      },
+    );
+
+    return [stats, null];
   },
 };

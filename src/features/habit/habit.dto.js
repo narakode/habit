@@ -31,3 +31,7 @@ export function toActivityStats({ totalActivities, daysActive }) {
     daysActive,
   };
 }
+
+export function toDailyDoneStats(data) {
+  return data.map((item) => ({ date: item.date, done: item.done }));
+}
