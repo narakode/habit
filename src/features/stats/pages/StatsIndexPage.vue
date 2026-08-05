@@ -17,7 +17,12 @@ import { getChartColor } from '../../../core/chart/chart.util';
 import { computed, reactive, ref } from 'vue';
 import { theme } from '../../../core/theme';
 import { StatService } from '../stats.service';
-import { getDaysRange, subDate } from '../../../utils/date.js';
+import {
+  formatDate,
+  getCalendar,
+  getDaysRange,
+  subDate,
+} from '../../../utils/date.js';
 
 Chart.register(
   CategoryScale,
@@ -118,29 +123,35 @@ const activityChartOptions = computed(() => {
   };
 });
 
-const heatmaps = [
-  3, 0, 1, 5, 2, 4, 6, 0, 3, 2, 1, 7, 4, 5, 0, 2, 3, 1, 6, 4, 2, 0, 5, 3, 7, 2,
-  1, 4, 3, 5, 2,
-];
+const currentMonth = new Date().getMonth();
 
-function getHeatMapColor(count) {
-  if (count === 0) {
-    return 'bg-gray-200 dark:bg-gray-700';
+const heatmapTitle = formatDate(new Date(), 'MMMM YYYY');
+const heatmapDays = getCalendar(
+  new Date().getMonth(),
+  new Date().getFullYear(),
+);
+const heatmaps = ref({});
+
+function getHeatMapColor(date) {
+  const count = heatmaps.value[date];
+
+  if (!count || count === 0) {
+    return 'bg-gray-200 text-gray-500 dark:bg-gray-700';
   }
 
   if (count <= 2) {
-    return 'bg-sky-200 dark:bg-sky-900';
+    return 'bg-sky-200 text-sky-500 dark:bg-sky-900';
   }
 
   if (count <= 5) {
-    return 'bg-sky-400 dark:bg-sky-700';
+    return 'bg-sky-400 text-sky-100 dark:bg-sky-700';
   }
 
   if (count <= 8) {
-    return 'bg-sky-600 dark:bg-sky-500';
+    return 'bg-sky-600 text-sky-200 dark:bg-sky-500';
   }
 
-  return 'bg-sky-800 dark:bg-sky-300';
+  return 'bg-sky-800 text-sky-300 dark:bg-sky-300';
 }
 
 async function loadStreakStats() {
@@ -174,11 +185,24 @@ async function loadDailyDone() {
     activityTrendsData.value = dailyDone;
   }
 }
+async function loadyHeatmaps() {
+  const [dailyDone, err] = await StatService.getHeatmaps({
+    start: heatmapDays[0],
+    end: heatmapDays[heatmapDays.length - 1],
+  });
+
+  if (!err) {
+    heatmaps.value = Object.fromEntries(
+      dailyDone.map((item) => [item.date, item.done]),
+    );
+  }
+}
 
 loadStreakStats();
 loadActivityStats();
 loadCompletionRate();
 loadDailyDone();
+loadyHeatmaps();
 </script>
 
 <template>
@@ -214,8 +238,11 @@ loadDailyDone();
         bordered
         class="flex flex-col items-center justify-center gap-2"
       >
-        <p class="font-bold">Juli 2026</p>
+        <p class="font-bold">{{ heatmapTitle }}</p>
         <div class="grid grid-cols-7 gap-2">
+          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
+            Min
+          </div>
           <div class="text-xs text-center text-gray-600 dark:text-gray-400">
             Sen
           </div>
@@ -234,15 +261,20 @@ loadDailyDone();
           <div class="text-xs text-center text-gray-600 dark:text-gray-400">
             Sab
           </div>
-          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
-            Min
-          </div>
           <div
-            v-for="day in heatmaps"
+            v-for="day in heatmapDays"
             :key="day"
-            :class="['size-6', getHeatMapColor(day)]"
-            v-tooltip="`${day} aktifitas`"
-          ></div>
+            :class="[
+              'size-6 text-xs flex items-center justify-center',
+              getHeatMapColor(formatDate(day)),
+              day.getMonth() !== currentMonth ? 'opacity-50' : '',
+            ]"
+            v-tooltip="
+              `${formatDate(day, 'DD MMM')} : ${heatmaps[formatDate(day)] ?? 0} aktifitas`
+            "
+          >
+            {{ day.getDate() }}
+          </div>
         </div>
       </BaseCard>
     </div>

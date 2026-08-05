@@ -99,4 +99,7 @@ export const StatService = {
 
     return [stats, null];
   },
+  async getHeatmaps(range) {
+    return await HabitRepository.getDailyDoneStats(range);
+  },
 };

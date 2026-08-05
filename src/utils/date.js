@@ -21,6 +21,26 @@ export function formatDate(date, format) {
   }
 
   const year = date.getFullYear();
+
+  if (format === 'MMMM YYYY') {
+    const months = [
+      'Januari',
+      'Febuari',
+      'Maret',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Agustus',
+      'September',
+      'Oktober',
+      'November',
+      'Desember',
+    ];
+
+    return `${months[date.getMonth()]} ${year}`;
+  }
+
   const month = `${date.getMonth() + 1}`.padStart(2, '0');
 
   return `${year}-${month}-${day}`;
@@ -41,7 +61,16 @@ export function addDate(date, add) {
 export function addMonth(date, add) {
   const res = new Date(date);
 
-  return new Date(res.setMonth(res.getMonth() + add));
+  res.setMonth(res.getMonth() + add);
+
+  return res;
+}
+export function subMonth(date, sub) {
+  const res = new Date(date);
+
+  res.setMonth(res.getMonth() - sub);
+
+  return res;
 }
 
 export function setStartOfDay(date) {
@@ -68,6 +97,18 @@ export function setStartOfWeek(date) {
   const diff = 1 - res.getDay();
 
   res.setDate(res.getDate() - diff);
+
+  return res;
+}
+
+export function setStartOfMonth(date) {
+  const res = new Date(date.getFullYear(), date.getMonth(), 1);
+
+  return res;
+}
+
+export function setEndOfMonth(date) {
+  const res = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
   return res;
 }
@@ -116,4 +157,44 @@ export function getDaysRange(dateA, dateB, format = null) {
 
     return date;
   });
+}
+
+export function getCalendar(month, year) {
+  const cells = [];
+
+  const startMonth = new Date(year, month, 1);
+  const endMonth = new Date(year, month + 1, 0);
+
+  const prevMonth = setEndOfMonth(subMonth(startMonth, 1));
+
+  for (let i = startMonth.getDay() - 1; i >= 0; i--) {
+    const date = new Date(
+      prevMonth.getFullYear(),
+      prevMonth.getMonth(),
+      prevMonth.getDate() - i,
+    );
+
+    cells.push(date);
+  }
+
+  for (let i = 1; i <= endMonth.getDate(); i++) {
+    const date = new Date(year, month, i);
+
+    cells.push(date);
+  }
+
+  const nextMonth = addMonth(startMonth, 1);
+
+  let nextDay = 0;
+  while (cells.length % 7 !== 0) {
+    const date = new Date(
+      nextMonth.getFullYear(),
+      nextMonth.getMonth(),
+      nextMonth.getDate() + nextDay++,
+    );
+
+    cells.push(date);
+  }
+
+  return cells;
 }
