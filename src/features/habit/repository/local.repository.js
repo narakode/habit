@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { toActivityStats, toHabit, toHabits } from '../habit.dto';
-import { subDate } from '../../../utils/date';
+import { diffDay, subDate } from '../../../utils/date';
 
 const habits = [
   {
@@ -115,6 +115,14 @@ export const LocalHabitRepository = {
         totalActivities: 1248,
         daysActive: 167,
       }),
+      null,
+    ];
+  },
+  getDailyDoneStats(range) {
+    const total = diffDay(range.start, range.end);
+
+    return [
+      Array.from({ length: total }, () => Math.floor(Math.random() * 41) + 1),
       null,
     ];
   },

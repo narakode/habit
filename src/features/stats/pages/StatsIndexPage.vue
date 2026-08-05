@@ -17,6 +17,7 @@ import { getChartColor } from '../../../core/chart/chart.util';
 import { computed, reactive, ref } from 'vue';
 import { theme } from '../../../core/theme';
 import { StatService } from '../stats.service';
+import { getDaysRange, subDate } from '../../../utils/date.js';
 
 Chart.register(
   CategoryScale,
@@ -43,7 +44,7 @@ const stats = reactive({
     icon: 'twemoji:trophy',
   },
   targetCompletion: {
-    name: 'Target Tercapai',
+    name: 'Rata-Rata Target',
     value: 0,
     unit: '%',
     icon: 'twemoji:bar-chart',
@@ -62,25 +63,30 @@ const stats = reactive({
   },
 });
 
-const activityTrends = {
-  labels: Array.from({ length: 30 }, (_, i) => i++),
-  datasets: [
-    {
-      label: 'Habit Dilakukan',
-      fill: true,
-      backgroundColor: getChartColor('blue', 0.3),
-      borderColor: getChartColor('blue'),
-      borderWidth: 2,
-      pointRadius: 0,
-      pointHoverRadius: 4,
-      pointHitRadius: 12,
-      data: [
-        3, 5, 2, 0, 4, 6, 7, 5, 1, 2, 3, 4, 6, 8, 5, 4, 3, 2, 1, 0, 5, 6, 4, 7,
-        8, 6, 5, 3, 4, 6,
-      ],
-    },
-  ],
-};
+const activityTrendsRange = { start: subDate(new Date(), 30), end: new Date() };
+const activityTrendsData = ref([]);
+const activityTrends = computed(() => {
+  return {
+    labels: getDaysRange(
+      activityTrendsRange.start,
+      activityTrendsRange.end,
+      'DD MMM',
+    ),
+    datasets: [
+      {
+        label: 'Habit Dilakukan',
+        fill: true,
+        backgroundColor: getChartColor('blue', 0.3),
+        borderColor: getChartColor('blue'),
+        borderWidth: 2,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        pointHitRadius: 12,
+        data: activityTrendsData.value,
+      },
+    ],
+  };
+});
 
 const activityChartOptions = computed(() => {
   return {
@@ -160,10 +166,19 @@ async function loadCompletionRate() {
     stats.targetCompletion.value = completionRate;
   }
 }
+async function loadDailyDone() {
+  const [dailyDone, err] =
+    await StatService.getDailyDoneStats(activityTrendsRange);
+
+  if (!err) {
+    activityTrendsData.value = dailyDone;
+  }
+}
 
 loadStreakStats();
 loadActivityStats();
 loadCompletionRate();
+loadDailyDone();
 </script>
 
 <template>

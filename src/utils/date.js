@@ -1,7 +1,27 @@
 export function formatDate(date, format) {
+  const day = `${date.getDate()}`.padStart(2, '0');
+
+  if (format === 'DD MMM') {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'Mei',
+      'Jun',
+      'Jul',
+      'Agu',
+      'Sep',
+      'Okt',
+      'Nov',
+      'Des',
+    ];
+
+    return `${day} ${months[date.getMonth()]}`;
+  }
+
   const year = date.getFullYear();
   const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const day = `${date.getDate()}`.padStart(2, '0');
 
   return `${year}-${month}-${day}`;
 }
@@ -79,4 +99,21 @@ export function diffMonth(dateA, dateB) {
   const monthDiff = dateA.getMonth() - dateB.getMonth();
 
   return yearDiff + monthDiff;
+}
+
+export function getDaysRange(dateA, dateB, format = null) {
+  const total = diffDay(dateB, dateA);
+
+  return Array.from({ length: total }, (_, i) => {
+    const date = new Date(dateA);
+
+    date.setDate(dateA.getDate() + (i + 1));
+    date.setHours(0, 0, 0, 0);
+
+    if (format) {
+      return formatDate(date, format);
+    }
+
+    return date;
+  });
 }

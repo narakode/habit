@@ -81,4 +81,7 @@ export const StatService = {
 
     return [Math.floor((completedTarget / totalPeriods) * 100), null];
   },
+  async getDailyDoneStats(range) {
+    return await HabitRepository.getDailyDoneStats(range);
+  },
 };
