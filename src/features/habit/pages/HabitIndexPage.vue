@@ -11,6 +11,7 @@ import { emitter } from '../../../core/emitter';
 import { getPercent } from '../../../utils/math';
 import { useHabit } from '../habit.compose.js';
 import BaseSkeleton from '../../../components/base/BaseSkeleton.vue';
+import BaseWidget from '../../../components/base/BaseWidget.vue';
 
 const { habits, loaded, loadHabits, updateDone } = useHabit();
 
@@ -74,88 +75,115 @@ onUnmounted(() => {
           Tambah Habit
         </BaseButton>
       </div>
-      <template v-else>
-        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <BaseCard
-            v-for="habit in habits.data"
-            :key="habit.id"
-            bordered
-            class="flex flex-col justify-between gap-4"
+      <div v-else class="space-y-6">
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+          <BaseWidget
+            icon="twemoji:fire"
+            name="Streak Saat Ini"
+            :value="15"
+            unit="hari"
           >
-            <div class="flex items-center justify-between">
-              <p class="font-bold flex items-center gap-2 text-lg">
-                <Icon :icon="habit.icon" />
-                {{ habit.name }}
-              </p>
-              <VDropdown placement="bottom-end">
-                <button class="text-gray-500 dark:text-gray-400 cursor-pointer">
-                  <Icon icon="tabler:dots" />
-                </button>
-
-                <template #popper>
-                  <div class="py-1 min-w-30">
-                    <BaseDropdownItem
-                      icon="tabler:edit"
-                      @click="onOpenEdit(habit)"
-                      >Edit</BaseDropdownItem
-                    >
-                    <BaseDropdownItem
-                      icon="tabler:trash"
-                      @click="onOpenDelete(habit)"
-                      >Delete</BaseDropdownItem
-                    >
-                  </div>
-                </template>
-              </VDropdown>
-            </div>
-            <div v-if="habit.target" class="space-y-1">
-              <div class="w-full h-1.5 bg-gray-100 rounded dark:bg-gray-700">
-                <div
-                  class="bg-sky-600 h-full rounded dark:bg-sky-400"
-                  :style="{
-                    width: `${getPercent(habit.done, habit.target)}%`,
-                  }"
-                ></div>
-              </div>
-              <div
-                class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400"
-              >
-                <span>{{ habit.done }}/{{ habit.target }}</span>
-                <span>{{ getPercent(habit.done, habit.target) }} %</span>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <p class="text-sm text-gray-500 dark:text-gray-400">
-                {{ targetLabel[habit.reset] }}
-              </p>
-              <div class="flex items-center justify-end gap-2">
-                <button
-                  :disabled="habit.done === 0"
-                  class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-700 dark:disabled:bg-gray-700"
-                  @click="updateDone(habit.id, -1)"
-                >
-                  <Icon icon="tabler:minus" />
-                </button>
-                <p class="font-bold text-xl">{{ habit.done }}x</p>
-                <button
-                  class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-700 dark:disabled:bg-gray-700"
-                  @click="updateDone(habit.id, 1)"
-                >
-                  <Icon icon="tabler:plus" />
-                </button>
-              </div>
-            </div>
-          </BaseCard>
+            <template #add-content>
+              <p class="text-sm">Tambahkan aktivitas untuk menjaga streak</p>
+            </template>
+          </BaseWidget>
+          <BaseWidget
+            icon="twemoji:check-mark-button"
+            name="Target Hari Ini"
+            :value="80"
+            unit="%"
+          >
+            <template #add-content>
+              <p class="text-sm">8/10</p>
+            </template>
+          </BaseWidget>
         </div>
-        <BaseButton
-          class="hidden md:flex items-center gap-2"
-          color="primary"
-          icon="tabler:plus"
-          @click="onOpenCreate"
-        >
-          Tambah Habit
-        </BaseButton>
-      </template>
+        <hr class="border-gray-300 border-dashed dark:border-gray-800" />
+        <div class="space-y-4">
+          <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <BaseCard
+              v-for="habit in habits.data"
+              :key="habit.id"
+              bordered
+              class="flex flex-col justify-between gap-4"
+            >
+              <div class="flex items-center justify-between">
+                <p class="font-bold flex items-center gap-2 text-lg">
+                  <Icon :icon="habit.icon" />
+                  {{ habit.name }}
+                </p>
+                <VDropdown placement="bottom-end">
+                  <button
+                    class="text-gray-500 dark:text-gray-400 cursor-pointer"
+                  >
+                    <Icon icon="tabler:dots" />
+                  </button>
+
+                  <template #popper>
+                    <div class="py-1 min-w-30">
+                      <BaseDropdownItem
+                        icon="tabler:edit"
+                        @click="onOpenEdit(habit)"
+                        >Edit</BaseDropdownItem
+                      >
+                      <BaseDropdownItem
+                        icon="tabler:trash"
+                        @click="onOpenDelete(habit)"
+                        >Delete</BaseDropdownItem
+                      >
+                    </div>
+                  </template>
+                </VDropdown>
+              </div>
+              <div v-if="habit.target" class="space-y-1">
+                <div class="w-full h-1.5 bg-gray-100 rounded dark:bg-gray-700">
+                  <div
+                    class="bg-sky-600 h-full rounded dark:bg-sky-400"
+                    :style="{
+                      width: `${getPercent(habit.done, habit.target)}%`,
+                    }"
+                  ></div>
+                </div>
+                <div
+                  class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400"
+                >
+                  <span>{{ habit.done }}/{{ habit.target }}</span>
+                  <span>{{ getPercent(habit.done, habit.target) }} %</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                  {{ targetLabel[habit.reset] }}
+                </p>
+                <div class="flex items-center justify-end gap-2">
+                  <button
+                    :disabled="habit.done === 0"
+                    class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-700 dark:disabled:bg-gray-700"
+                    @click="updateDone(habit.id, -1)"
+                  >
+                    <Icon icon="tabler:minus" />
+                  </button>
+                  <p class="font-bold text-xl">{{ habit.done }}x</p>
+                  <button
+                    class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 cursor-poiner hover:bg-gray-100 disabled:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-700 dark:disabled:bg-gray-700"
+                    @click="updateDone(habit.id, 1)"
+                  >
+                    <Icon icon="tabler:plus" />
+                  </button>
+                </div>
+              </div>
+            </BaseCard>
+          </div>
+          <BaseButton
+            class="hidden md:flex items-center gap-2"
+            color="primary"
+            icon="tabler:plus"
+            @click="onOpenCreate"
+          >
+            Tambah Habit
+          </BaseButton>
+        </div>
+      </div>
     </template>
 
     <HabitDeleteConfirm

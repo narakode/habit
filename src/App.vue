@@ -5,10 +5,12 @@ import { useRoute, useRouter } from 'vue-router';
 import { setUser, user } from './core/auth/auth';
 import { AuthService } from './core/auth/auth.service';
 import { useHabit } from './features/habit/habit.compose.js';
+import { useStreak } from './features/user-streak/user-streak.compose.js';
 
 const router = useRouter();
 const route = useRoute();
 const { loadHabits } = useHabit();
+const { loadStreak } = useStreak();
 
 const userPage = computed(() => {
   return route.matched.some((route) => route.meta.auth);
@@ -21,6 +23,7 @@ async function init() {
     router.push({ name: 'login' });
   } else {
     loadHabits();
+    loadStreak();
   }
 }
 

@@ -2,19 +2,20 @@ import { readonly, ref } from 'vue';
 import { HabitService } from './habit.service';
 import { debounce } from '../../utils/debounce';
 
-const habits = ref({
+const _habits = ref({
   data: [],
   total: 0,
 });
 const _loaded = ref(false);
 
 export function useHabit() {
+  const habits = readonly(_habits);
   const loaded = readonly(_loaded);
 
   async function loadHabits() {
     const [res, err] = await HabitService.getDailyProgress(new Date());
 
-    habits.value = res;
+    _habits.value = res;
     _loaded.value = true;
   }
 
@@ -25,8 +26,8 @@ export function useHabit() {
       return [null, err];
     }
 
-    habits.value.data.push(res);
-    habits.value.total++;
+    _habits.value.data.push(res);
+    _habits.value.total++;
 
     return [res, err];
   }
@@ -38,9 +39,9 @@ export function useHabit() {
       return [null, err];
     }
 
-    const index = habits.value.data.findIndex((habit) => habit.id === id);
+    const index = _habits.value.data.findIndex((habit) => habit.id === id);
 
-    habits.value.data[index] = { ...res };
+    _habits.value.data[index] = { ...res };
 
     return [res, err];
   }
@@ -52,29 +53,29 @@ export function useHabit() {
       return [null, err];
     }
 
-    const index = habits.value.data.findIndex((habit) => habit.id === id);
+    const index = _habits.value.data.findIndex((habit) => habit.id === id);
 
-    habits.value.data.splice(index, 1);
+    _habits.value.data.splice(index, 1);
 
     return [res, err];
   }
 
   const updateDoneDebounce = debounce(async (id, done) => {
-    const index = habits.value.data.findIndex((habit) => habit.id === id);
+    const index = _habits.value.data.findIndex((habit) => habit.id === id);
 
-    habits.value.data[index].persistedDone += done;
+    _habits.value.data[index].persistedDone += done;
 
     await HabitService.updateDone(id, done);
   }, 500);
 
   async function updateDone(id, done) {
-    const index = habits.value.data.findIndex((habit) => habit.id === id);
+    const index = _habits.value.data.findIndex((habit) => habit.id === id);
 
-    habits.value.data[index].done += done;
+    _habits.value.data[index].done += done;
 
     updateDoneDebounce(
       id,
-      habits.value.data[index].done - habits.value.data[index].persistedDone,
+      _habits.value.data[index].done - _habits.value.data[index].persistedDone,
     );
   }
 

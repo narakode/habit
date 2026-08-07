@@ -23,6 +23,8 @@ import {
   getDaysRange,
   subDate,
 } from '../../../utils/date.js';
+import { useStreak } from '../../user-streak/user-streak.compose.js';
+import BaseWidget from '../../../components/base/BaseWidget.vue';
 
 Chart.register(
   CategoryScale,
@@ -35,38 +37,46 @@ Chart.register(
   Tooltip,
 );
 
-const stats = reactive({
+const { streak } = useStreak();
+
+const targetCompletion = ref(0);
+const habitStats = reactive({
+  totalActivities: 0,
+  daysActive: 0,
+});
+
+const stats = computed(() => ({
   currentStreak: {
     name: 'Streak Saat Ini',
-    value: 0,
+    value: streak.value.currentStreak,
     unit: 'hari',
     icon: 'twemoji:fire',
   },
   longestStreak: {
     name: 'Rekor Streak',
-    value: 0,
+    value: streak.value.longestStreak,
     unit: 'hari',
     icon: 'twemoji:trophy',
   },
   targetCompletion: {
     name: 'Rata-Rata Target',
-    value: 0,
+    value: targetCompletion.value,
     unit: '%',
     icon: 'twemoji:bar-chart',
   },
   totalActivities: {
     name: 'Habit Dilakukan',
-    value: 0,
+    value: habitStats.totalActivities,
     unit: 'kali',
     icon: 'twemoji:white-heavy-check-mark',
   },
   daysActive: {
     name: 'Hari Aktif',
-    value: 0,
+    value: habitStats.daysActive,
     unit: 'hari',
     icon: 'twemoji:calendar',
   },
-});
+}));
 
 const activityTrendsRange = { start: subDate(new Date(), 30), end: new Date() };
 const activityTrendsData = ref([]);
@@ -154,27 +164,19 @@ function getHeatMapColor(date) {
   return 'bg-sky-800 text-sky-300 dark:bg-sky-300 dark:text-sky-700';
 }
 
-async function loadStreakStats() {
-  const [res, err] = await StatService.getStreakStats();
-
-  if (!err) {
-    stats.currentStreak.value = res.currentStreakDate;
-    stats.longestStreak.value = res.longestStreak;
-  }
-}
 async function loadActivityStats() {
   const [res, err] = await StatService.getActivityStats();
 
   if (!err) {
-    stats.totalActivities.value = res.totalActivities;
-    stats.daysActive.value = res.daysActive;
+    habitStats.totalActivities = res.totalActivities;
+    habitStats.daysActive = res.daysActive;
   }
 }
 async function loadCompletionRate() {
   const [completionRate, err] = await StatService.getCompletionRate();
 
   if (!err) {
-    stats.targetCompletion.value = completionRate;
+    targetCompletion.value = completionRate;
   }
 }
 async function loadDailyDone() {
@@ -198,7 +200,6 @@ async function loadyHeatmaps() {
   }
 }
 
-loadStreakStats();
 loadActivityStats();
 loadCompletionRate();
 loadDailyDone();
@@ -210,18 +211,15 @@ loadyHeatmaps();
     <div class="col-span-full">
       <h1 class="font-bold text-3xl mb-4">Statistik</h1>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-        <BaseCard
+        <BaseWidget
           v-for="stat in Object.values(stats)"
           :key="stat.name"
           bordered
-          class="space-y-2"
-        >
-          <h3 class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-            <Icon :icon="stat.icon" />
-            {{ stat.name }}
-          </h3>
-          <p class="font-bold text-xl">{{ stat.value }} {{ stat.unit }}</p>
-        </BaseCard>
+          :icon="stat.icon"
+          :name="stat.name"
+          :value="stat.value"
+          :unit="stat.unit"
+        />
       </div>
     </div>
 
