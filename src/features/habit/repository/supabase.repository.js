@@ -8,8 +8,10 @@ import {
 } from '../habit.dto';
 
 export const SupabaseHabitRepository = {
-  async getAll() {
-    const { data, error, count } = await supabase.from('habits').select();
+  async getCompletedPeriods() {
+    const { data, error, count } = await supabase
+      .from('habit_completed_periods')
+      .select();
 
     if (error) {
       return [null, error];

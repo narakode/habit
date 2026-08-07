@@ -87,7 +87,7 @@ const habits = [
 ];
 
 export const LocalHabitRepository = {
-  getAll(date = null) {
+  getCompletedPeriods(date = null) {
     return [
       {
         total: 0,

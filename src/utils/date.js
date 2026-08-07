@@ -90,21 +90,10 @@ export function setStartOfWeek(date) {
 
   res.setHours(0, 0, 0, 0);
 
-  if (res.getDay() === 1) {
-    return res;
-  }
-
-  if (res.getDay() === 0) {
-    return res.setDate(res.getDate() - 6);
-  }
-
-  const diff = 1 - res.getDay();
-
-  res.setDate(res.getDate() - diff);
+  res.setDate(res.getDate() - res.getDay());
 
   return res;
 }
-
 export function setStartOfMonth(date) {
   const res = new Date(date.getFullYear(), date.getMonth(), 1);
 

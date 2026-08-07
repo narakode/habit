@@ -43,7 +43,7 @@ export const StatService = {
     return await HabitRepository.getActivityStats();
   },
   async getCompletionRate() {
-    const [habits, err] = await HabitRepository.getAll();
+    const [habits, err] = await HabitRepository.getCompletedPeriods();
 
     if (err) {
       return [null, err];
