@@ -12,8 +12,10 @@ import { getPercent } from '../../../utils/math';
 import { useHabit } from '../habit.compose.js';
 import BaseSkeleton from '../../../components/base/BaseSkeleton.vue';
 import BaseWidget from '../../../components/base/BaseWidget.vue';
+import { useStreak } from '../../user-streak/user-streak.compose.js';
 
 const { habits, loaded, loadHabits, updateDone } = useHabit();
+const { streak } = useStreak();
 
 const loadingPage = ref(true);
 
@@ -80,11 +82,13 @@ onUnmounted(() => {
           <BaseWidget
             icon="twemoji:fire"
             name="Streak Saat Ini"
-            :value="15"
+            :value="streak.currentStreak"
             unit="hari"
           >
             <template #add-content>
-              <p class="text-sm">Tambahkan aktivitas untuk menjaga streak</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Tambahkan aktivitas untuk menjaga streak
+              </p>
             </template>
           </BaseWidget>
           <BaseWidget
@@ -94,7 +98,7 @@ onUnmounted(() => {
             unit="%"
           >
             <template #add-content>
-              <p class="text-sm">8/10</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">8/10</p>
             </template>
           </BaseWidget>
         </div>
