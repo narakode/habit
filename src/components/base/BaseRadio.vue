@@ -3,6 +3,7 @@ defineProps({
   name: String,
   label: String,
   inputValue: null,
+  disabled: Boolean,
 });
 
 const checked = defineModel();
@@ -14,9 +15,12 @@ const checked = defineModel();
       type="radio"
       :name="name"
       :value="inputValue"
-      class="border-gray-300 checked:border-sky-600 checked:bg-sky-600 focus:ring-sky-600 dark:bg-gray-700 dark:border-gray-700 dark:ring-offset-gray-800"
+      :disabled="disabled"
+      class="border-gray-300 disabled:opacity-75 checked:border-sky-600 checked:bg-sky-600 checked:disabled:border-gray-400 checked:disabled:bg-gray-400 focus:ring-sky-600 dark:bg-gray-700 dark:border-gray-700 dark:ring-offset-gray-800"
       v-model="checked"
     />
-    {{ label }}
+    <p :class="disabled ? 'opacity-50' : ''">
+      {{ label }}
+    </p>
   </label>
 </template>

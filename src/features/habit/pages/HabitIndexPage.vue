@@ -37,7 +37,7 @@ const formModal = reactive({
 const targetLabel = {
   daily: 'Hari ini',
   weekly: 'Minggu ini',
-  yearly: 'Bulan ini',
+  monthly: 'Bulan ini',
 };
 
 function onOpenCreate() {

@@ -97,6 +97,7 @@ async function onSubmit() {
             input-value="daily"
             label="Harian"
             required
+            :disabled="!!props.habit"
             v-model="form.reset"
           />
           <BaseRadio
@@ -104,6 +105,7 @@ async function onSubmit() {
             input-value="weekly"
             label="Mingguan"
             required
+            :disabled="!!props.habit"
             v-model="form.reset"
           />
           <BaseRadio
@@ -111,6 +113,7 @@ async function onSubmit() {
             input-value="monthly"
             label="Bulanan"
             required
+            :disabled="!!props.habit"
             v-model="form.reset"
           />
         </div>
@@ -121,9 +124,15 @@ async function onSubmit() {
           :id="id"
           placeholder="10"
           required
+          :disabled="!!props.habit"
           v-model="form.target"
         />
       </BaseFormItem>
+
+      <p v-if="props.habit" class="text-sm text-gray-400">
+        Reset dan Target tidak bisa diubah untuk versi saat ini, silakan buat
+        habit baru untuk membuat target dan reset yang baru.
+      </p>
     </form>
 
     <template #footer="{ close }">
