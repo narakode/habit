@@ -3,5 +3,5 @@ export function getPercent(done, target) {
     return 100;
   }
 
-  return (done / target) * 100;
+  return Math.floor((done / target) * 100);
 }

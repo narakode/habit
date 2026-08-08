@@ -9,7 +9,13 @@ import HabitFormModal from '../components/HabitFormModal.vue';
 import { HabitService } from '../habit.service';
 import { emitter } from '../../../core/emitter';
 import { getPercent } from '../../../utils/math';
-import { habits, loaded, loadHabits, updateDone } from '../habit.compose.js';
+import {
+  habits,
+  progress,
+  loaded,
+  loadHabits,
+  updateDone,
+} from '../habit.compose.js';
 import BaseSkeleton from '../../../components/base/BaseSkeleton.vue';
 import BaseWidget from '../../../components/base/BaseWidget.vue';
 import {
@@ -117,12 +123,14 @@ onUnmounted(() => {
           </BaseWidget>
           <BaseWidget
             icon="twemoji:check-mark-button"
-            name="Target Hari Ini"
-            :value="80"
+            name="Target"
+            :value="progress.value"
             unit="%"
           >
             <template #add-content>
-              <p class="text-sm text-gray-600 dark:text-gray-400">8/10</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                {{ progress.done }}/{{ progress.total }}
+              </p>
             </template>
           </BaseWidget>
         </div>

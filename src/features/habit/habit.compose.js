@@ -1,10 +1,11 @@
-import { readonly, ref } from 'vue';
+import { computed, readonly, ref } from 'vue';
 import { HabitService } from './habit.service';
 import { debounce } from '../../utils/debounce';
 import {
   setStreakToday,
   todayStreak,
 } from '../user-streak/user-streak.compose';
+import { getPercent } from '../../utils/math';
 
 const _habits = ref({
   data: [],
@@ -14,6 +15,25 @@ const _loaded = ref(false);
 
 export const habits = readonly(_habits);
 export const loaded = readonly(_loaded);
+
+export const progress = computed(() => {
+  const done = habits.value.data.reduce((total, current) => {
+    if (!current.target) {
+      return total;
+    }
+
+    return total + current.done;
+  }, 0);
+  const total = _habits.value.data.reduce((total, current) => {
+    if (!current.target) {
+      return total;
+    }
+
+    return total + current.target;
+  }, 0);
+
+  return { total, done, value: getPercent(done, total) };
+});
 
 export async function loadHabits() {
   const [res, err] = await HabitService.getDailyProgress(new Date());
