@@ -1,6 +1,10 @@
 import { readonly, ref } from 'vue';
 import { HabitService } from './habit.service';
 import { debounce } from '../../utils/debounce';
+import {
+  setStreakToday,
+  todayStreak,
+} from '../user-streak/user-streak.compose';
 
 const _habits = ref({
   data: [],
@@ -8,84 +12,76 @@ const _habits = ref({
 });
 const _loaded = ref(false);
 
-export function useHabit() {
-  const habits = readonly(_habits);
-  const loaded = readonly(_loaded);
+export const habits = readonly(_habits);
+export const loaded = readonly(_loaded);
 
-  async function loadHabits() {
-    const [res, err] = await HabitService.getDailyProgress(new Date());
+export async function loadHabits() {
+  const [res, err] = await HabitService.getDailyProgress(new Date());
 
-    _habits.value = res;
-    _loaded.value = true;
+  _habits.value = res;
+  _loaded.value = true;
+}
+
+export async function createHabit(data) {
+  const [res, err] = await HabitService.create(data);
+
+  if (err) {
+    return [null, err];
   }
 
-  async function createHabit(data) {
-    const [res, err] = await HabitService.create(data);
+  _habits.value.data.push(res);
+  _habits.value.total++;
 
-    if (err) {
-      return [null, err];
-    }
+  return [res, err];
+}
 
-    _habits.value.data.push(res);
-    _habits.value.total++;
+export async function updateHabit(id, data) {
+  const [res, err] = await HabitService.update(id, data);
 
-    return [res, err];
+  if (err) {
+    return [null, err];
   }
 
-  async function updateHabit(id, data) {
-    const [res, err] = await HabitService.update(id, data);
+  const index = _habits.value.data.findIndex((habit) => habit.id === id);
 
-    if (err) {
-      return [null, err];
-    }
+  _habits.value.data[index] = { ...res };
 
-    const index = _habits.value.data.findIndex((habit) => habit.id === id);
+  return [res, err];
+}
 
-    _habits.value.data[index] = { ...res };
+export async function deleteHabit(id, data) {
+  const [res, err] = await HabitService.delete(id, data);
 
-    return [res, err];
+  if (err) {
+    return [null, err];
   }
 
-  async function deleteHabit(id, data) {
-    const [res, err] = await HabitService.delete(id, data);
+  const index = _habits.value.data.findIndex((habit) => habit.id === id);
 
-    if (err) {
-      return [null, err];
-    }
+  _habits.value.data.splice(index, 1);
 
-    const index = _habits.value.data.findIndex((habit) => habit.id === id);
+  return [res, err];
+}
 
-    _habits.value.data.splice(index, 1);
+const updateDoneDebounce = debounce(async (id, done) => {
+  const index = _habits.value.data.findIndex((habit) => habit.id === id);
 
-    return [res, err];
+  _habits.value.data[index].persistedDone += done;
+
+  await HabitService.updateDone(id, done);
+}, 500);
+
+export async function updateDone(id, done) {
+  const index = _habits.value.data.findIndex((habit) => habit.id === id);
+
+  _habits.value.data[index].done += done;
+
+  updateDoneDebounce(
+    id,
+    _habits.value.data[index].done - _habits.value.data[index].persistedDone,
+  );
+
+  if (!todayStreak.value) {
+    setStreakToday();
   }
-
-  const updateDoneDebounce = debounce(async (id, done) => {
-    const index = _habits.value.data.findIndex((habit) => habit.id === id);
-
-    _habits.value.data[index].persistedDone += done;
-
-    await HabitService.updateDone(id, done);
-  }, 500);
-
-  async function updateDone(id, done) {
-    const index = _habits.value.data.findIndex((habit) => habit.id === id);
-
-    _habits.value.data[index].done += done;
-
-    updateDoneDebounce(
-      id,
-      _habits.value.data[index].done - _habits.value.data[index].persistedDone,
-    );
-  }
-
-  return {
-    habits,
-    loaded,
-    loadHabits,
-    createHabit,
-    updateHabit,
-    deleteHabit,
-    updateDone,
-  };
 }

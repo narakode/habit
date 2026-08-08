@@ -1,15 +1,13 @@
 <script setup>
 import { ref } from 'vue';
 import BaseConfirm from '../../../components/base/BaseConfirm.vue';
-import { useHabit } from '../habit.compose';
+import { deleteHabit } from '../habit.compose';
 
 const props = defineProps({
   id: null,
 });
 const emit = defineEmits(['deleted']);
 const visible = defineModel('visible');
-
-const { deleteHabit } = useHabit();
 
 const loadingDelete = ref(false);
 

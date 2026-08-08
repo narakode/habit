@@ -3,9 +3,7 @@ import { Icon } from '@iconify/vue';
 import { navs } from '../../core/nav';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { emitter } from '../../core/emitter';
-import { useHabit } from '../../features/habit/habit.compose';
-
-const { loaded } = useHabit();
+import { loaded } from '../../features/habit/habit.compose';
 
 const navActive = 'Home';
 const hidden = ref(false);

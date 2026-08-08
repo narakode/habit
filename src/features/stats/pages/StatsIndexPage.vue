@@ -23,7 +23,10 @@ import {
   getDaysRange,
   subDate,
 } from '../../../utils/date.js';
-import { useStreak } from '../../user-streak/user-streak.compose.js';
+import {
+  currentStreak,
+  longestStreak,
+} from '../../user-streak/user-streak.compose.js';
 import BaseWidget from '../../../components/base/BaseWidget.vue';
 
 Chart.register(
@@ -37,8 +40,6 @@ Chart.register(
   Tooltip,
 );
 
-const { streak } = useStreak();
-
 const targetCompletion = ref(0);
 const habitStats = reactive({
   totalActivities: 0,
@@ -48,13 +49,13 @@ const habitStats = reactive({
 const stats = computed(() => ({
   currentStreak: {
     name: 'Streak Saat Ini',
-    value: streak.value.currentStreak,
+    value: currentStreak.value,
     unit: 'hari',
     icon: 'twemoji:fire',
   },
   longestStreak: {
     name: 'Rekor Streak',
-    value: streak.value.longestStreak,
+    value: longestStreak.value,
     unit: 'hari',
     icon: 'twemoji:trophy',
   },

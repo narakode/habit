@@ -9,13 +9,13 @@ import HabitFormModal from '../components/HabitFormModal.vue';
 import { HabitService } from '../habit.service';
 import { emitter } from '../../../core/emitter';
 import { getPercent } from '../../../utils/math';
-import { useHabit } from '../habit.compose.js';
+import { habits, loaded, loadHabits, updateDone } from '../habit.compose.js';
 import BaseSkeleton from '../../../components/base/BaseSkeleton.vue';
 import BaseWidget from '../../../components/base/BaseWidget.vue';
-import { useStreak } from '../../user-streak/user-streak.compose.js';
-
-const { habits, loaded, loadHabits, updateDone } = useHabit();
-const { streak } = useStreak();
+import {
+  currentStreak,
+  todayStreak,
+} from '../../user-streak/user-streak.compose.js';
 
 const loadingPage = ref(true);
 
@@ -78,16 +78,40 @@ onUnmounted(() => {
         </BaseButton>
       </div>
       <div v-else class="space-y-6">
-        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           <BaseWidget
             icon="twemoji:fire"
             name="Streak Saat Ini"
-            :value="streak.currentStreak"
+            :value="currentStreak"
             unit="hari"
           >
             <template #add-content>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                Tambahkan aktivitas untuk menjaga streak
+              <p
+                class="text-sm text-gray-600 dark:text-gray-400 flex gap-1.5 items-center"
+              >
+                <Icon
+                  :icon="
+                    currentStreak === 0
+                      ? 'tabler:info-square-rounded'
+                      : todayStreak
+                        ? 'tabler:check'
+                        : 'tabler:alert-triangle'
+                  "
+                  :class="
+                    currentStreak === 0
+                      ? ''
+                      : todayStreak
+                        ? 'text-green-600'
+                        : 'text-yellow-600'
+                  "
+                />
+                {{
+                  currentStreak === 0
+                    ? 'Tambah aktivitas untuk mulai streak'
+                    : todayStreak
+                      ? 'Streak lanjut hari ini'
+                      : 'Tambah aktivitas untuk lanjut streak'
+                }}
               </p>
             </template>
           </BaseWidget>

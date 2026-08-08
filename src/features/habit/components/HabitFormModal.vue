@@ -6,7 +6,7 @@ import BaseInput from '../../../components/base/BaseInput.vue';
 import BaseModal from '../../../components/base/BaseModal.vue';
 import BaseRadio from '../../../components/base/BaseRadio.vue';
 import HabitIconDropdown from './HabitIconDropdown.vue';
-import { useHabit } from '../habit.compose.js';
+import { createHabit, updateHabit } from '../habit.compose.js';
 import BaseAlert from '../../../components/base/BaseAlert.vue';
 
 const props = defineProps({
@@ -14,8 +14,6 @@ const props = defineProps({
 });
 const emit = defineEmits(['saved']);
 const visible = defineModel('visible');
-
-const { createHabit, updateHabit } = useHabit();
 
 const form = reactive({
   name: null,
