@@ -8,6 +8,7 @@
   - Total activities
   - Total days
   - Edit/Delete
+  - 404
 - New User create profile
 - Disable delete/update profile
 - Help modal
@@ -17,3 +18,4 @@
 - Screenshot for login
 - Mokcup screenshot for login
 - Dynamic aspect image for login carousel
+- 404 page

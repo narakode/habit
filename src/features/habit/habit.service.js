@@ -7,6 +7,9 @@ export const HabitService = {
   getDailyActivities(date = null) {
     return HabitRepository.getDailyActvities(date);
   },
+  getSingleById(id) {
+    return HabitRepository.getSingleById(id);
+  },
   create(data) {
     return HabitRepository.create(data);
   },

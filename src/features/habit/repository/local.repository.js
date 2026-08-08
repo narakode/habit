@@ -136,6 +136,15 @@ export const LocalHabitRepository = {
       null,
     ];
   },
+  getSingleById(id) {
+    const habit = habits.find((habit) => habit.id == id);
+
+    if (!habit) {
+      return [null, new Error('404 not found')];
+    }
+
+    return [habit, null];
+  },
   create(data) {
     const habit = toHabit({
       ...data,

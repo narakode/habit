@@ -144,10 +144,13 @@ onUnmounted(() => {
               class="flex flex-col justify-between gap-4"
             >
               <div class="flex items-center justify-between">
-                <p class="font-bold flex items-center gap-2 text-lg">
+                <router-link
+                  :to="{ name: 'habits.detail', params: { id: habit.id } }"
+                  class="font-bold flex items-center gap-2 text-lg"
+                >
                   <Icon :icon="habit.icon" />
                   {{ habit.name }}
-                </p>
+                </router-link>
                 <VDropdown placement="bottom-end">
                   <button
                     class="text-gray-500 dark:text-gray-400 cursor-pointer"

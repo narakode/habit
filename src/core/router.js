@@ -1,6 +1,7 @@
 import { registerGuards } from 'vue-auth-helper';
 import { createRouter, createWebHistory } from 'vue-router';
 import { AuthService } from './auth/auth.service';
+import { setTitle } from '../utils/head';
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -50,6 +51,15 @@ export const router = createRouter({
       },
       component: () => import('../features/history/pages/HistoryIndexPage.vue'),
     },
+    {
+      path: '/habits/:id',
+      name: 'habits.detail',
+      meta: {
+        title: 'Detail Habit',
+        auth: true,
+      },
+      component: () => import('../features/habit/pages/HabitDetailPage.vue'),
+    },
   ],
 });
 
@@ -67,7 +77,6 @@ router.beforeEach(async (to) => {
 
 router.beforeEach((to) => {
   const { title } = to.meta;
-  const appTitle = import.meta.env.VITE_APP_TITLE;
 
-  document.title = title ? `${title} - ${appTitle}` : appTitle;
+  setTitle(title);
 });
