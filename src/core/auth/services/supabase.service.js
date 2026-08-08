@@ -20,6 +20,19 @@ export const AuthSupabaseService = {
 
     return [data.user, error];
   },
+  async getProfile() {
+    const { data, error } = await supabase
+      .from('user_profiles')
+      .select()
+      .limit(1)
+      .single();
+
+    if (error) {
+      return [null, error];
+    }
+
+    return [data, error];
+  },
   async logout() {
     const { error } = await supabase.auth.signOut();
 

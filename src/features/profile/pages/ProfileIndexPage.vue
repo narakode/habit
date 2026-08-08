@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import BaseButton from '../../../components/base/BaseButton.vue';
 import BaseCard from '../../../components/base/BaseCard.vue';
-import { user } from '../../../core/auth/auth';
+import { user, userProfile } from '../../../core/auth/auth';
 import { formatDate } from '../../../utils/date';
 import AuthLogoutConfirm from '../../auth/components/AuthLogoutConfirm.vue';
 
@@ -30,6 +30,10 @@ const logoutVisible = ref(false);
             user ? formatDate(new Date(user.created_at), 'DD MMMM YYYY') : '-'
           }}
         </dd>
+      </div>
+      <div class="space-y-0.5">
+        <dt class="text-sm text-gray-600 dark:text-gray-400">Zona Waktu</dt>
+        <dd>{{ userProfile ? userProfile.timezone : '-' }}</dd>
       </div>
     </dl>
   </BaseCard>
