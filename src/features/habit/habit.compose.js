@@ -83,6 +83,16 @@ export async function deleteHabit(id, data) {
   return [res, err];
 }
 
+export function findHabit(id) {
+  const habit = _habits.value.data.find((habit) => habit.id == id);
+
+  if (!habit) {
+    return [null, new Error('not found')];
+  }
+
+  return [habit, null];
+}
+
 const updateDoneDebounce = debounce(async (id, done) => {
   const index = _habits.value.data.findIndex((habit) => habit.id === id);
 
