@@ -1,8 +1,6 @@
 ## Todo
 
 - Detail habit
-  - 404
-  - breadcrumb
   - Get habit stats function
   - Get habit daily done filter by id
 - New User create profile

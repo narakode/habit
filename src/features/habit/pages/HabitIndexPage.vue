@@ -22,6 +22,7 @@ import {
   todayStreak,
 } from '../../user-streak/user-streak.compose.js';
 import HabitCard from '../components/HabitCard.vue';
+import BaseState from '../../../components/base/BaseState.vue';
 
 const loadingPage = ref(true);
 
@@ -61,22 +62,15 @@ onUnmounted(() => {
     </div>
 
     <template v-else>
-      <div
+      <BaseState
         v-if="!habits.data.length"
-        class="flex flex-col items-center text-center gap-4"
-      >
-        <Icon
-          icon="tabler:clipboard-plus"
-          class="size-14 text-gray-300 dark:text-gray-700"
-        />
-        <p class="font-bold text-3xl">Belum ada habit</p>
-        <p class="text-gray-600 dark:text-gray-400">
-          Anda belum memiliki habit untuk dilakukan, tambahkan satu habit.
-        </p>
-        <BaseButton color="primary" icon="tabler:plus" @click="onOpenCreate">
-          Tambah Habit
-        </BaseButton>
-      </div>
+        icon="tabler:clipboard-plus"
+        title="Belum ada habit"
+        description="Anda belum memiliki habit untuk dilakukan, tambahkan satu habit."
+        action="Tambah Habit"
+        action-icon="tabler:plus"
+        @click-action="onOpenCreate"
+      />
       <div v-else class="space-y-6">
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           <BaseWidget
