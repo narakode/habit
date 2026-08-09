@@ -90,7 +90,9 @@ export function setStartOfWeek(date) {
 
   res.setHours(0, 0, 0, 0);
 
-  res.setDate(res.getDate() - res.getDay());
+  const day = res.getDay();
+
+  res.setDate(res.getDate() - (day === 0 ? 6 : day - 1));
 
   return res;
 }
