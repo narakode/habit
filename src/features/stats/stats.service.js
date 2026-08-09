@@ -61,7 +61,7 @@ export const StatService = {
 
     return [stats, null];
   },
-  async getHeatmaps(range) {
-    return await HabitRepository.getDailyDoneStats(range);
+  async getHeatmaps(range, habitId = null) {
+    return await HabitRepository.getDailyDoneStats(range, habitId);
   },
 };

@@ -1,7 +1,6 @@
 ## Todo
 
 - Detail habit
-  - Heatmap
   - Edit/Delete
   - 404
   - breadcrumb

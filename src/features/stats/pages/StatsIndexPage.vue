@@ -15,6 +15,7 @@ import {
 } from '../../user-streak/user-streak.compose.js';
 import BaseWidget from '../../../components/base/BaseWidget.vue';
 import ActivityLineChart from '../components/ActivityLineChart.vue';
+import BaseHeatmap from '../../../components/base/BaseHeatmap.vue';
 
 const targetCompletion = ref(0);
 const habitStats = reactive({
@@ -58,36 +59,12 @@ const stats = computed(() => ({
 const activityTrendsRange = { start: subDate(new Date(), 30), end: new Date() };
 const activityTrendsData = ref([]);
 
-const currentMonth = new Date().getMonth();
-
 const heatmapTitle = formatDate(new Date(), 'MMMM YYYY');
 const heatmapDays = getCalendar(
   new Date().getMonth(),
   new Date().getFullYear(),
 );
-const heatmaps = ref({});
-
-function getHeatMapColor(date) {
-  const count = heatmaps.value[date];
-
-  if (!count || count === 0) {
-    return 'bg-gray-200 text-gray-500 dark:bg-gray-700';
-  }
-
-  if (count <= 2) {
-    return 'bg-sky-200 text-sky-500 dark:bg-sky-900';
-  }
-
-  if (count <= 5) {
-    return 'bg-sky-400 text-sky-100 dark:bg-sky-700';
-  }
-
-  if (count <= 8) {
-    return 'bg-sky-600 text-sky-200 dark:bg-sky-500';
-  }
-
-  return 'bg-sky-800 text-sky-300 dark:bg-sky-300 dark:text-sky-700';
-}
+const heatmapDaysData = ref([]);
 
 async function loadActivityStats() {
   const [res, err] = await StatService.getActivityStats();
@@ -118,10 +95,21 @@ async function loadyHeatmaps() {
     end: heatmapDays[heatmapDays.length - 1],
   });
 
+  const currentMonth = new Date().getMonth();
+
   if (!err) {
-    heatmaps.value = Object.fromEntries(
-      dailyDone.map((item) => [item.date, item.done]),
-    );
+    heatmapDaysData.value = heatmapDays.map((day, i) => {
+      const stat = dailyDone.find((item) => item.date === formatDate(day));
+      const count = stat?.done ?? 0;
+
+      return {
+        id: i,
+        count: count,
+        disabled: day.getMonth() !== currentMonth,
+        date: day,
+        tooltip: `${formatDate(day, 'DD MMM')} : ${count} aktifitas`,
+      };
+    });
   }
 }
 
@@ -132,7 +120,7 @@ loadyHeatmaps();
 </script>
 
 <template>
-  <div class="pb-8 grid gap-6 xl:grid-cols-2">
+  <div class="pb-8 grid gap-6 lg:grid-cols-2">
     <div class="col-span-full">
       <h1 class="font-bold text-3xl mb-4">Statistik</h1>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
@@ -166,43 +154,7 @@ loadyHeatmaps();
         class="flex flex-col items-center justify-center gap-2"
       >
         <p class="font-bold">{{ heatmapTitle }}</p>
-        <div class="grid grid-cols-7 gap-2">
-          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
-            Min
-          </div>
-          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
-            Sen
-          </div>
-          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
-            Sel
-          </div>
-          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
-            Rab
-          </div>
-          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
-            Kam
-          </div>
-          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
-            Jum
-          </div>
-          <div class="text-xs text-center text-gray-600 dark:text-gray-400">
-            Sab
-          </div>
-          <div
-            v-for="day in heatmapDays"
-            :key="day"
-            :class="[
-              'size-6 text-xs flex items-center justify-center',
-              getHeatMapColor(formatDate(day)),
-              day.getMonth() !== currentMonth ? 'opacity-50' : '',
-            ]"
-            v-tooltip="
-              `${formatDate(day, 'DD MMM')} : ${heatmaps[formatDate(day)] ?? 0} aktifitas`
-            "
-          >
-            {{ day.getDate() }}
-          </div>
-        </div>
+        <BaseHeatmap :days="heatmapDaysData" />
       </BaseCard>
     </div>
   </div>

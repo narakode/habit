@@ -12,7 +12,8 @@ import { getTotalPeriod } from '../../stats/stats.utils';
 import { getPercent } from '../../../utils/math';
 import BaseCard from '../../../components/base/BaseCard.vue';
 import ActivityLineChart from '../../stats/components/ActivityLineChart.vue';
-import { subDate } from '../../../utils/date';
+import { formatDate, getCalendar, subDate } from '../../../utils/date';
+import BaseHeatmap from '../../../components/base/BaseHeatmap.vue';
 
 const route = useRoute();
 
@@ -22,6 +23,12 @@ const stats = reactive({
 });
 const activityTrendsRange = { start: subDate(new Date(), 30), end: new Date() };
 const activityTrendsData = ref([]);
+const heatmapTitle = formatDate(new Date(), 'MMMM YYYY');
+const heatmapDays = getCalendar(
+  new Date().getMonth(),
+  new Date().getFullYear(),
+);
+const heatmapDaysData = ref([]);
 
 const habit = computed(() => {
   const [found, err] = findHabit(route.params.id);
@@ -54,6 +61,32 @@ async function loadActivityTrends() {
     activityTrendsData.value = res;
   }
 }
+async function loadyHeatmaps() {
+  const [daysDone, err] = await StatService.getHeatmaps(
+    {
+      start: heatmapDays[0],
+      end: heatmapDays[heatmapDays.length - 1],
+    },
+    route.params.id,
+  );
+
+  const currentMonth = new Date().getMonth();
+
+  if (!err) {
+    heatmapDaysData.value = heatmapDays.map((day, i) => {
+      const stat = daysDone.find((item) => item.date === formatDate(day));
+      const count = stat?.done ?? 0;
+
+      return {
+        id: i,
+        count: count,
+        disabled: day.getMonth() !== currentMonth,
+        date: day,
+        tooltip: `${formatDate(day, 'DD MMM')} : ${count} aktifitas`,
+      };
+    });
+  }
+}
 
 watch(
   habitLoaded,
@@ -61,6 +94,7 @@ watch(
     if (loaded) {
       loadStats();
       loadActivityTrends();
+      loadyHeatmaps();
     }
   },
   { immediate: true },
@@ -92,15 +126,28 @@ watch(
       </div>
     </div>
 
-    <div>
-      <h2 class="font-bold text-2xl mb-4">Tren</h2>
-      <BaseCard bordered>
-        <ActivityLineChart
-          :data="activityTrendsData"
-          :start="activityTrendsRange.start"
-          :end="activityTrendsRange.end"
-        />
-      </BaseCard>
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div>
+        <h2 class="font-bold text-2xl mb-4">Tren</h2>
+        <BaseCard bordered>
+          <ActivityLineChart
+            :data="activityTrendsData"
+            :start="activityTrendsRange.start"
+            :end="activityTrendsRange.end"
+          />
+        </BaseCard>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-2xl mb-4">Heatmap</h2>
+        <BaseCard
+          bordered
+          class="flex flex-col items-center justify-center gap-2"
+        >
+          <p class="font-bold">{{ heatmapTitle }}</p>
+          <BaseHeatmap :days="heatmapDaysData" />
+        </BaseCard>
+      </div>
     </div>
   </div>
 </template>
