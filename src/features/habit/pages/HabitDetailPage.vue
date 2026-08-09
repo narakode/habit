@@ -16,6 +16,7 @@ import { formatDate, getCalendar, subDate } from '../../../utils/date';
 import BaseHeatmap from '../../../components/base/BaseHeatmap.vue';
 import HabitDeleteConfirm from '../components/HabitDeleteConfirm.vue';
 import HabitFormModal from '../components/HabitFormModal.vue';
+import { Icon } from '@iconify/vue';
 
 const route = useRoute();
 
@@ -108,6 +109,19 @@ watch(
 <template>
   <BaseSkeleton v-if="!habitLoaded" class="h-40" />
   <div v-else-if="habit" class="space-y-6">
+    <nav class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+      <RouterLink
+        :to="{ name: 'home' }"
+        class="flex items-center gap-2 hover:text-sky-600 dark:hover:text-sky-400"
+      >
+        <Icon icon="tabler:home" />
+        Home
+      </RouterLink>
+      <span class="text-gray-400 dark:text-gray-500">
+        <Icon icon="tabler:chevron-right" />
+      </span>
+      <span class="text-gray-400 dark:text-gray-500">Detail Habit</span>
+    </nav>
     <HabitCard
       :habit="habit"
       :with-link="false"

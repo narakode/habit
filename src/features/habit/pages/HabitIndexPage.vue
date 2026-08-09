@@ -55,7 +55,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="space-y-4 pb-8">
+  <div class="space-y-4">
     <div v-if="!loaded" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       <BaseSkeleton v-for="i in 6" :key="i" class="h-40" />
     </div>
