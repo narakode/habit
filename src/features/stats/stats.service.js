@@ -9,10 +9,14 @@ import {
   subDate,
 } from '../../utils/date';
 import { HabitRepository } from '../habit/habit.repository';
+import { getTotalPeriod } from './stats.utils';
 
 export const StatService = {
   async getActivityStats() {
     return await HabitRepository.getActivityStats();
+  },
+  async getHabitStats() {
+    return await HabitRepository.getHabitStats();
   },
   async getCompletionRate() {
     const [habits, err] = await HabitRepository.getCompletedPeriods();
@@ -26,21 +30,7 @@ export const StatService = {
     }
 
     const totalPeriods = habits.data.reduce((total, habit) => {
-      if (habit.reset === 'daily') {
-        return (
-          total + diffDay(addDate(new Date(), 1), new Date(habit.createdAt))
-        );
-      }
-
-      if (habit.reset === 'weekly') {
-        return (
-          total + diffWeek(addDate(new Date(), 7), new Date(habit.createdAt))
-        );
-      }
-
-      return (
-        total + diffMonth(addMonth(new Date(), 1), new Date(habit.createdAt))
-      );
+      return total + getTotalPeriod(habit.reset, habit.createdAt);
     }, 0);
 
     const completedTarget = habits.data.reduce(

@@ -1,14 +1,11 @@
 ## Todo
 
 - Detail habit
-  - Habit card
   - Heatmap
-  - Daily stats
-  - Completion rate
-  - Total activities
-  - Total days
   - Edit/Delete
   - 404
+  - breadcrumb
+  - Get habit stats function
 - New User create profile
 - Disable delete/update profile
 - Help modal

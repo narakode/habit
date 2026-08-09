@@ -4,6 +4,7 @@ import {
   toDailyDoneStats,
   toHabit,
   toHabits,
+  toHabitStats,
 } from '../habit.dto';
 import { diffDay, getDaysRange, subDate } from '../../../utils/date';
 
@@ -119,6 +120,15 @@ export const LocalHabitRepository = {
       toActivityStats({
         totalActivities: 1248,
         daysActive: 167,
+      }),
+      null,
+    ];
+  },
+  getHabitStats() {
+    return [
+      toHabitStats({
+        totalActivities: 1248,
+        completedPeriod: 10,
       }),
       null,
     ];

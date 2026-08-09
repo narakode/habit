@@ -32,6 +32,13 @@ export function toActivityStats({ totalActivities, daysActive }) {
   };
 }
 
+export function toHabitStats({ totalActivities, daysActive }) {
+  return {
+    totalActivities,
+    completedPeriod: 10,
+  };
+}
+
 export function toDailyDoneStats(data) {
   return data.map((item) => ({ date: item.date, done: item.done }));
 }
