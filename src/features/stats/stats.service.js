@@ -15,8 +15,8 @@ export const StatService = {
   async getActivityStats() {
     return await HabitRepository.getActivityStats();
   },
-  async getHabitStats() {
-    return await HabitRepository.getHabitStats();
+  async getHabitStats(id) {
+    return await HabitRepository.getHabitStats(id);
   },
   async getCompletionRate() {
     const [habits, err] = await HabitRepository.getCompletedPeriods();

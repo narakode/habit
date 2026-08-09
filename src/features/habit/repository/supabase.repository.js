@@ -5,6 +5,7 @@ import {
   toDailyDoneStats,
   toHabit,
   toHabits,
+  toHabitStats,
 } from '../habit.dto';
 
 export const SupabaseHabitRepository = {
@@ -74,6 +75,23 @@ export const SupabaseHabitRepository = {
       null,
     ];
   },
+  async getHabitStats(id) {
+    const { data, error } = await supabase
+      .rpc('get_habit_stats', { p_habit_id: id })
+      .single();
+
+    if (error) {
+      return [null, error];
+    }
+
+    return [
+      toHabitStats({
+        totalActivities: data.total_activities,
+        completedPeriod: data.completed_period,
+      }),
+      null,
+    ];
+  },
   async getCurrentProgress(id) {
     const { data, error } = await supabase
       .rpc('get_daily_progress_habits', {
@@ -99,10 +117,11 @@ export const SupabaseHabitRepository = {
       null,
     ];
   },
-  async getDailyDoneStats(range) {
+  async getDailyDoneStats(range, habitId = null) {
     const { data, error } = await supabase.rpc('get_daily_done_stats', {
       p_start_date: formatDate(range.start, 'YYYY-MM-DD'),
       p_end_date: formatDate(range.end, 'YYYY-MM-DD'),
+      p_habit_id: habitId,
     });
 
     if (error) {
