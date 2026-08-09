@@ -44,8 +44,8 @@ export const StatService = {
 
     return [Math.floor((completedTarget / totalPeriods) * 100), null];
   },
-  async getDailyDoneStats(range) {
-    const [data, err] = await HabitRepository.getDailyDoneStats(range);
+  async getDailyDoneStats(range, habitId = null) {
+    const [data, err] = await HabitRepository.getDailyDoneStats(range, habitId);
 
     if (err) {
       return [null, err];

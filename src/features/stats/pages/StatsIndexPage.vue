@@ -1,21 +1,7 @@
 <script setup>
 import { Icon } from '@iconify/vue';
 import BaseCard from '../../../components/base/BaseCard.vue';
-import { Line } from 'vue-chartjs';
-import {
-  CategoryScale,
-  Chart,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Legend,
-  Colors,
-  Filler,
-  Tooltip,
-} from 'chart.js';
-import { getChartColor } from '../../../core/chart/chart.util';
 import { computed, reactive, ref } from 'vue';
-import { theme } from '../../../core/theme';
 import { StatService } from '../stats.service';
 import {
   formatDate,
@@ -28,17 +14,7 @@ import {
   longestStreak,
 } from '../../user-streak/user-streak.compose.js';
 import BaseWidget from '../../../components/base/BaseWidget.vue';
-
-Chart.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Legend,
-  Colors,
-  Filler,
-  Tooltip,
-);
+import ActivityLineChart from '../components/ActivityLineChart.vue';
 
 const targetCompletion = ref(0);
 const habitStats = reactive({
@@ -81,58 +57,6 @@ const stats = computed(() => ({
 
 const activityTrendsRange = { start: subDate(new Date(), 30), end: new Date() };
 const activityTrendsData = ref([]);
-const activityTrends = computed(() => {
-  return {
-    labels: getDaysRange(
-      activityTrendsRange.start,
-      activityTrendsRange.end,
-      'DD MMM',
-    ),
-    datasets: [
-      {
-        label: 'Habit Dilakukan',
-        fill: true,
-        backgroundColor: getChartColor('blue', 0.3),
-        borderColor: getChartColor('blue'),
-        borderWidth: 2,
-        pointRadius: 0,
-        pointHoverRadius: 4,
-        pointHitRadius: 12,
-        data: activityTrendsData.value,
-      },
-    ],
-  };
-});
-
-const activityChartOptions = computed(() => {
-  return {
-    scales: {
-      x: {
-        grid: {
-          color: theme.value === 'light' ? '#d1d5db' : '#4b5563',
-        },
-        ticks: {
-          color: theme.value === 'light' ? '#d1d5db' : '#4b5563',
-        },
-      },
-      y: {
-        grid: {
-          color: theme.value === 'light' ? '#d1d5db' : '#4b5563',
-        },
-        ticks: {
-          color: theme.value === 'light' ? '#d1d5db' : '#4b5563',
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        labels: {
-          color: theme.value === 'light' ? '#4b5563' : '#d1d5db',
-        },
-      },
-    },
-  };
-});
 
 const currentMonth = new Date().getMonth();
 
@@ -227,7 +151,11 @@ loadyHeatmaps();
     <div>
       <h2 class="font-bold text-2xl mb-4">Tren</h2>
       <BaseCard bordered>
-        <Line :data="activityTrends" :options="activityChartOptions" />
+        <ActivityLineChart
+          :data="activityTrendsData"
+          :start="activityTrendsRange.start"
+          :end="activityTrendsRange.end"
+        />
       </BaseCard>
     </div>
 
