@@ -1,7 +1,6 @@
 ## Todo
 
 - Detail habit
-  - Edit/Delete
   - 404
   - breadcrumb
   - Get habit stats function

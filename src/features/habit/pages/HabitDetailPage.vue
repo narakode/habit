@@ -14,6 +14,8 @@ import BaseCard from '../../../components/base/BaseCard.vue';
 import ActivityLineChart from '../../stats/components/ActivityLineChart.vue';
 import { formatDate, getCalendar, subDate } from '../../../utils/date';
 import BaseHeatmap from '../../../components/base/BaseHeatmap.vue';
+import HabitDeleteConfirm from '../components/HabitDeleteConfirm.vue';
+import HabitFormModal from '../components/HabitFormModal.vue';
 
 const route = useRoute();
 
@@ -29,6 +31,8 @@ const heatmapDays = getCalendar(
   new Date().getFullYear(),
 );
 const heatmapDaysData = ref([]);
+const editModalVisible = ref(false);
+const deleteConfirmVisible = ref(false);
 
 const habit = computed(() => {
   const [found, err] = findHabit(route.params.id);
@@ -104,7 +108,12 @@ watch(
 <template>
   <BaseSkeleton v-if="!habitLoaded" class="h-40" />
   <div v-else-if="habit" class="space-y-6">
-    <HabitCard :habit="habit" :with-link="false" />
+    <HabitCard
+      :habit="habit"
+      :with-link="false"
+      @edit="editModalVisible = true"
+      @delete="deleteConfirmVisible = true"
+    />
     <div>
       <h2 class="font-bold text-2xl mb-4">Statistik</h2>
       <div
@@ -149,5 +158,11 @@ watch(
         </BaseCard>
       </div>
     </div>
+    <HabitDeleteConfirm
+      :id="route.params.id"
+      v-model:visible="deleteConfirmVisible"
+      @deleted="$router.push({ name: 'home' })"
+    />
+    <HabitFormModal :habit="habit" v-model:visible="editModalVisible" />
   </div>
 </template>
