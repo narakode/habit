@@ -1,7 +1,13 @@
 import { computed, readonly, ref } from 'vue';
 import { StatService } from '../stats/stats.service';
 import { UserStreakService } from './user-streak.service';
-import { addDate, diffDay, isSameDate, subDate } from '../../utils/date';
+import {
+  addDate,
+  diffDay,
+  isSameDate,
+  setStartOfDay,
+  subDate,
+} from '../../utils/date';
 
 const _longestStreak = ref(0);
 const _lastActivityDate = ref(null);
@@ -47,9 +53,24 @@ export async function loadStreak() {
 }
 
 export function setStreakToday() {
+  const newLastActivityDate = new Date();
+
+  if (!_currentStreakStartDate.value) {
+    _longestStreak.value = 1;
+  } else {
+    const prevLongestStreak = currentStreak.value
+      ? diffDay(
+          setStartOfDay(newLastActivityDate),
+          _currentStreakStartDate.value,
+        ) + 1
+      : diffDay(_lastActivityDate.value, _currentStreakStartDate.value) + 1;
+
+    _longestStreak.value = Math.max(_longestStreak.value, prevLongestStreak);
+  }
+
   if (!currentStreak.value) {
     _currentStreakStartDate.value = new Date();
   }
 
-  _lastActivityDate.value = new Date();
+  _lastActivityDate.value = newLastActivityDate;
 }
