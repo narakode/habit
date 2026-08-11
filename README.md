@@ -1,6 +1,5 @@
 ## Todo
 
-- calendar start mon
 - New User create profile
 - Disable delete/update profile
 - Help modal

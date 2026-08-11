@@ -26,13 +26,13 @@ function getHeatMapColor(count) {
 
 <template>
   <div class="grid grid-cols-7 gap-2">
-    <div class="text-xs text-center text-gray-600 dark:text-gray-400">Min</div>
     <div class="text-xs text-center text-gray-600 dark:text-gray-400">Sen</div>
     <div class="text-xs text-center text-gray-600 dark:text-gray-400">Sel</div>
     <div class="text-xs text-center text-gray-600 dark:text-gray-400">Rab</div>
     <div class="text-xs text-center text-gray-600 dark:text-gray-400">Kam</div>
     <div class="text-xs text-center text-gray-600 dark:text-gray-400">Jum</div>
     <div class="text-xs text-center text-gray-600 dark:text-gray-400">Sab</div>
+    <div class="text-xs text-center text-gray-600 dark:text-gray-400">Min</div>
     <div
       v-for="day in days"
       :key="day.id"

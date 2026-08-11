@@ -157,12 +157,14 @@ export function getDaysRange(dateA, dateB, format = null) {
 export function getCalendar(month, year) {
   const cells = [];
 
-  const startMonth = new Date(year, month, 1);
+  const startDateMonth = new Date(year, month, 1);
   const endMonth = new Date(year, month + 1, 0);
 
-  const prevMonth = setEndOfMonth(subMonth(startMonth, 1));
+  const prevMonth = setEndOfMonth(subMonth(startDateMonth, 1));
 
-  for (let i = startMonth.getDay() - 1; i >= 0; i--) {
+  const leadingDays = (startDateMonth.getDay() + 6) % 7;
+
+  for (let i = leadingDays - 1; i >= 0; i--) {
     const date = new Date(
       prevMonth.getFullYear(),
       prevMonth.getMonth(),
@@ -178,7 +180,7 @@ export function getCalendar(month, year) {
     cells.push(date);
   }
 
-  const nextMonth = addMonth(startMonth, 1);
+  const nextMonth = addMonth(startDateMonth, 1);
 
   let nextDay = 0;
   while (cells.length % 7 !== 0) {
