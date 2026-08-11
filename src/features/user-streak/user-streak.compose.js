@@ -47,5 +47,9 @@ export async function loadStreak() {
 }
 
 export function setStreakToday() {
+  if (!currentStreak.value) {
+    _currentStreakStartDate.value = new Date();
+  }
+
   _lastActivityDate.value = new Date();
 }

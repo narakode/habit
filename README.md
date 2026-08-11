@@ -11,4 +11,4 @@
 - Mokcup screenshot for login
 - Dynamic aspect image for login carousel
 - 404 page
-- Fix increment streak yang dari - harusnya ngga lanjut kemarin
+- Start new streak save longest streak
