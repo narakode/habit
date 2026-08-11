@@ -32,10 +32,10 @@ export function toActivityStats({ totalActivities, daysActive }) {
   };
 }
 
-export function toHabitStats({ totalActivities, daysActive }) {
+export function toHabitStats({ totalActivities, daysActive, completedPeriod }) {
   return {
     totalActivities,
-    completedPeriod: 10,
+    completedPeriod,
   };
 }
 

@@ -46,7 +46,23 @@ export const SupabaseHabitRepository = {
       return [null, error];
     }
 
-    return [{ data: toHabits(data), total: count }, null];
+    return [
+      {
+        data: data.map((item) =>
+          toHabit({
+            id: item.id,
+            name: item.name,
+            icon: item.icon,
+            reset: item.reset,
+            target: item.target,
+            done: item.done,
+            createdAt: item.created_at,
+          }),
+        ),
+        total: count,
+      },
+      null,
+    ];
   },
   async getDailyActvities(date = new Date()) {
     const { data, error, count } = await supabase.rpc(
@@ -77,7 +93,10 @@ export const SupabaseHabitRepository = {
   },
   async getHabitStats(id) {
     const { data, error } = await supabase
-      .rpc('get_habit_stats', { p_habit_id: id })
+      .from('habit_stats')
+      .select()
+      .eq('id', id)
+      .limit(1)
       .single();
 
     if (error) {
@@ -87,7 +106,7 @@ export const SupabaseHabitRepository = {
     return [
       toHabitStats({
         totalActivities: data.total_activities,
-        completedPeriod: data.completed_period,
+        completedPeriod: data.completed_periods,
       }),
       null,
     ];

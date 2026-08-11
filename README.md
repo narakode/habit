@@ -1,8 +1,5 @@
 ## Todo
 
-- Detail habit
-  - Get habit stats function
-  - Get habit daily done filter by id
 - calendar start mon
 - New User create profile
 - Disable delete/update profile
@@ -14,3 +11,4 @@
 - Mokcup screenshot for login
 - Dynamic aspect image for login carousel
 - 404 page
+- Fix increment streak yang dari - harusnya ngga lanjut kemarin

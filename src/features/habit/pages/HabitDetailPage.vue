@@ -4,7 +4,7 @@ import { HabitService } from '../habit.service';
 import { useRoute } from 'vue-router';
 import { setTitle } from '../../../utils/head';
 import HabitCard from '../components/HabitCard.vue';
-import { findHabit, loaded as habitLoaded } from '../habit.compose';
+import { findHabit, loaded as habitLoaded, habits } from '../habit.compose';
 import BaseSkeleton from '../../../components/base/BaseSkeleton.vue';
 import BaseWidget from '../../../components/base/BaseWidget.vue';
 import { StatService } from '../../stats/stats.service';
