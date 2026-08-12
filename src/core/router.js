@@ -60,6 +60,14 @@ export const router = createRouter({
       },
       component: () => import('../features/habit/pages/HabitDetailPage.vue'),
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: '404',
+      meta: {
+        title: '404 Halaman Tidak Ditemukan',
+      },
+      component: () => import('../common/pages/NotFoundPage.vue'),
+    },
   ],
 });
 
