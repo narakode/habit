@@ -21,17 +21,26 @@ export const AuthSupabaseService = {
     return [data.user, error];
   },
   async getProfile() {
-    const { data, error } = await supabase
-      .from('user_profiles')
-      .select()
-      .limit(1)
-      .single();
+    const { data, error } = await supabase.from('user_profiles').select();
 
     if (error) {
       return [null, error];
     }
 
-    return [data, error];
+    if (!data.length) {
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .insert({ timezone: Intl.DateTimeFormat().resolvedOptions().timeZone })
+        .select();
+
+      if (error) {
+        return [null, error];
+      }
+
+      return [data[0], error];
+    }
+
+    return [data[0], error];
   },
   async logout() {
     const { error } = await supabase.auth.signOut();

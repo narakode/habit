@@ -1,7 +1,5 @@
 ## Todo
 
-- New User create profile
-- Disable delete/update profile
 - Help modal
 - New user tour
 - Update & Changelog
