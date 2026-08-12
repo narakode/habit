@@ -69,30 +69,43 @@ import BaseCard from '../../components/base/BaseCard.vue';
       <p>
         Any ideas?
         <a
-          href=""
+          href="https://forms.gle/YAhJDSMGyZb3ezxE6"
           class="text-sky-600 font-medium hover:underline dark:text-sky-400"
+          target="_blank"
           >Request a Feature</a
         >.
       </p>
     </BaseCard>
     <BaseCard bordered class="space-y-4">
       <h2 class="font-bold text-xl">Support</h2>
-      <p>Support us and get updates by in our platforms.</p>
+      <p>Support us and follow us on our social media platforms.</p>
       <ol class="flex items-center gap-2">
-        <li
-          class="size-10 flex items-center justify-center rounded-lg bg-sky-500 text-white hover:bg-sky-600 dark:bg-sky-600 hover:dark:bg-sky-700"
-        >
-          <Icon icon="tabler:brand-twitter-filled" />
+        <li>
+          <a
+            href="https://x.com/narakode"
+            target="_blank"
+            class="size-8 flex items-center justify-center rounded-lg bg-sky-500 text-white hover:bg-sky-600 dark:bg-sky-600 hover:dark:bg-sky-700"
+          >
+            <Icon icon="tabler:brand-twitter-filled" />
+          </a>
         </li>
-        <li
-          class="size-10 flex items-center justify-center rounded-lg bg-rose-500 text-white hover:bg-rose-600 dark:bg-rose-600 hover:dark:bg-rose-700"
-        >
-          <Icon icon="tabler:brand-instagram-filled" />
+        <li>
+          <a
+            href="https://www.instagram.com/narakode.id/"
+            target="_blank"
+            class="size-8 flex items-center justify-center rounded-lg bg-rose-500 text-white hover:bg-rose-600 dark:bg-rose-600 hover:dark:bg-rose-700"
+          >
+            <Icon icon="tabler:brand-instagram-filled" />
+          </a>
         </li>
-        <li
-          class="size-10 flex items-center justify-center rounded-lg bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 hover:dark:bg-blue-700"
-        >
-          <Icon icon="tabler:brand-facebook-filled" />
+        <li>
+          <a
+            href="https://www.facebook.com/narakode.id/"
+            target="_blank"
+            class="size-8 flex items-center justify-center rounded-lg bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 hover:dark:bg-blue-700"
+          >
+            <Icon icon="tabler:brand-facebook-filled" />
+          </a>
         </li>
       </ol>
     </BaseCard>
