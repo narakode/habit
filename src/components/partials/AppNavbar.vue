@@ -47,6 +47,9 @@ const logoutVisible = ref(false);
             :icon="theme === 'light' ? 'tabler:moon' : 'tabler:sun-filled'"
           />
         </button>
+        <RouterLink :to="{ name: 'info' }">
+          <Icon icon="tabler:info-circle" />
+        </RouterLink>
         <RouterLink :to="{ name: 'profile' }" class="sm:hidden">
           <Icon icon="tabler:user" />
         </RouterLink>

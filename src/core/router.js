@@ -25,6 +25,15 @@ export const router = createRouter({
       component: () => import('../features/profile/pages/ProfileIndexPage.vue'),
     },
     {
+      path: '/info',
+      name: 'info',
+      meta: {
+        title: 'Updates and Support',
+        auth: true,
+      },
+      component: () => import('../common/pages/InfoPage.vue'),
+    },
+    {
       path: '/login',
       name: 'login',
       meta: {
