@@ -15,7 +15,7 @@ const habits = [
     icon: 'twemoji:open-book',
     reset: 'daily',
     done: 1,
-    completedTarget: 3,
+    completedTarget: 30,
     createdAt: new Date(),
   },
   {
@@ -24,7 +24,7 @@ const habits = [
     icon: 'twemoji:person-in-lotus-position',
     reset: 'daily',
     done: 2,
-    completedTarget: 8,
+    completedTarget: 105,
     createdAt: subDate(new Date(), 14),
   },
   {
@@ -48,13 +48,13 @@ const habits = [
   },
   {
     id: 5,
-    name: 'Walk',
-    icon: 'twemoji:person-walking',
+    name: 'Read Pages',
+    icon: 'twemoji:books',
     reset: 'daily',
-    done: 5432,
+    done: 10,
     completedTarget: 5,
     createdAt: subDate(new Date(), 1),
-    target: 8000,
+    target: 20,
   },
   {
     id: 6,
@@ -118,8 +118,8 @@ export const LocalHabitRepository = {
   getActivityStats() {
     return [
       toActivityStats({
-        totalActivities: 1248,
-        daysActive: 167,
+        totalActivities: 367,
+        daysActive: 63,
       }),
       null,
     ];
@@ -140,11 +140,14 @@ export const LocalHabitRepository = {
       toDailyDoneStats(
         getDaysRange(range.start, range.end, 'YYYY-MM-DD').map((date) => ({
           date,
-          done: Math.floor(Math.random() * 41) + 1,
+          done: Math.floor(Math.random() * 9) + 1,
         })),
       ),
       null,
     ];
+  },
+  getDailyActvities(date = new Date()) {
+    return [{ data: toHabits(habits), total: habits.length }, null];
   },
   getSingleById(id) {
     const habit = habits.find((habit) => habit.id == id);

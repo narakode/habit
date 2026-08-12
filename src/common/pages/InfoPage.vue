@@ -8,7 +8,7 @@ import BaseCard from '../../components/base/BaseCard.vue';
     <BaseCard bordered class="space-y-4">
       <h2 class="font-bold text-xl">Version History</h2>
       <div class="space-y-2">
-        <h3 class="font-bold">v0.0.1</h3>
+        <h3 class="font-bold">v1.0.0</h3>
         <ol class="space-y-1">
           <li class="flex items-center gap-1.5">
             <Icon
@@ -23,6 +23,13 @@ import BaseCard from '../../components/base/BaseCard.vue';
               class="text-sky-600 dark:text-sky-400"
             />
             User Stats
+          </li>
+          <li class="flex items-center gap-1.5">
+            <Icon
+              icon="tabler:square-check"
+              class="text-sky-600 dark:text-sky-400"
+            />
+            Activity History
           </li>
         </ol>
       </div>
@@ -93,7 +100,7 @@ import BaseCard from '../../components/base/BaseCard.vue';
           <a
             href="https://www.instagram.com/narakode.id/"
             target="_blank"
-            class="size-8 flex items-center justify-center rounded-lg bg-rose-500 text-white hover:bg-rose-600 dark:bg-rose-600 hover:dark:bg-rose-700"
+            class="size-8 flex items-center justify-center rounded-lg bg-purple-500 text-white hover:bg-purple-600 dark:bg-purple-600 hover:dark:bg-purple-700"
           >
             <Icon icon="tabler:brand-instagram-filled" />
           </a>
