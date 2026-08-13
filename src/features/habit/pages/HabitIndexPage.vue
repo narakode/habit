@@ -65,9 +65,9 @@ onUnmounted(() => {
       <BaseState
         v-if="!habits.data.length"
         icon="tabler:clipboard-plus"
-        title="Belum ada habit"
-        description="Anda belum memiliki habit untuk dilakukan, tambahkan satu habit."
-        action="Tambah Habit"
+        title="No habits yet"
+        description="You don't have any habits to work on yet. Add a habit to get started."
+        action="Add Habit"
         action-icon="tabler:plus"
         @click-action="onOpenCreate"
       />
@@ -75,9 +75,9 @@ onUnmounted(() => {
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           <BaseWidget
             icon="twemoji:fire"
-            name="Streak Saat Ini"
+            name="Current Streak"
             :value="currentStreak"
-            unit="hari"
+            :unit="currentStreak < 2 ? 'day' : 'days'"
           >
             <template #add-content>
               <p
@@ -101,10 +101,10 @@ onUnmounted(() => {
                 />
                 {{
                   currentStreak === 0
-                    ? 'Tambah aktivitas untuk mulai streak'
+                    ? 'Add an activity to start your streak'
                     : todayStreak
-                      ? 'Streak lanjut hari ini'
-                      : 'Tambah aktivitas untuk lanjut streak'
+                      ? 'Your streak continues today'
+                      : 'Add an activity to keep your streak going'
                 }}
               </p>
             </template>
@@ -139,7 +139,7 @@ onUnmounted(() => {
             icon="tabler:plus"
             @click="onOpenCreate"
           >
-            Tambah Habit
+            Add Habit
           </BaseButton>
         </div>
       </div>

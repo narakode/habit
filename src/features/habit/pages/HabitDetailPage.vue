@@ -88,7 +88,7 @@ async function loadyHeatmaps() {
         count: count,
         disabled: day.getMonth() !== currentMonth,
         date: day,
-        tooltip: `${formatDate(day, 'DD MMM')} : ${count} aktifitas`,
+        tooltip: `${formatDate(day, 'DD MMM')} : ${count} activities`,
       };
     });
   }
@@ -113,9 +113,9 @@ watch(
     <BaseState
       v-if="!habit"
       icon="tabler:ghost-3"
-      title="Habit Tidak Ditemukan"
-      description="Habit yang diakses tidak dapat ditemukan"
-      action="Kembali"
+      title="Habit Not Found"
+      description="The requested habit could not be found."
+      action="Back"
       action-icon="tabler:arrow-back-up"
       @click-action="$router.back()"
     />
@@ -131,7 +131,7 @@ watch(
         <span class="text-gray-400 dark:text-gray-500">
           <Icon icon="tabler:chevron-right" />
         </span>
-        <span class="text-gray-400 dark:text-gray-500">Detail Habit</span>
+        <span class="text-gray-400 dark:text-gray-500">Habit Detail</span>
       </nav>
       <HabitCard
         :habit="habit"
@@ -140,20 +140,20 @@ watch(
         @delete="deleteConfirmVisible = true"
       />
       <div>
-        <h2 class="font-bold text-2xl mb-4">Statistik</h2>
+        <h2 class="font-bold text-2xl mb-4">Stats</h2>
         <div
           class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
         >
           <BaseWidget
             icon="twemoji:white-heavy-check-mark"
-            name="Total Aktifitas"
+            name="Total Activities"
             :value="stats.totalActivities"
             unit="x"
           />
           <BaseWidget
             v-if="habit.target"
             icon="twemoji:bar-chart"
-            name="Target Tercapai"
+            name="Completion Rate"
             :value="stats.completedPeriod"
             unit="%"
           />
@@ -162,7 +162,7 @@ watch(
 
       <div class="grid gap-4 lg:grid-cols-2">
         <div>
-          <h2 class="font-bold text-2xl mb-4">Tren</h2>
+          <h2 class="font-bold text-2xl mb-4">Trend</h2>
           <BaseCard bordered>
             <ActivityLineChart
               :data="activityTrendsData"

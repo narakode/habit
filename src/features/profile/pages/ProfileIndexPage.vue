@@ -14,7 +14,7 @@ const logoutVisible = ref(false);
     <h1 class="font-bold text-3xl mb-4">Profile</h1>
     <dl class="space-y-4">
       <div class="space-y-0.5">
-        <dt class="text-sm text-gray-600 dark:text-gray-400">Nama</dt>
+        <dt class="text-sm text-gray-600 dark:text-gray-400">Name</dt>
         <dd>{{ user ? user.user_metadata.name : '-' }}</dd>
       </div>
       <div class="space-y-0.5">
@@ -22,9 +22,7 @@ const logoutVisible = ref(false);
         <dd>{{ user ? user.email : '-' }}</dd>
       </div>
       <div class="space-y-0.5">
-        <dt class="text-sm text-gray-600 dark:text-gray-400">
-          Tanggal Bergabung
-        </dt>
+        <dt class="text-sm text-gray-600 dark:text-gray-400">Created At</dt>
         <dd>
           {{
             user ? formatDate(new Date(user.created_at), 'DD MMMM YYYY') : '-'
@@ -32,7 +30,7 @@ const logoutVisible = ref(false);
         </dd>
       </div>
       <div class="space-y-0.5">
-        <dt class="text-sm text-gray-600 dark:text-gray-400">Zona Waktu</dt>
+        <dt class="text-sm text-gray-600 dark:text-gray-400">Timezone</dt>
         <dd>{{ userProfile ? userProfile.timezone : '-' }}</dd>
       </div>
     </dl>

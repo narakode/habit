@@ -18,9 +18,9 @@ defineProps({
 defineEmits(['edit', 'delete']);
 
 const targetLabel = {
-  daily: 'Hari ini',
-  weekly: 'Minggu ini',
-  monthly: 'Bulan ini',
+  daily: 'Daily',
+  weekly: 'Weekly',
+  monthly: 'Monthly',
 };
 </script>
 

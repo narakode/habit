@@ -38,7 +38,7 @@ const chartData = computed(() => {
     labels: getDaysRange(props.start, props.end, 'DD MMM'),
     datasets: [
       {
-        label: 'Habit Dilakukan',
+        label: 'Activities',
         fill: true,
         backgroundColor: getChartColor('blue', 0.3),
         borderColor: getChartColor('blue'),

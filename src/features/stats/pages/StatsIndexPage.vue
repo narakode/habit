@@ -25,31 +25,31 @@ const habitStats = reactive({
 
 const stats = computed(() => ({
   currentStreak: {
-    name: 'Streak Saat Ini',
+    name: 'Current Streak',
     value: currentStreak.value,
     unit: 'hari',
     icon: 'twemoji:fire',
   },
   longestStreak: {
-    name: 'Rekor Streak',
+    name: 'Longest Streak',
     value: longestStreak.value,
     unit: 'hari',
     icon: 'twemoji:trophy',
   },
   targetCompletion: {
-    name: 'Rata-Rata Target',
+    name: 'Completion Rate',
     value: targetCompletion.value,
     unit: '%',
     icon: 'twemoji:bar-chart',
   },
   totalActivities: {
-    name: 'Habit Dilakukan',
+    name: 'Total Activities',
     value: habitStats.totalActivities,
     unit: 'kali',
     icon: 'twemoji:white-heavy-check-mark',
   },
   daysActive: {
-    name: 'Hari Aktif',
+    name: 'Days Active',
     value: habitStats.daysActive,
     unit: 'hari',
     icon: 'twemoji:calendar',
@@ -107,7 +107,7 @@ async function loadyHeatmaps() {
         count: count,
         disabled: day.getMonth() !== currentMonth,
         date: day,
-        tooltip: `${formatDate(day, 'DD MMM')} : ${count} aktifitas`,
+        tooltip: `${formatDate(day, 'DD MMM')} : ${count} activities`,
       };
     });
   }
@@ -122,7 +122,7 @@ loadyHeatmaps();
 <template>
   <div class="pb-8 grid gap-6 lg:grid-cols-2">
     <div class="col-span-full">
-      <h1 class="font-bold text-3xl mb-4">Statistik</h1>
+      <h1 class="font-bold text-3xl mb-4">Stats</h1>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <BaseWidget
           v-for="stat in Object.values(stats)"
@@ -137,7 +137,7 @@ loadyHeatmaps();
     </div>
 
     <div>
-      <h2 class="font-bold text-2xl mb-4">Tren</h2>
+      <h2 class="font-bold text-2xl mb-4">Trend</h2>
       <BaseCard bordered>
         <ActivityLineChart
           :data="activityTrendsData"

@@ -7,14 +7,14 @@ export function formatDate(date, format) {
       'Feb',
       'Mar',
       'Apr',
-      'Mei',
+      'May',
       'Jun',
       'Jul',
-      'Agu',
+      'Aug',
       'Sep',
-      'Okt',
+      'Oct',
       'Nov',
-      'Des',
+      'Dec',
     ];
 
     return `${day} ${months[date.getMonth()]}`;
@@ -23,18 +23,18 @@ export function formatDate(date, format) {
   const year = date.getFullYear();
 
   const months = [
-    'Januari',
-    'Febuari',
-    'Maret',
+    'January',
+    'Febuary',
+    'March',
     'April',
-    'Mei',
-    'Juni',
-    'Juli',
-    'Agustus',
+    'May',
+    'June',
+    'July',
+    'August',
     'September',
-    'Oktober',
+    'October',
     'November',
-    'Desember',
+    'December',
   ];
 
   if (format === 'MMMM YYYY') {

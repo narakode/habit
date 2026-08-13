@@ -38,7 +38,9 @@ onUnmounted(() => stopScreenshotCareousel());
 <template>
   <div class="max-w-sm md:max-w-screen-md mx-auto">
     <div class="mb-4 flex justify-between text-gray-600 dark:text-gray-400">
-      <a href="" class="text-sm">narakode.id</a>
+      <a href="https://www.narakode.id" target="_blank" class="text-sm"
+        >narakode.id</a
+      >
       <button class="cursor-pointer" @click="toggle">
         <Icon
           :icon="theme === 'light' ? 'tabler:moon-filled' : 'tabler:sun-filled'"
@@ -52,7 +54,7 @@ onUnmounted(() => stopScreenshotCareousel());
         <div>
           <h1 class="font-bold text-xl mb-1">Welcome To Habit Tracker</h1>
           <p class="text-gray-600 dark:text-gray-400">
-            Sign in with your google account below
+            Sign in with your Google account.
           </p>
         </div>
         <BaseButton

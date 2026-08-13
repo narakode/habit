@@ -24,11 +24,11 @@ async function onConfirm() {
 
 <template>
   <BaseConfirm
-    title="Hapus Habit"
-    message="Apakah anda yakin ingin menghapus habit ini?"
+    title="Delete Habit"
+    message="Are you sure you want to delete this habit?"
     :loading="loadingDelete"
-    confirm-text="Hapus"
-    cancel-text="Batal"
+    confirm-text="Delete"
+    cancel-text="Cancel"
     v-model:visible="visible"
     @confirm="onConfirm"
   />

@@ -55,7 +55,7 @@ async function onSubmit() {
     : await createHabit(form);
 
   if (err) {
-    error.value = 'Gagal membuat habit baru, silakan coba lagi';
+    error.value = 'Failed to create a new habit. Please try again.';
   } else {
     emit('saved');
 
@@ -68,7 +68,7 @@ async function onSubmit() {
 
 <template>
   <BaseModal
-    :title="`${props.habit ? 'Edit' : 'Tambah'} Habit`"
+    :title="`${props.habit ? 'Edit' : 'Add'} Habit`"
     width="md"
     v-model:visible="visible"
     @open="onOpen"
@@ -83,7 +83,7 @@ async function onSubmit() {
           <BaseInput
             type="text"
             :id="id"
-            placeholder="Ngoding"
+            placeholder="Coding Practice"
             class="rounded-l-none border-l-0"
             required
             v-model="form.name"
@@ -95,7 +95,7 @@ async function onSubmit() {
           <BaseRadio
             name="habit_form_reset"
             input-value="daily"
-            label="Harian"
+            label="Daily"
             required
             :disabled="!!props.habit"
             v-model="form.reset"
@@ -103,7 +103,7 @@ async function onSubmit() {
           <BaseRadio
             name="habit_form_reset"
             input-value="weekly"
-            label="Mingguan"
+            label="Weekly"
             required
             :disabled="!!props.habit"
             v-model="form.reset"
@@ -111,7 +111,7 @@ async function onSubmit() {
           <BaseRadio
             name="habit_form_reset"
             input-value="monthly"
-            label="Bulanan"
+            label="Monthly"
             required
             :disabled="!!props.habit"
             v-model="form.reset"
@@ -130,8 +130,8 @@ async function onSubmit() {
       </BaseFormItem>
 
       <p v-if="props.habit" class="text-sm text-gray-400">
-        Reset dan Target tidak bisa diubah untuk versi saat ini, silakan buat
-        habit baru untuk membuat target dan reset yang baru.
+        Reset and Target cannot be changed in the current version. Please create
+        a new habit to set a different target or reset frequency.
       </p>
     </form>
 
@@ -142,9 +142,9 @@ async function onSubmit() {
           type="submit"
           form="habit_form"
           color="primary"
-          >Simpan</BaseButton
+          >Save</BaseButton
         >
-        <BaseButton @click="close">Tutup</BaseButton>
+        <BaseButton @click="close">Cancel</BaseButton>
       </div>
     </template>
   </BaseModal>

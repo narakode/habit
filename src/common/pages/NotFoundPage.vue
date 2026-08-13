@@ -5,9 +5,9 @@ import BaseState from '../../components/base/BaseState.vue';
 <template>
   <BaseState
     icon="tabler:ghost-3"
-    title="Halaman Tidak Ditemukan"
-    description="Halaman yang diakses tidak dapat ditemukan"
-    action="Kembali"
+    title="Page Not Found"
+    description="The requested page could not be found."
+    action="Back"
     action-icon="tabler:arrow-back-up"
     @click-action="$router.back()"
   />

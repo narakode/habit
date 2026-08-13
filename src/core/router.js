@@ -64,7 +64,7 @@ export const router = createRouter({
       path: '/habits/:id',
       name: 'habits.detail',
       meta: {
-        title: 'Detail Habit',
+        title: 'Habit Detail',
         auth: true,
       },
       component: () => import('../features/habit/pages/HabitDetailPage.vue'),
@@ -73,7 +73,7 @@ export const router = createRouter({
       path: '/:pathMatch(.*)*',
       name: '404',
       meta: {
-        title: '404 Halaman Tidak Ditemukan',
+        title: '404',
       },
       component: () => import('../common/pages/NotFoundPage.vue'),
     },

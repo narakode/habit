@@ -34,7 +34,7 @@ watch(date, () => loadActivities());
 
 <template>
   <div class="space-y-4 pb-8">
-    <h1 class="font-bold text-3xl">Riwayat Aktifitas</h1>
+    <h1 class="font-bold text-3xl">Activity Histories</h1>
 
     <div class="flex justify-end">
       <VueDatePicker
@@ -61,13 +61,13 @@ watch(date, () => loadActivities());
               class="border-b border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
             >
               <th class="px-4 py-2">Habit</th>
-              <th class="px-4 py-2">Dilakukan</th>
+              <th class="px-4 py-2">Activities</th>
             </tr>
           </thead>
           <tbody v-if="!activities.length">
             <tr>
               <td class="px-4 py-3 text-gray-600 dark:text-gray-400">
-                Tidak ada data
+                No data
               </td>
             </tr>
           </tbody>
